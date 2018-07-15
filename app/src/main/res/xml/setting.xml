@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.jenzz.materialpreference.SwitchPreference
+        android:defaultValue="true"
+        android:key="soundEffect"
+        android:title="@string/pref_sound" />
+    <com.jenzz.materialpreference.Preference
+            android:key="invite"
+            android:title="@string/pref_invite" />
+    <com.jenzz.materialpreference.Preference
+        android:key="about"
+        android:title="@string/pref_information" />
+    <com.jenzz.materialpreference.Preference
+        android:key="oss"
+        android:title="@string/pref_oss" />
+    <com.jenzz.materialpreference.Preference
+            android:key="pp"
+            android:title="@string/pref_privacy_policy" />
+</PreferenceScreen>

@@ -1,0 +1,51 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context=".main.MainActivity">
+    <!-- ツールバーとコンテンツのLinearLayout -->
+
+    <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+        <!-- コンテンツ -->
+        <!-- 爆発エフェクトレイヤー -->
+        <jp.bellware.echo.main.view.ExplosionView
+                android:id="@+id/explosion"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        <!-- ステータス -->
+        <include layout="@layout/main_status"/>
+        <!-- コントロール-->
+        <include layout="@layout/main_control"/>
+
+        <FrameLayout
+                android:id="@+id/warning_mute"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <jp.bellware.echo.main.view.MyCardView
+                    android:layout_width="320dp"
+                    app:myCardColor="@color/warning"
+                    android:layout_height="48dp"/>
+            <TextView
+                    android:singleLine="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/warning_mute_text"
+                    android:text="@string/warning_volume"/>
+        </FrameLayout>
+    </FrameLayout>
+</LinearLayout>

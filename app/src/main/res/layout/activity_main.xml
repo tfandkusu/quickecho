@@ -1,0 +1,68 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".main.MainActivity">
+    <jp.bellware.echo.main.view.ToolbarShadowView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_gravity="top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <FrameLayout
+            android:layout_marginTop="56dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+        <!-- コンテンツ -->
+
+        <!-- 爆発エフェクトレイヤー -->
+        <jp.bellware.echo.main.view.ExplosionView
+                android:id="@+id/explosion"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        <!-- ステータス表示 -->
+        <include layout="@layout/main_status"/>
+        <!-- コントロール -->
+        <include layout="@layout/main_control"/>
+
+        <!-- 警告表示 -->
+        <FrameLayout
+                android:id="@+id/warning_mute"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="336dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <jp.bellware.echo.main.view.MyCardView
+                    android:layout_width="match_parent"
+                    app:myCardColor="@color/warning"
+                    android:layout_height="48dp"/>
+            <TextView
+                    android:singleLine="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/warning_mute_text"
+                    android:text="@string/warning_time_limit"/>
+        </FrameLayout>
+
+        <!--
+        広告はしばらくなしにする
+                <com.google.android.gms.ads.AdView android:id="@+id/ad"
+                                                   android:layout_width="wrap_content"
+                                                   android:layout_height="wrap_content"
+                                                   android:layout_gravity="center_horizontal|top"
+                                                   app:adUnitId="@string/banner_ad_unit_id"
+                                                   android:layout_marginBottom="@dimen/activity_margin"
+                                                   app:adSize="BANNER"/>
+                                                   -->
+
+    </FrameLayout>
+</FrameLayout>

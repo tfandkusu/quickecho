@@ -1,0 +1,7 @@
+/build
+src/main/assets/*.css
+src/main/assets/*.js
+src/main/assets/*.html
+!jquery.min.js
+!bootstrap.min.js
+

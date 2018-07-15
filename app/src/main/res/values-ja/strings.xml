@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="warning_time_limit">録音可能時間は最長2分です。</string>
+    <string name="warning_volume">音楽ボリュームがミュートになっています。</string>
+    <string name="pref_oss">オープンソースライセンス</string>
+    <string name="pref_sound">効果音</string>
+    <string name="pref_information">アプリについて</string>
+    <string name="title_setting">設定</string>
+    <string name="app_name">エコー</string>
+    <string name="app_name_long">クイックエコー</string>
+    <string name="warning_no_sound">なにも録音されていません。</string>
+    <string name="black">白紙</string>
+    <string name="script">台本</string>
+    <string name="pr">広告</string>
+    <string name="login">ログイン</string>
+    <string name="message_login">ログインすると、台本を編集できます。</string>
+    <string name="copyright" translatable="false"></string>
+    <string name="error_auth">ユーザ認証に失敗しました。</string>
+    <string name="error_internet_connection">インターネット接続がありません。</string>
+    <string name="error_unknown_response">未知のレスポンス</string>
+    <string name="error_unknown_error">未知のエラー</string>
+    <string name="error">エラー</string>
+    <string name="ok">OK</string>
+    <string name="error_google_auth">Googleアカウント認証が</string>
+    <string name="pref_invite">友人にアプリを紹介する</string>
+    <string name="message_permission">このアプリはマイクの権限が必要です。</string>
+    <string name="title_permission">情報</string>
+    <string name="cancel">キャンセル</string>
+    <string name="pref_privacy_policy">プライバシーポリシー</string>
+</resources>

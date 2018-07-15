@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?><!-- ステータス表示と再再生、停止ボタン -->
+<!-- ステータス表示-->
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="104dp">
+
+    <FrameLayout
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+        <!-- ボリューム -->
+        <jp.bellware.echo.main.view.VisualVolumeView
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:id="@+id/visual_volume"
+                android:layout_gravity="top|center_horizontal"/>
+
+        <!-- 状態アイコン -->
+        <ImageView
+                android:id="@+id/status_image"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:scaleType="center"
+                android:src="@drawable/microphone_48dp"
+                android:layout_gravity="top|center_horizontal"/>
+    </FrameLayout>
+
+</FrameLayout>

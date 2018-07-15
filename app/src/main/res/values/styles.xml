@@ -1,0 +1,43 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- ツールバーの背景色 -->
+        <item name="colorPrimary">@color/primary</item>
+        <!-- ナビゲーションバーの背景色 -->
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <!-- <item name="android:textColorPrimary">@color/text</item> -->
+        <item name="colorAccent">@color/primary</item>
+        <!-- ツールバーの色設定-->
+        <item name="toolbarStyle">@style/Toolbar</item>
+        <!-- Toolbarの戻るボタンの色を定義する。ここに記述する必要あり。-->
+        <item name="colorControlNormal">@color/toolbar_title</item>
+        <!-- ボタンのスタイル -->
+        <item name="android:alertDialogStyle">@style/AlertDialog</item>
+    </style>
+
+    <style name="Toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="titleTextAppearance">@style/Toolbar.Title</item>
+        <item name="android:background">@color/primary</item>
+    </style>
+
+    <style name="Toolbar.Title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textColor">@color/toolbar_title</item>
+    </style>
+
+    <!-- スクリーンショット用 -->
+    <style name="ScreenShotCardView">
+        <item name="cardBackgroundColor">@color/ss_card</item>
+        <item name="cardElevation">4dp</item>
+    </style>
+    <style name="ScreenShotDescription" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/text_dark</item>
+    </style>
+
+    <!-- ボタン -->
+    <style name="AlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/primary</item>
+    </style>
+
+</resources>

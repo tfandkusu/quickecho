@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_gravity="right|bottom"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:gravity="right|bottom">
+    <!-- 停止ボタン -->
+    <jp.bellware.echo.main.view.MyFAB
+            android:id="@+id/stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="44dp"
+            android:layout_marginRight="0dp"
+            app:myFabColor="@color/play_button"
+            app:myFabIcon="@drawable/ic_stop_white_24dp"
+            app:myFabSize="mini"/>
+    <!-- 再再生ボタン -->
+    <jp.bellware.echo.main.view.MyFAB
+            android:id="@+id/replay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="44dp"
+            android:layout_marginRight="0dp"
+            app:myFabColor="@color/play_button"
+            app:myFabIcon="@drawable/ic_play_arrow_white_24dp"
+            app:myFabSize="mini"/>
+    <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:paddingBottom="44dp">
+        <!-- 録音ボタン -->
+        <jp.bellware.echo.main.view.MyFAB
+                android:id="@+id/record"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:myFabColor="@color/record_button"
+                app:myFabIcon="@drawable/ic_mic_white_24dp"
+                app:myFabSize="normal"/>
+        <!-- 再生ボタン -->
+        <jp.bellware.echo.main.view.MyFAB
+                android:id="@+id/play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:myFabColor="@color/play_button"
+                app:myFabIcon="@drawable/ic_play_arrow_white_24dp"
+                app:myFabSize="normal"/>
+    </FrameLayout>
+
+
+    <!-- 削除ボタン -->
+    <jp.bellware.echo.main.view.MyFAB
+            android:id="@+id/delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="44dp"
+            android:layout_marginRight="8dp"
+            app:myFabIcon="@drawable/ic_delete_white_24dp"
+            app:myFabSize="mini"/>
+
+
+</LinearLayout>

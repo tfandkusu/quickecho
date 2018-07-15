@@ -1,0 +1,30 @@
+<resources>
+    <!-- プライマリカラー-->
+    <color name="primary">#ef5350</color>
+    <!-- ステータスバーカラー -->
+    <color name="primary_dark">#c44442</color>
+    <!-- ツールバーのタイトル色 -->
+    <color name="toolbar_title">#ffffff</color>
+    <!-- 選択されていないタブ色 -->
+    <color name="normal_tab_text">#aaffffff</color>
+    <!-- プライマリーカラー(薄い) -->
+    <color name="primary_light">#E57373</color>
+    <!--　押されたプライマリ -->
+    <color name="primary_pressed">#E53935</color>
+    <!-- 警告表示 -->
+    <color name="warning">#F8BBD0</color>
+    <!-- 再生カラー -->
+    <color name="play">#76FF03</color>
+    <color name="play_pressed">#65f10c</color>
+    <color name="play_light">#CCFF90</color>
+
+    <!-- 白 -->
+    <color name="white">#ffffff</color>
+    <!-- テキスト色 -->
+    <color name="text">@color/abc_secondary_text_material_light</color>
+    <color name="text_dark">@color/abc_primary_text_material_light</color>
+    <!-- スクリーンショットの吹き出し色 -->
+    <color name="ss_card">#C5CAE9</color>
+    <!-- スクリーンショットの矢印色 -->
+    <color name="ss_arrow">#303F9F</color>
+</resources>
