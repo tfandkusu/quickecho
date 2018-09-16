@@ -4,9 +4,12 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              tools:context=".main.MainActivity">
-    <jp.bellware.echo.main.view.ToolbarShadowView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:layout_marginTop="56dp"
+        android:src="@drawable/shadow"
+        />
 
     <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
