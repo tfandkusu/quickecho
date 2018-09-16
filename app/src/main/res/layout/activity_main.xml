@@ -8,17 +8,13 @@
             type="jp.bellware.echo.main.MainViewModel" />
     </data>
 
-    <FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".main.MainActivity">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="6dp"
-            android:layout_marginTop="56dp"
-            android:src="@drawable/shadow" />
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -29,8 +25,12 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="56dp"
             android:layout_weight="1">
+            <!-- ツールバーの影 -->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="6dp"
+                android:src="@drawable/shadow" />
             <!-- コンテンツ -->
 
             <!-- 爆発エフェクトレイヤー -->
@@ -52,8 +52,8 @@
                 android:id="@+id/warning_mute"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginBottom="336dp">
+                android:layout_gravity="center"
+                android:layout_marginBottom="104dp">
 
                 <jp.bellware.echo.main.view.MyCardView
                     android:layout_width="match_parent"
@@ -83,5 +83,5 @@
                                                        -->
 
         </FrameLayout>
-    </FrameLayout>
+    </LinearLayout>
 </layout>
