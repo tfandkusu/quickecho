@@ -111,7 +111,7 @@ class MyFAB : View {
         canvas.drawCircle(cx, cy + shadowOffset, sizeDP / 2, paint)
         //本体を描画
         paint.maskFilter = null
-        paint.color = colorTint.getColorForState(drawableState, colorTint!!.defaultColor)
+        paint.color = colorTint.getColorForState(drawableState, colorTint.defaultColor)
         paint.alpha = 255
         canvas.drawCircle(cx, cy, sizeDP / 2, paint)
         //アイコンを描画
