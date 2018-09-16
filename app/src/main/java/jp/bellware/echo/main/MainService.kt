@@ -67,8 +67,7 @@ class MainService : Service() {
             seh.delete()
             status = QRecStatus.DELETE_RECORDING
         }
-        if (cb != null)
-            cb!!.onShowWarningMessage(R.string.warning_time_limit)
+        cb?.onShowWarningMessage(R.string.warning_time_limit)
         update()
     }
 
@@ -83,6 +82,9 @@ class MainService : Service() {
     private var status = QRecStatus.INIT
 
 
+    /**
+     * コールバック
+     */
     private var cb: MainCallback? = null
 
     inner class MainServiceBinder : Binder() {
@@ -113,9 +115,7 @@ class MainService : Service() {
             }
 
             override fun onUpdateVolume(volume: Float) {
-                if (cb != null) {
-                    cb!!.onUpdateVolume(volume)
-                }
+                cb?.onUpdateVolume(volume)
             }
         })
         record.onResume()
@@ -140,6 +140,7 @@ class MainService : Service() {
             cb.onUpdateVolume(0f)
         }
         this.cb = cb
+
     }
 
 
@@ -210,9 +211,7 @@ class MainService : Service() {
             } else {
                 seh.delete()
                 status = QRecStatus.DELETE_RECORDING
-                if (cb != null) {
-                    cb!!.onShowWarningMessage(R.string.warning_no_sound)
-                }
+                cb?.onShowWarningMessage(R.string.warning_no_sound)
             }
             update()
         }
@@ -342,9 +341,8 @@ class MainService : Service() {
             update()
         }
         //状態更新をActivityに通知
-        if (cb != null) {
-            cb!!.onUpdateStatus(true, status)
-        }
+        cb?.onUpdateStatus(true, status)
+
     }
 
     companion object {
