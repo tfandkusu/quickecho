@@ -13,12 +13,13 @@ interface MainServiceCallback {
 
     /**
      * 視覚的ボリュームを更新する
-     * @param volume
+     * @param volume ボリューム
      */
     fun onUpdateVolume(volume: Float)
 
     /**
      * 警告メッセージ表示
+     * @param resId メッセージID
      */
     fun onShowWarningMessage(resId: Int)
 

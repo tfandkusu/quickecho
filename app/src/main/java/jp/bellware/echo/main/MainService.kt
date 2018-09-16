@@ -12,8 +12,8 @@ import jp.bellware.echo.setting.SettingFragment
 import jp.bellware.util.BWU
 
 /**
- * 録音サービス。
- * 画面回転や画面の大きさが変わっても録音を継続できるようにサービス化している。
+ * メインサービス。
+ * 画面回転や画面の大きさが変わっても録音、再生を継続できるようにサービス化している。
  */
 class MainService : Service() {
 
@@ -186,16 +186,11 @@ class MainService : Service() {
     }
 
     /**
-     * 録音する
+     * 録音要求が発生
      */
     fun onRecord() {
-        if (status == QRecStatus.READY_FIRST || status == QRecStatus.READY) {
-            status = QRecStatus.STARTING_RECORD
-            update()
-        } else if (status == QRecStatus.STOP) {
-            status = QRecStatus.STARTING_RECORD
-            update()
-        } else if (status == QRecStatus.PLAYING) {
+        if (status == QRecStatus.READY_FIRST || status == QRecStatus.READY ||
+                status == QRecStatus.STOP || status == QRecStatus.PLAYING) {
             status = QRecStatus.STARTING_RECORD
             update()
         }

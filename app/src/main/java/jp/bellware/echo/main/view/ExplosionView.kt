@@ -16,16 +16,25 @@ import android.view.animation.LinearInterpolator
 class ExplosionView : View {
 
 
-    private var width: Float = 0.toFloat()
+    /**
+     * ビューの幅
+     */
+    private var viewWidth = 0f
 
-    private var height: Float = 0.toFloat()
+    /**
+     * ビューの高さ
+     */
+    private var viewHeight = 0f
 
-    private var centerX: Float = 0.toFloat()
+    /**
+     * 中心X
+     */
+    private var centerX = 0f
 
-    private var centerY: Float = 0.toFloat()
-
-
-
+    /**
+     * 中心Y
+     */
+    private var centerY = 0f
 
     private val paint = Paint()
 
@@ -40,20 +49,25 @@ class ExplosionView : View {
      */
     private var radius = 0f
 
+    /**
+     * アニメーション進行度を設定する
+     */
     fun setRadius(radius : Float){
         this.radius = radius
         invalidate()
     }
+
     override fun onDraw(canvas: Canvas) {
-        paint.color = -0x333334
+        //円を描画する
+        paint.color = -0x333334 //0xffcccccc
         paint.isAntiAlias = true
         paint.style = Paint.Style.FILL
         canvas.drawCircle(centerX, centerY, radius, paint)
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        this.width = w.toFloat()
-        this.height = h.toFloat()
+        this.viewWidth = w.toFloat()
+        this.viewHeight = h.toFloat()
     }
 
 
@@ -65,14 +79,15 @@ class ExplosionView : View {
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             //横画面
             centerX = (32 + 64) * dp
-            centerY = height / 2
+            centerY = viewHeight / 2
         } else {
             //縦画面
-            centerX = width / 2
-            centerY = (height - 104 * dp) / 2
+            centerX = viewWidth / 2
+            centerY = (viewHeight - 104 * dp) / 2
         }
         //最大半径
         val radius = (Math.sqrt((centerY * centerY + centerX * centerX).toDouble()) * 1.2f).toFloat()
+        //大きくしつつ透明にする
         val pvhR = PropertyValuesHolder.ofFloat("radius", 0f, radius)
         val pvhA = PropertyValuesHolder.ofFloat("alpha", 1f, 0f)
         val animator = ObjectAnimator.ofPropertyValuesHolder(this, pvhA, pvhR)

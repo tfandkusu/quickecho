@@ -12,11 +12,20 @@ import jp.bellware.echo.R
  */
 class MyCardView : View {
 
-    private var viewWidth: Int = 0
+    /**
+     * ビューの幅
+     */
+    private var viewWidth = 0
 
-    private var viewHeight: Int = 0
+    /**
+     * ビューの高さ
+     */
+    private var viewHeight = 0
 
-    private var color: Int = 0
+    /**
+     * 色
+     */
+    private var color = 0
 
     private val paint = Paint()
 

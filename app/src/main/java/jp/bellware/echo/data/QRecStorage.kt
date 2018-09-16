@@ -46,6 +46,9 @@ class QRecStorage {
     private val gd = GainDetector()
 
 
+    /**
+     * 録音をクリア
+     */
     @Synchronized
     fun clear() {
         packetSize = 0
@@ -56,6 +59,10 @@ class QRecStorage {
     }
 
 
+    /**
+     * 音声パケットを追加
+     * @param data 音声パケット
+     */
     @Synchronized
     fun add(data: FloatArray) {
         if (data.size > packetSize)
@@ -68,10 +75,15 @@ class QRecStorage {
     }
 
 
+    /**
+     * 音声パケットを取得。記録されているパケット数以上のインデックスを設定すると、nullが返却される。
+     * @param index インデックス。大きい方が新しい。
+     */
     @Synchronized
     operator fun get(index: Int): FloatArray? {
         return if (index >= packets.size) null else packets[index]
     }
+
 
     /**
      * デバッグ用にwavファイルを保存する

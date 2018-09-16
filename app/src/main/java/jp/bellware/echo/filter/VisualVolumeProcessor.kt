@@ -26,5 +26,5 @@ interface VisualVolumeProcessor {
      * サンプルを追加する
      * @param s サンプル
      */
-    fun filter(s: Float)
+    fun add(s: Float)
 }

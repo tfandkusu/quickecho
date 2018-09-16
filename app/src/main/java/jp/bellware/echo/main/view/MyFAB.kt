@@ -22,7 +22,7 @@ class MyFAB : View {
     /**
      * FABのサイズ。DP単位で56か40
      */
-    private var size: Int = 0
+    private var size = 0
 
     /**
      * ピクセル単位のサイズ
@@ -56,12 +56,12 @@ class MyFAB : View {
     /**
      * 中心X
      */
-    private var cx: Float = 0f
+    private var cx = 0f
 
     /**
      * 中心Y
      */
-    private var cy: Float = 0f
+    private var cy = 0f
 
     constructor(context: Context) : super(context) {
         init(null)
@@ -81,17 +81,23 @@ class MyFAB : View {
                 R.styleable.MyFAB,
                 0, 0)
         val dp = resources.displayMetrics.density
+        //ビューサイズ
         viewWidth = ((56 + 4) * dp).toInt()
         viewHeight = ((56 + 4) * dp).toInt()
+        //中心点
         cx = viewWidth.toFloat() / 2
         cy = 56 * dp / 2
+        //アイコン
         val resId = a.getResourceId(R.styleable.MyFAB_myFabIcon, R.drawable.ic_mic_white_24dp)
+        bitmap = BitmapFactory.decodeResource(resources, resId)
+        //アイコンサイズ
         size = a.getInteger(R.styleable.MyFAB_myFabSize, 56)
         sizeDP = size * dp
+        //色
         val colorTintResId = a.getResourceId(R.styleable.MyFAB_myFabColor, R.color.record_button)
         /* 第２引数ある版だとAndroid Studioでエラー */
         colorTint = resources.getColorStateList(colorTintResId)
-        bitmap = BitmapFactory.decodeResource(resources, resId)
+        //影
         shadowOffset = 2 * dp
         //ソフトウェアレンダリングにする
         this.setLayerType(View.LAYER_TYPE_SOFTWARE, null)

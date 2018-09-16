@@ -12,6 +12,9 @@ import jp.bellware.echo.R
 class SoundEffectHandler {
 
 
+    /**
+     * 効果音読み込みと再生の担当
+     */
     private lateinit var soundPool: SoundPool
 
     /**
@@ -22,18 +25,21 @@ class SoundEffectHandler {
     /**
      * 録音開始効果音ID
      */
-    private var startId: Int = 0
+    private var startId = 0
 
     /**
      * 録音終了効果音ID
      */
-    private var playId: Int = 0
+    private var playId = 0
 
     /**
      * 削除効果音ID
      */
-    private var deleteId: Int = 0
+    private var deleteId = 0
 
+    /**
+     * サービスのonCreateから呼ばれる
+     */
     fun onCreate(context: Context, onLoadFinished: () -> Unit) {
         //サウンドプール
         soundPool = SoundPool(1, AudioManager.STREAM_MUSIC, 0)
@@ -50,22 +56,37 @@ class SoundEffectHandler {
         deleteId = soundPool.load(context, R.raw.delete, 1)
     }
 
+    /**
+     * 録音開始の効果音再生
+     */
     fun start() {
         play(startId)
     }
 
+    /**
+     * 再生開始の効果音再生
+     */
     fun play() {
         play(playId)
     }
 
+    /**
+     * 削除の効果音再生
+     */
     fun delete() {
         play(deleteId)
     }
 
+    /**
+     * ServiceのonDestroyから呼ばれる
+     */
     fun onDestroy() {
         soundPool.release()
     }
 
+    /**
+     * 効果音を再生
+     */
     private fun play(id: Int) {
         if (isEnabled) {
             soundPool.play(id, 1f, 1f, 0, 0, 1f)

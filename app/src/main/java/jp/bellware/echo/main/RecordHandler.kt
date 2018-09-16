@@ -9,22 +9,16 @@ import android.media.MediaRecorder
 import android.os.Handler
 import jp.bellware.echo.data.QRecStorage
 import jp.bellware.echo.filter.FirstCut
-import jp.bellware.echo.filter.GainDetector
 import jp.bellware.echo.filter.PacketConverter
-import jp.bellware.echo.filter.VisualVolumeProcessor
 import jp.bellware.echo.filter.ZeroCrossRecordVisualVolumeProcessor
 import jp.bellware.util.BWU
 
 /**
  * 録音担当
+ * @param storage 記録担当
  */
 class RecordHandler(
-        /**
-         *
-         */
         private val storage: QRecStorage) {
-
-    private val handler = Handler()
 
     /**
      *
@@ -47,6 +41,9 @@ class RecordHandler(
     private val fc = FirstCut(FC)
 
 
+    /**
+     * 視覚的ボリューム担当
+     */
     private val vvp = ZeroCrossRecordVisualVolumeProcessor()
 
 
@@ -61,12 +58,21 @@ class RecordHandler(
     private var recording = false
 
 
+    /**
+     * 視覚的ボリューム
+     */
     val visualVolume: Float
         @Synchronized get() = vvp.getVolume()
 
+    /**
+     * 音声が含まれているフラグ
+     */
     val isIncludeSound: Boolean
         @Synchronized get() = vvp.isIncludeSound()
 
+    /**
+     * 録音を開始する
+     */
     fun onResume() {
         val recordMinBufferSize = AudioRecord.getMinBufferSize(SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO,
                 AudioFormat.ENCODING_PCM_16BIT)
@@ -100,6 +106,9 @@ class RecordHandler(
     }
 
 
+    /**
+     * 録音を終了する
+     */
     fun onPause() {
         val lrecord = record
         val lthread = thread
@@ -116,6 +125,9 @@ class RecordHandler(
         }
     }
 
+    /**
+     * 音声パケットの記録を開始する
+     */
     @Synchronized
     fun start() {
         recording = true
@@ -124,22 +136,31 @@ class RecordHandler(
         clear()
     }
 
+    /**
+     * 音声パケットの記録を終了する
+     */
     @Synchronized
     fun stop() {
         recording = false
     }
 
+    /**
+     * 音声パケットを記録中の時のみ記録する
+     */
     @Synchronized
     private fun addPacket(packet: ShortArray) {
         if (recording) {
             val fd = converter.convert(packet)
             storage.add(fd)
             for (s in fd) {
-                vvp.filter(fc.filter(s))
+                vvp.add(fc.filter(s))
             }
         }
     }
 
+    /**
+     * 録音音声をクリアする
+     */
     @Synchronized
     private fun clear() {
         storage.clear()

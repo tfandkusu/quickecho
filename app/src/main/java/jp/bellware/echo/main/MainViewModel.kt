@@ -82,7 +82,7 @@ class MainViewModel(private val context: Context, private val listener: Listener
     val statusImageSrc = ObservableField<Int>(R.drawable.microphone_48dp)
 
     /**
-     * 録音サービス
+     * メインサービス
      */
     private var service: MainService? = null
 
@@ -166,6 +166,7 @@ class MainViewModel(private val context: Context, private val listener: Listener
                     stopVisibility.set(View.VISIBLE)
                 }
             } else if (status == QRecStatus.PLAYING) {
+                //再生中
                 statusFrameVisibility.set(View.VISIBLE)
                 statusImageSrc.set(R.drawable.speaker_48dp)
                 recordVisibility.set(View.VISIBLE)

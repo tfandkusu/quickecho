@@ -6,11 +6,15 @@ package jp.bellware.echo.data
  * @param defVal デフォルト値
  */
 class StaticQueue<T>(
-        val capacity: Int,val defVal : T) {
+        val capacity: Int, val defVal: T) {
     private var offset: Int = 0
     private var array = mutableListOf<T>()
 
-    private var size: Int = 0
+    /**
+     * サイズ
+     */
+    var size: Int = 0
+        private set
 
     init {
         init()
@@ -25,11 +29,18 @@ class StaticQueue<T>(
         size = 0
     }
 
+
+    /**
+     * クリアする
+     */
     fun clear() {
         init()
     }
 
 
+    /**
+     * 要素を追加する
+     */
     fun add(v: T) {
         array[offset] = v
         ++offset
@@ -52,8 +63,5 @@ class StaticQueue<T>(
         return array[index]
     }
 
-    fun size(): Int {
-        return size
-    }
 
 }

@@ -46,6 +46,9 @@ class ZeroCross {
     val isSpeaking: Boolean
         get() = cross >= CROSS
 
+    /**
+     * リセットする
+     */
     fun reset() {
         top = 0
         bottom = 0
@@ -75,7 +78,7 @@ class ZeroCross {
         //ボトムについて
         bottom = top - WINDOW_SIZE
         if (bottom >= 0) {
-            val t = queue[queue.size() - 1]
+            val t = queue[queue.size - 1]
             //クロス判定
             if (bottomSign == 1 && t < 0) {
                 --cross

@@ -9,6 +9,9 @@ import jp.bellware.echo.analytics.AnalyticsHandler
 
 import kotlinx.android.synthetic.main.activity_setting.*
 
+/**
+ * 設定画面
+ */
 class SettingActivity : AppCompatActivity() {
 
     private val ah = AnalyticsHandler()

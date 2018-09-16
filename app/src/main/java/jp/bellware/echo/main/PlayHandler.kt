@@ -102,7 +102,6 @@ class PlayHandler(private val storage: QRecStorage) {
             }
 
         })
-        val lthread = thread
         thread?.start()
     }
 
@@ -140,7 +139,7 @@ class PlayHandler(private val storage: QRecStorage) {
             if(lfo != null)
                 s = lfo.filter(s)
             //視覚的ボリューム
-            vvp.filter(fc.filter(s))
+            vvp.add(fc.filter(s))
             //置き換え
             packet[i] = s
         }

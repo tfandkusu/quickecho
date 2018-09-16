@@ -23,21 +23,14 @@ import kotlinx.android.synthetic.main.main_status.*
 import android.databinding.DataBindingUtil
 import jp.bellware.echo.databinding.ActivityMainBinding
 
-
+/**
+ * メイン画面
+ */
 class MainActivity : AppCompatActivity() {
-
-    private val handler = Handler()
-
-
     /**
      * 警告担当
      */
     private val wh = WarningHandler()
-
-    /**
-     * 表示FPS
-     */
-    private var fps: Int = 0
 
     /**
      * ボリュームの設定担当
@@ -46,26 +39,10 @@ class MainActivity : AppCompatActivity() {
 
 
     /**
-     * アニメ
+     * アニメ担当
      */
     private val animator = QRecAnimator()
 
-    /**
-     * DP
-     */
-    private var dp: Float = 0f
-
-
-    /**
-     * FPS計算タスク
-     */
-    private val fpsTask = object : Runnable {
-        override fun run() {
-            BWU.log("fps = $fps")
-            fps = 0
-            handler.postDelayed(this, 1000)
-        }
-    }
 
 
     /**
@@ -126,9 +103,6 @@ class MainActivity : AppCompatActivity() {
         this.audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
         //警告担当
         wh.onCreate(this)
-        //dpを取得
-        dp = resources.displayMetrics.density
-        //
         viewModel.onCreate()
 
     }
@@ -151,7 +125,6 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         BWU.log("MainActivity#onPause")
-        handler.removeCallbacks(fpsTask)
         wh.onPause()
     }
 
@@ -212,8 +185,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-
-
         private val CODE_SETTING = 1
     }
 }

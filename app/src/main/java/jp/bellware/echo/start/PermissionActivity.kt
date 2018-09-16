@@ -58,10 +58,14 @@ class PermissionActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * 実行時パーミッションをチェックする
+     */
     private fun checkPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.RECORD_AUDIO)) {
+                //拒否した場合は説明を表示
                 showInformation()
                 // Show an expanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
@@ -102,7 +106,7 @@ class PermissionActivity : AppCompatActivity() {
     }
 
     /**
-     * アプリ詳細
+     * アプリ詳細を呼び出す
      */
     private fun callApplicationDetailActivity() {
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,

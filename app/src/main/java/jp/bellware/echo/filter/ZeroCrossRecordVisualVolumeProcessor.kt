@@ -28,7 +28,7 @@ class ZeroCrossRecordVisualVolumeProcessor : VisualVolumeProcessor {
     /**
      * 現在ボリューム
      */
-    private var volume = 0f
+    private var volume = 0.01f
 
     /**
      * サンプルインデックス
@@ -55,27 +55,25 @@ class ZeroCrossRecordVisualVolumeProcessor : VisualVolumeProcessor {
         packet.reset()
     }
 
-    override fun filter(s: Float) {
+    override fun add(s: Float) {
         var s = s
         zc.add(s)
         //絶対値にする
         s = Math.abs(s)
         packet.add(s)
         if (index % PACKET_SIZE == PACKET_SIZE - 1) {
-            /**
-             * 現在ボリューム
-             */
+            //0.01秒ごとに
+            //現在ボリューム
             val cv: Float
             if (zc.isSpeaking) {
+                //話している
                 include = true
                 packet.calculate()
-                //入力中
-                if (base == 0f) {
-                    base = packet.max
-                    if (base == 0f)
-                        base = 0.01f
-                }
+                //前の0.01秒のボリュームを基準にする
                 cv = packet.max / base
+                base = packet.max
+                if(base == 0f)
+                    base = 0.1f
             } else {
                 //無音
                 cv = 0f

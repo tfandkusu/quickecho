@@ -27,6 +27,9 @@ class VisualVolumeHandler {
     private var playing = false
 
 
+    /**
+     * コールバック
+     */
     private lateinit var cb: Callback
 
 

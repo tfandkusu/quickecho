@@ -5,13 +5,16 @@ package jp.bellware.echo.filter
  */
 class PlayVisualVolumeProcessor : VisualVolumeProcessor {
 
+    /**
+     * 視覚的ボリューム
+     */
     private var vv = 0f
 
     override fun reset() {
         vv = 0f
     }
 
-    override fun filter(s: Float) {
+    override fun add(s: Float) {
         var s = s
         if (s < 0)
             s *= -1f

@@ -8,6 +8,9 @@ import jp.bellware.echo.data.StaticQueue
  */
 class BasisStats(window: Int) {
 
+    /**
+     * 音声キュー
+     */
     private val queue: StaticQueue<Float> = StaticQueue(window, 0f)
 
     /**
@@ -42,7 +45,7 @@ class BasisStats(window: Int) {
     fun calculate() {
         max = java.lang.Float.MIN_VALUE
         sum = 0f
-        for (i in 0 until queue.size()) {
+        for (i in 0 until queue.size) {
             val v = queue[i]
             sum += v
             if (v > max)
