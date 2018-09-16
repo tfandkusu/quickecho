@@ -24,6 +24,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1">
+            <!-- Toolbarの影 -->
+            <ImageView
+                android:layout_gravity="top"
+                android:layout_width="match_parent"
+                android:layout_height="6dp"
+                android:src="@drawable/shadow" />
             <!-- コンテンツ -->
             <!-- 爆発エフェクトレイヤー -->
             <jp.bellware.echo.main.view.ExplosionView
