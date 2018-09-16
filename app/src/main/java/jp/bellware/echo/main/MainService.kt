@@ -85,7 +85,7 @@ class MainService : Service() {
     /**
      * コールバック
      */
-    private var cb: MainCallback? = null
+    private var cb: MainServiceCallback? = null
 
     inner class MainServiceBinder : Binder() {
         val service: MainService
@@ -131,7 +131,7 @@ class MainService : Service() {
      *
      * @param cb
      */
-    fun setCallback(cb: MainCallback?) {
+    fun setCallback(cb: MainServiceCallback?) {
         handler.removeCallbacks(endTask)
         if (cb == null) {
             handler.postDelayed(endTask, END_TIME.toLong())
@@ -186,9 +186,9 @@ class MainService : Service() {
     }
 
     /**
-     * 録音ボタンがクリックされた時のイベント
+     * 録音する
      */
-    fun onRecordClicked() {
+    fun onRecord() {
         if (status == QRecStatus.READY_FIRST || status == QRecStatus.READY) {
             status = QRecStatus.STARTING_RECORD
             update()
@@ -202,9 +202,9 @@ class MainService : Service() {
     }
 
     /**
-     * 再生ボタンがクリックされた時のイベント
+     * 再生要求が発生
      */
-    fun onPlayClicked() {
+    fun onPlay() {
         if (status == QRecStatus.RECORDING) {
             if (record.isIncludeSound) {
                 status = QRecStatus.STOPPING_RECORD
@@ -218,9 +218,9 @@ class MainService : Service() {
     }
 
     /**
-     * 再再生ボタンがクリックされた時のイベント
+     * 再再生要求が発生
      */
-    fun onReplayClicked() {
+    fun onReplay() {
         if (status == QRecStatus.PLAYING || status == QRecStatus.STOP) {
             status = QRecStatus.PLAYING
             update()
@@ -228,9 +228,9 @@ class MainService : Service() {
     }
 
     /**
-     * 停止ボタンがクリックされた時のイベント
+     * 停止要求が発生
      */
-    fun onStopClicked() {
+    fun onStop() {
         if (status == QRecStatus.PLAYING) {
             status = QRecStatus.STOPPING_PLAYING
             update()
@@ -239,9 +239,9 @@ class MainService : Service() {
     }
 
     /**
-     * 削除ボタンがクリックされた時のイベント
+     * 削除要求が発生
      */
-    fun onDeleteClicked() {
+    fun onDelete() {
         if (status == QRecStatus.RECORDING) {
             seh.delete()
             status = QRecStatus.DELETE_RECORDING

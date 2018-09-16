@@ -3,10 +3,10 @@ package jp.bellware.echo.main
 /**
  * MainServiceからのコールバック
  */
-interface MainCallback {
+interface MainServiceCallback {
     /**
      * 状態を更新する
-     * @param animation アニメーションフラグ
+     * @param animation アニメーションフラグ。バックグランドからの復帰による状態再現の場合はfalseとなる。
      * @param status 状態
      */
     fun onUpdateStatus(animation: Boolean, status: QRecStatus)

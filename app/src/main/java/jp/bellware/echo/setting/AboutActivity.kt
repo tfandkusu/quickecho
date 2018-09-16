@@ -1,12 +1,14 @@
 package jp.bellware.echo.setting
 
 import android.content.pm.PackageManager
+import android.databinding.DataBindingUtil
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 
 import jp.bellware.echo.R
 import jp.bellware.echo.analytics.AnalyticsHandler
+import jp.bellware.echo.databinding.ActivityAboutBinding
 
 import kotlinx.android.synthetic.main.activity_about.*
 
@@ -17,26 +19,24 @@ class AboutActivity : AppCompatActivity() {
 
     private val ah = AnalyticsHandler()
 
+    /**
+     * ビューモデル
+     */
+    private val viewModel = AboutViewModel(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_about)
+        //データバインディング設定
+        val binding = DataBindingUtil.setContentView<ActivityAboutBinding>(this, R.layout.activity_about)
+        binding.viewModel = viewModel
         setSupportActionBar(toolbar)
         val lsab = supportActionBar
         lsab?.setHomeButtonEnabled(true)
         lsab?.setDisplayHomeAsUpEnabled(true)
-        //バージョンを挿入
-        var versionText = ""
-        try {
-            val pm = packageManager
-            val packageInfo = pm.getPackageInfo(packageName, 0)
-            versionText = packageInfo.versionName
-        } catch (e: PackageManager.NameNotFoundException) {
-            //おこらない
-        }
-
-        version.text = getString(R.string.version) + " " + versionText
         //Analytics
         ah.onCreate(this)
+        //
+        viewModel.onCreate()
     }
 
     override fun onResume() {
