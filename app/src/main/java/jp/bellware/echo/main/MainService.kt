@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Binder
 import android.os.Handler
 import android.os.IBinder
+import androidx.test.espresso.IdlingRegistry
+import androidx.test.espresso.idling.CountingIdlingResource
 import jp.bellware.echo.R
 import jp.bellware.echo.analytics.AnalyticsHandler
 import jp.bellware.echo.data.QRecStorage
@@ -55,6 +57,17 @@ class MainService : Service() {
      * 分析担当
      */
     private val ah = AnalyticsHandler()
+
+    /**
+     * Espressoの同期待ちを登録する
+     */
+    private val registry = IdlingRegistry.getInstance()
+
+    /**
+     * Espressoの同期待ちカウンター
+     */
+    private val cir = CountingIdlingResource("MainService")
+
 
 
     /**
@@ -123,6 +136,9 @@ class MainService : Service() {
         vvh.onResume()
         //分析
         ah.onCreate(this)
+        //Espressoの同期待ち登録
+        registry.register(cir)
+        //初回更新
         update()
     }
 
@@ -154,6 +170,8 @@ class MainService : Service() {
         vvh.onPause()
         seh.onDestroy()
         handler.removeCallbacks(delayTask)
+        //Espressoの同期待ち解除
+        registry.unregister(cir)
     }
 
     /**
@@ -280,6 +298,7 @@ class MainService : Service() {
             //視覚的ボリューム
             vvh.stop()
         } else if (status == QRecStatus.STARTING_RECORD) {
+            cir.increment()
             //音を鳴らす
             seh.start()
             //再生終了
@@ -290,6 +309,7 @@ class MainService : Service() {
             delayTask = Runnable {
                 status = QRecStatus.RECORDING
                 update()
+                cir.decrement()
             }
             handler.postDelayed(delayTask, 500)
             //イベントを送る

@@ -13,7 +13,7 @@ android {
         versionCode 8
         versionName "1.2.1"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
 
@@ -36,8 +36,6 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
-    androidTestImplementation 'com.jayway.android.robotium:robotium-solo:5.6.3'
 
 
     //Android
@@ -54,6 +52,11 @@ dependencies {
     implementation project(':material-preference')
     //kotlinでDataBindingを使えるようにする
     kapt "com.android.databinding:compiler:$android_plugin_version"
+
+    //EspressoでUIテスト
+    androidTestImplementation 'androidx.test:runner:1.1.0'
+    androidTestImplementation 'androidx.test:rules:1.1.0'
+    implementation 'androidx.test.espresso:espresso-core:3.1.0'
 }
 
 kapt {
