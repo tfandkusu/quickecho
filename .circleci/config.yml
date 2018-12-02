@@ -6,4 +6,15 @@ jobs:
       - image: circleci/android:api-27-alpha
     steps:
       - checkout
-      - run: echo "Hello World!"
+      - restore_cache: #キャッシュをリストアする
+          key: jars-{{checksum "build.gradle"}}-{{checksum  "app/build.gradle"}}
+      - run: # ライブラリの依存関係を解決
+          name: Download Dependencies
+          command: ./gradlew androidDependencies
+      - save_cache: # キャッシュを保存する
+          paths:
+            - ~/.gradle
+          key: jars-{{checksum "build.gradle"}}-{{checksum  "app/build.gradle"}}
+      - run: # コンパイルを行う
+          name: Run Compile
+          command: ./gradlew assembleDebug
