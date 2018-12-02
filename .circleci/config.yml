@@ -1,7 +1,6 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/code
     docker:
       - image: circleci/android:api-27-alpha
     steps:
@@ -22,10 +21,17 @@ jobs:
           name: Run Inspection
           command: ./gradlew lint
   acceptance:
-
+    docker:
+      - image: circleci/android:api-27-alpha
+    steps:
+      - checkout
+      - run: # Hello World的な
+        name: Run Inspection
+        command: echo "acceptance"
 workflows:
   version: 2
   deployment_pipeline:
     jobs:
+      - build
       - acceptance:
           type: approval
