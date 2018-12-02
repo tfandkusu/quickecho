@@ -21,3 +21,14 @@ jobs:
       - run: # lintを行う
           name: Run Inspection
           command: ./gradlew lint
+      - run:
+          command: |
+            echo $GCLOUD_SERVICE_KEY | \
+            base64 --decode > ${HOME}/gcloud-service-key.json
+  acceptance:
+    docker:
+      - image: circleci/android:api-27-alpha
+    steps:
+      - checkout
+      - run: # 受け入れテスト
+          command: echo "Acceptance"
