@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
     /**
      * アニメ担当
      */
-    private val animator = QReAnimator()
+    private val animator = QRecAnimator()
 
 
 
