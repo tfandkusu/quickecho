@@ -5,7 +5,6 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 27
-
     defaultConfig {
         applicationId "jp.bellware.echo"
         minSdkVersion 15
@@ -16,9 +15,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
-
     //ソースコード公開用なので、署名設定は削除。
-
     lintOptions {
         checkReleaseBuilds false
         // Or, if you prefer, you can continue to check for errors in release builds,
@@ -30,6 +27,10 @@ android {
         enabled = true
     }
 
+}
+
+ext{
+    dagger_version = '2.14.1'
 }
 
 dependencies {
@@ -57,6 +58,13 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.0'
     androidTestImplementation 'androidx.test:rules:1.1.0'
     implementation 'androidx.test.espresso:espresso-core:3.1.0'
+
+    //Dagger
+    implementation "com.google.dagger:dagger:$dagger_version"
+    implementation "com.google.dagger:dagger-android:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
 }
 
 kapt {

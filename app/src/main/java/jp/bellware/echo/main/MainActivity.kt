@@ -21,7 +21,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_control.*
 import kotlinx.android.synthetic.main.main_status.*
 import android.databinding.DataBindingUtil
+import dagger.android.AndroidInjection
 import jp.bellware.echo.databinding.ActivityMainBinding
+import jp.bellware.echo.main.di.Injected
+import javax.inject.Inject
 
 /**
  * メイン画面
@@ -42,6 +45,9 @@ class MainActivity : AppCompatActivity() {
      * アニメ担当
      */
     private val animator = QRecAnimator()
+
+    @Inject
+    lateinit var injected : Injected
 
 
 
@@ -90,6 +96,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AndroidInjection.inject(this)
+        injected.sayHello()
         BWU.log("MainActivity#onCreate")
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         binding.viewModel = viewModel
