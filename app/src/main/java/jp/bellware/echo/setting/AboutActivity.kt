@@ -1,8 +1,8 @@
 package jp.bellware.echo.setting
 
 import android.content.pm.PackageManager
-import android.databinding.DataBindingUtil
-import android.support.v7.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 

@@ -1,6 +1,6 @@
 package jp.bellware.echo.main
 
-import android.databinding.BindingAdapter
+import androidx.databinding.BindingAdapter
 import android.widget.ImageView
 
 

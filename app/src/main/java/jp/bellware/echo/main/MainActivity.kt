@@ -8,7 +8,7 @@ import android.media.AudioManager
 import android.os.Handler
 import android.os.Bundle
 import android.os.IBinder
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -20,7 +20,7 @@ import jp.bellware.util.BWU
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_control.*
 import kotlinx.android.synthetic.main.main_status.*
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import jp.bellware.echo.databinding.ActivityMainBinding
 
 /**
