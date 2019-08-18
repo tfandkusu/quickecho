@@ -1,12 +1,9 @@
 package jp.bellware.echo.main
 
-import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
-import android.content.ServiceConnection
 import androidx.databinding.ObservableField
-import android.os.IBinder
 import android.view.View
+import androidx.lifecycle.ViewModel
 import jp.bellware.echo.R
 import jp.bellware.util.BWU
 
@@ -15,7 +12,7 @@ import jp.bellware.util.BWU
  * @param context
  * @param listener リスナ
  */
-class MainViewModel(private val context: Context, private val listener: Listener) {
+class MainViewModel(private val context: Context) : ViewModel() {
 
     interface Listener {
 
@@ -45,6 +42,8 @@ class MainViewModel(private val context: Context, private val listener: Listener
          */
         fun onShowWarningMessage(resId: Int)
     }
+
+    private lateinit var listener: Listener
 
     /**
      * ステータス表示
@@ -84,9 +83,9 @@ class MainViewModel(private val context: Context, private val listener: Listener
     /**
      * メインサービス
      */
-    private var service: MainService? = null
+    private val helper = MainHelper(context)
 
-    private val mainCB = object : MainServiceCallback {
+    private val mainCB = object : MainHelperCallback {
         override fun onUpdateStatus(animation: Boolean, status: QRecStatus) {
             BWU.log("MainActivity#onUpdateStatus $status")
             //ステータスビュー
@@ -187,23 +186,22 @@ class MainViewModel(private val context: Context, private val listener: Listener
 
     }
 
-
-    private val conn = object : ServiceConnection {
-        override fun onServiceConnected(name: ComponentName, binder: IBinder) {
-            service = (binder as MainService.MainServiceBinder).service
-            service?.setCallback(mainCB)
-            service?.onSettingUpdated()
-        }
-
-        override fun onServiceDisconnected(name: ComponentName) {
-
-        }
+    override fun onCleared() {
+        helper.onDestroy()
     }
+
+    private var createdFlag = false
 
     /**
      * ActivityのonCreateから呼ばれる
      */
-    fun onCreate() {
+    fun onCreate(listener: Listener) {
+        if(!createdFlag) {
+            helper.onCreate()
+            helper.setCallback(mainCB)
+            createdFlag = true
+        }
+        this.listener = listener
 
     }
 
@@ -211,19 +209,12 @@ class MainViewModel(private val context: Context, private val listener: Listener
      * ActivityのonStartから呼ばれる
      */
     fun onStart() {
-        //録音サービスを開始
-        val intent = Intent(context, MainService::class.java)
-        context.startService(intent)
-        context.bindService(intent, conn, 0)
     }
 
     /**
      * ActivityのonStopから呼ばれる
      */
     fun onStop() {
-        service?.setCallback(null)
-        service = null
-        context.unbindService(conn)
     }
 
     /**
@@ -237,50 +228,49 @@ class MainViewModel(private val context: Context, private val listener: Listener
      * 戻るボタンが押された
      */
     fun onBackPressed(): Boolean {
-        var result = service?.onBackPressed()
-        return result == true
+        return helper.onBackPressed()
     }
 
     /**
      * 設定が更新された時に呼ばれる
      */
     fun onSettingUpdate() {
-        service?.onSettingUpdated()
+        helper.onSettingUpdated()
     }
 
     /**
      * 録音ボタンが押された
      */
-    fun onRecordClicked(view : View) {
-        service?.onRecord()
+    fun onRecordClicked(view: View) {
+        helper.onRecord()
     }
 
     /**
      * 再生ボタンが押された
      */
-    fun onPlayClicked(view : View) {
-        service?.onPlay()
+    fun onPlayClicked(view: View) {
+        helper.onPlay()
     }
 
     /**
      * 再再生ボタンが押された
      */
-    fun onReplayClicked(view : View) {
-        service?.onReplay()
+    fun onReplayClicked(view: View) {
+        helper.onReplay()
     }
 
     /**
      * 停止ボタンが押された
      */
-    fun onStopClicked(view : View) {
-        service?.onStop()
+    fun onStopClicked(view: View) {
+        helper.onStop()
     }
 
     /**
      * 削除ボタンが押された
      */
-    fun onDeleteClicked(view : View) {
-        service?.onDelete()
+    fun onDeleteClicked(view: View) {
+        helper.onDelete()
     }
 
 }

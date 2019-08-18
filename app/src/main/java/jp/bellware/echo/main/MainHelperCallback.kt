@@ -1,9 +1,9 @@
 package jp.bellware.echo.main
 
 /**
- * MainServiceからのコールバック
+ * MainHelperからのコールバック
  */
-interface MainServiceCallback {
+interface MainHelperCallback {
     /**
      * 状態を更新する
      * @param animation アニメーションフラグ。バックグランドからの復帰による状態再現の場合はfalseとなる。

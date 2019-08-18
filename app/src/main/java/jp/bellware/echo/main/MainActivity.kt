@@ -48,49 +48,50 @@ class MainActivity : AppCompatActivity() {
     /**
      * メイン画面のビューモデル
      */
-    private val viewModel = MainViewModel(this, object : MainViewModel.Listener {
-        override fun onDeleteRecord() {
-            animator.startDeleteAnimation(statusFrame)
-            animator.startDeleteAnimation(delete)
-            animator.startDeleteAnimation(replay)
-            animator.startDeleteAnimation(stop)
-        }
-
-        override fun onStartRecord() {
-            //爆発エフェクト
-            explosion.startRecordAnimation()
-            //ステータスはフェードイン
-            animator.fadeIn(statusFrame)
-            //削除ボタンはフェードイン
-            if (delete.visibility == View.INVISIBLE) {
-                animator.fadeIn(delete)
-            }
-        }
-
-        override fun onStopRecord() {
-            //ステータスを表示
-            animator.fadeIn(statusFrame)
-            //サブコントロール表示
-            animator.fadeIn(replay)
-            animator.fadeIn(stop)
-        }
-
-        override fun onUpdateVolume(volume: Float) {
-            //視覚的ボリュームを更新する
-            visualVolume.setVolume(volume)
-        }
-
-        override fun onShowWarningMessage(resId: Int) {
-            //警告を表示する
-            wh.show(resId)
-        }
-
-    });
+    private val viewModel = MainViewModel(this)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         BWU.log("MainActivity#onCreate")
+        viewModel.onCreate(object : MainViewModel.Listener {
+            override fun onDeleteRecord() {
+                animator.startDeleteAnimation(statusFrame)
+                animator.startDeleteAnimation(delete)
+                animator.startDeleteAnimation(replay)
+                animator.startDeleteAnimation(stop)
+            }
+
+            override fun onStartRecord() {
+                //爆発エフェクト
+                explosion.startRecordAnimation()
+                //ステータスはフェードイン
+                animator.fadeIn(statusFrame)
+                //削除ボタンはフェードイン
+                if (delete.visibility == View.INVISIBLE) {
+                    animator.fadeIn(delete)
+                }
+            }
+
+            override fun onStopRecord() {
+                //ステータスを表示
+                animator.fadeIn(statusFrame)
+                //サブコントロール表示
+                animator.fadeIn(replay)
+                animator.fadeIn(stop)
+            }
+
+            override fun onUpdateVolume(volume: Float) {
+                //視覚的ボリュームを更新する
+                visualVolume.setVolume(volume)
+            }
+
+            override fun onShowWarningMessage(resId: Int) {
+                //警告を表示する
+                wh.show(resId)
+            }
+
+        })
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         binding.viewModel = viewModel
         //ツールバー設定
@@ -103,8 +104,6 @@ class MainActivity : AppCompatActivity() {
         this.audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
         //警告担当
         wh.onCreate(this)
-        viewModel.onCreate()
-
     }
 
     override fun onStart() {

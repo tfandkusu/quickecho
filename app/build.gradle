@@ -36,12 +36,18 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-
-    //Android
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
+    // Architecture Components
+    implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
+    // KOIN
+    def koin_version = '2.0.1'
+    implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+
+
     //ソースコード公開用にFirebase使用部分は削除
     //firebase
     //compile 'com.google.firebase:firebase-core:9.4.0'

@@ -1,10 +1,7 @@
 package jp.bellware.echo.main
 
-import android.app.Service
-import android.content.Intent
-import android.os.Binder
+import android.content.Context
 import android.os.Handler
-import android.os.IBinder
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.idling.CountingIdlingResource
 import jp.bellware.echo.R
@@ -14,19 +11,11 @@ import jp.bellware.echo.setting.SettingFragment
 import jp.bellware.util.BWU
 
 /**
- * メインサービス。
- * 画面回転や画面の大きさが変わっても録音、再生を継続できるようにサービス化している。
+ * メインサービス。ViewModelに移行したので、いったんただのクラスにする。
  */
-class MainService : Service() {
+class MainHelper(private val context: Context) {
 
     private val handler = Handler()
-
-    private val endTask = Runnable {
-        BWU.log("MainService#endTask")
-        stopSelf()
-    }
-
-    private val binder = MainServiceBinder()
 
     /**
      * 効果音担当
@@ -66,9 +55,7 @@ class MainService : Service() {
     /**
      * Espressoの同期待ちカウンター
      */
-    private val cir = CountingIdlingResource("MainService")
-
-
+    private val cir = CountingIdlingResource("MainHelper")
 
     /**
      * 録音可能時間
@@ -98,27 +85,14 @@ class MainService : Service() {
     /**
      * コールバック
      */
-    private var cb: MainServiceCallback? = null
+    private var cb: MainHelperCallback? = null
 
-    inner class MainServiceBinder : Binder() {
-        val service: MainService
-            get() = this@MainService
-    }
-
-    override fun onBind(intent: Intent): IBinder? {
-        return binder
-    }
-
-
-    override fun onCreate() {
-        super.onCreate()
-        BWU.log("MainService#onCreate")
-        //終了タスクを予約
-        handler.postDelayed(endTask, END_TIME.toLong())
+    fun onCreate() {
+        BWU.log("MainHelper#onCreate")
         //設定を反映
         onSettingUpdated()
         //視覚的ボリューム
-        vvh.onCreate(this, object : VisualVolumeHandler.Callback {
+        vvh.onCreate(context, object : VisualVolumeHandler.Callback {
             override fun getRecordVisualVolume(): Float {
                 return record.visualVolume
             }
@@ -135,7 +109,7 @@ class MainService : Service() {
         play.onResume()
         vvh.onResume()
         //分析
-        ah.onCreate(this)
+        ah.onCreate(context)
         //Espressoの同期待ち登録
         registry.register(cir)
         //初回更新
@@ -147,11 +121,8 @@ class MainService : Service() {
      *
      * @param cb
      */
-    fun setCallback(cb: MainServiceCallback?) {
-        handler.removeCallbacks(endTask)
-        if (cb == null) {
-            handler.postDelayed(endTask, END_TIME.toLong())
-        } else {
+    fun setCallback(cb: MainHelperCallback?) {
+        if (cb != null) {
             cb.onUpdateStatus(false, status)
             cb.onUpdateVolume(0f)
         }
@@ -160,9 +131,8 @@ class MainService : Service() {
     }
 
 
-    override fun onDestroy() {
-        super.onDestroy()
-        BWU.log("MainService#onDestroy")
+    fun onDestroy() {
+        BWU.log("MainHelper#onDestroy")
         handler.removeCallbacks(timeLimitTask)
         record.onPause()
         play.onPause()
@@ -200,7 +170,7 @@ class MainService : Service() {
 
     fun onSettingUpdated() {
         //設定が更新された時に呼ばれる
-        seh.isEnabled = SettingFragment.isSoundEffect(this)
+        seh.isEnabled = SettingFragment.isSoundEffect(context)
     }
 
     /**
@@ -272,7 +242,7 @@ class MainService : Service() {
     private fun update() {
         if (status == QRecStatus.INIT) {
             //効果音読み込み
-            seh.onCreate(this) {
+            seh.onCreate(context) {
                 //初期化完了
                 status = QRecStatus.READY_FIRST
                 update()
