@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import jp.bellware.echo.R
-import jp.bellware.echo.main.MainActivity
+import jp.bellware.echo.main2.Main2Activity
 import kotlinx.android.synthetic.main.activity_permission.*
 
 /**
@@ -86,7 +86,7 @@ class PermissionActivity : AppCompatActivity() {
      * メイン画面を呼び出す
      */
     private fun callMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, Main2Activity::class.java)
         startActivityForResult(intent, CODE_MAIN)
     }
 
