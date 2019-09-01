@@ -15,7 +15,8 @@
         android:src="@drawable/ic_mic_white_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <!-- 再生ボタン -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/play"
@@ -27,7 +28,8 @@
         app:backgroundTint="@color/play_button2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- 削除ボタン -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
