@@ -3,43 +3,48 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <!-- 録音ボタン -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/record"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="48dp"
-        android:src="@drawable/ic_mic_white_24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-    <!-- 再生ボタン -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/play"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="48dp"
-        android:src="@drawable/ic_play_arrow_white_24dp"
-        app:backgroundTint="@color/play_button2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
 
     <!-- 削除ボタン -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:layout_marginBottom="56dp"
+        android:layout_marginEnd="24dp"
         android:src="@drawable/ic_delete_white_24dp"
         app:fabSize="mini"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/play" />
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- 録音ボタン -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="48dp"
+        android:src="@drawable/ic_mic_white_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/delete"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- 再生ボタン -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="48dp"
+        android:src="@drawable/ic_play_arrow_white_24dp"
+        app:backgroundTint="@color/play_button2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/delete"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <!-- 再再生ボタン -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
