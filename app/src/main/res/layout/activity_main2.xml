@@ -56,6 +56,8 @@
         android:layout_marginBottom="120dp"
         android:elevation="4dp"
         app:cardBackgroundColor="@color/warning"
+        android:visibility="invisible"
+        tools:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
