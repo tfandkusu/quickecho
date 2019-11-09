@@ -1,10 +1,14 @@
 package jp.bellware.echo.main2
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import jp.bellware.echo.R
 import jp.bellware.echo.actioncreator.MainActionCreator
+import jp.bellware.echo.setting.SettingActivity
 import jp.bellware.echo.store.MainStore
 import kotlinx.android.synthetic.main.activity_main2.*
 import kotlinx.android.synthetic.main.main_control2.*
@@ -13,6 +17,10 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class Main2Activity : AppCompatActivity() {
+
+    companion object {
+        private const val CODE_SETTING = 1
+    }
 
     private val store: MainStore by viewModel()
 
@@ -32,6 +40,7 @@ class Main2Activity : AppCompatActivity() {
         store.recordClickable.observe(this, Observer {
             if (it == true) {
                 record.setOnClickListener {
+                    soundEffect.start()
                     actionCreator.onRecordClick()
                 }
             }
@@ -78,5 +87,30 @@ class Main2Activity : AppCompatActivity() {
                     delete.hide()
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+        if (id == R.id.setting) {
+            callSettingActivity()
+            return true
+        }
+        return false
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == CODE_SETTING) {
+            soundEffect.onSettingUpdate()
+        }
+    }
+
+    private fun callSettingActivity() {
+        val intent = Intent(this, SettingActivity::class.java)
+        startActivityForResult(intent, CODE_SETTING)
     }
 }

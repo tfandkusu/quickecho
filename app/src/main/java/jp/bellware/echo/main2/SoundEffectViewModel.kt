@@ -6,11 +6,12 @@ import android.media.SoundPool
 import androidx.lifecycle.ViewModel
 
 import jp.bellware.echo.R
+import jp.bellware.echo.repository.SettingRepository
 
 /**
  * 効果音担当ViewModel
  */
-class SoundEffectViewModel : ViewModel() {
+class SoundEffectViewModel(val repository: SettingRepository) : ViewModel() {
 
 
     /**
@@ -21,7 +22,7 @@ class SoundEffectViewModel : ViewModel() {
     /**
      * 効果音有効フラグ
      */
-    var isEnabled = true
+    private var isEnabled = true
 
     /**
      * 録音開始効果音ID
@@ -55,6 +56,8 @@ class SoundEffectViewModel : ViewModel() {
         startId = soundPool.load(context, R.raw.start, 1)
         playId = soundPool.load(context, R.raw.play, 1)
         deleteId = soundPool.load(context, R.raw.delete, 1)
+
+        onSettingUpdate()
     }
 
     /**
@@ -77,7 +80,7 @@ class SoundEffectViewModel : ViewModel() {
     fun delete() {
         play(deleteId)
     }
-    
+
     override fun onCleared() {
         soundPool.release()
     }
@@ -89,5 +92,11 @@ class SoundEffectViewModel : ViewModel() {
         if (isEnabled) {
             soundPool.play(id, 1f, 1f, 0, 0, 1f)
         }
+    }
+
+    fun onSettingUpdate() {
+        // 設定読み込み
+        isEnabled = repository.isSoundEffect()
+
     }
 }

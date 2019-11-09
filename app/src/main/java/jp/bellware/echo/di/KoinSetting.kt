@@ -1,9 +1,15 @@
 package jp.bellware.echo.di
 
+import android.app.Application
+import android.preference.PreferenceManager
 import jp.bellware.echo.actioncreator.MainActionCreator
+import jp.bellware.echo.datastore.local.SettingLocalDatastore
+import jp.bellware.echo.datastore.local.SettingLocalDatastoreImpl
 import jp.bellware.echo.main.MainViewModel
 import jp.bellware.echo.main.SoundEffectHandler
 import jp.bellware.echo.main2.SoundEffectViewModel
+import jp.bellware.echo.repository.SettingRepository
+import jp.bellware.echo.repository.SettingRepositoryImpl
 import jp.bellware.echo.store.MainStore
 import jp.bellware.util.Dispatcher
 import jp.bellware.util.DispatcherImpl
@@ -16,17 +22,20 @@ import org.koin.dsl.module
  * DIのKOINの設定
  */
 object KoinSetting {
-    fun start() {
+    fun start(application: Application) {
         // DIの設定
         val myModule = module {
             single { DispatcherImpl() as Dispatcher }
+            factory { SettingLocalDatastoreImpl(PreferenceManager.getDefaultSharedPreferences(androidContext())) as SettingLocalDatastore }
+            factory { SettingRepositoryImpl(get()) as SettingRepository }
             viewModel { MainViewModel(androidContext()) }
             viewModel { MainStore() }
-            viewModel { SoundEffectViewModel() }
+            viewModel { SoundEffectViewModel(get()) }
             factory { SoundEffectHandler() }
             factory { MainActionCreator(get()) }
         }
         startKoin {
+            androidContext(application.applicationContext)
             modules(myModule)
         }
     }
