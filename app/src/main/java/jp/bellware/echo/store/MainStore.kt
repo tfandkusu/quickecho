@@ -1,7 +1,7 @@
 package jp.bellware.echo.store
 
 import androidx.lifecycle.MutableLiveData
-import jp.bellware.echo.action.DummyAction
+import jp.bellware.echo.action.MainSoundLoadedAction
 
 class MainStore : Store() {
 
@@ -9,6 +9,11 @@ class MainStore : Store() {
      * 録音ボタン表示
      */
     val record = MutableLiveData<Boolean>()
+
+    /**
+     * 録音ボタンが押せる
+     */
+    val recordClickable = MutableLiveData<Boolean>()
 
     /**
      * 録音ボタン表示
@@ -33,14 +38,15 @@ class MainStore : Store() {
     init {
         // 初期状態設定
         record.value = true
+        recordClickable.value = false
         play.value = false
         stop.value = false
         replay.value = false
         delete.value = false
     }
 
-    fun onEvent(action: DummyAction) {
-
+    fun onEvent(action: MainSoundLoadedAction) {
+        recordClickable.value = true
     }
 
 }

@@ -88,7 +88,7 @@ class MainHelper(private val context: Context) {
     private var cb: MainHelperCallback? = null
 
     fun onCreate() {
-        BWU.log("MainHelper#onCreate")
+        BWU.log("MainHelper#onSoundLoaded")
         //設定を反映
         onSettingUpdated()
         //視覚的ボリューム

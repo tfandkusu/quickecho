@@ -1,27 +1,21 @@
 package jp.bellware.echo.main
 
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.ServiceConnection
 import android.media.AudioManager
-import android.os.Handler
 import android.os.Bundle
-import android.os.IBinder
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import jp.bellware.echo.R
-
+import jp.bellware.echo.databinding.ActivityMainBinding
 import jp.bellware.echo.setting.SettingActivity
 import jp.bellware.util.BWU
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_control.*
 import kotlinx.android.synthetic.main.main_status.*
-import androidx.databinding.DataBindingUtil
-import jp.bellware.echo.databinding.ActivityMainBinding
 
 /**
  * メイン画面
@@ -44,7 +38,6 @@ class MainActivity : AppCompatActivity() {
     private val animator = QRecAnimator()
 
 
-
     /**
      * メイン画面のビューモデル
      */
@@ -53,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        BWU.log("MainActivity#onCreate")
+        BWU.log("MainActivity#onSoundLoaded")
         viewModel.onCreate(object : MainViewModel.Listener {
             override fun onDeleteRecord() {
                 animator.startDeleteAnimation(statusFrame)
