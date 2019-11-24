@@ -11,7 +11,7 @@ import jp.bellware.echo.repository.SettingRepository
 /**
  * 効果音担当ViewModel
  */
-class SoundEffectViewModel(val repository: SettingRepository) : ViewModel() {
+class SoundEffectViewHelper(val repository: SettingRepository) : ViewModel() {
 
 
     /**

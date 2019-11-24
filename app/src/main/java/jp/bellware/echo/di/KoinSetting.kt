@@ -5,9 +5,14 @@ import android.preference.PreferenceManager
 import jp.bellware.echo.actioncreator.MainActionCreator
 import jp.bellware.echo.datastore.local.SettingLocalDatastore
 import jp.bellware.echo.datastore.local.SettingLocalDatastoreImpl
+import jp.bellware.echo.datastore.local.SoundLocalDatastore
+import jp.bellware.echo.datastore.local.SoundLocalDatastoreImpl
 import jp.bellware.echo.main.MainViewModel
 import jp.bellware.echo.main.SoundEffectHandler
-import jp.bellware.echo.main2.SoundEffectViewModel
+import jp.bellware.echo.main2.PlayViewHelper
+import jp.bellware.echo.main2.RecordViewHelper
+import jp.bellware.echo.main2.SoundEffectViewHelper
+import jp.bellware.echo.main2.VisualVolumeViewHelper
 import jp.bellware.echo.repository.SettingRepository
 import jp.bellware.echo.repository.SettingRepositoryImpl
 import jp.bellware.echo.store.MainStore
@@ -26,11 +31,15 @@ object KoinSetting {
         // DIの設定
         val myModule = module {
             single { DispatcherImpl() as Dispatcher }
+            single { SoundLocalDatastoreImpl() as SoundLocalDatastore }
             factory { SettingLocalDatastoreImpl(PreferenceManager.getDefaultSharedPreferences(androidContext())) as SettingLocalDatastore }
             factory { SettingRepositoryImpl(get()) as SettingRepository }
             viewModel { MainViewModel(androidContext()) }
             viewModel { MainStore() }
-            viewModel { SoundEffectViewModel(get()) }
+            viewModel { SoundEffectViewHelper(get()) }
+            viewModel { RecordViewHelper(get()) }
+            viewModel { PlayViewHelper(get()) }
+            viewModel { VisualVolumeViewHelper() }
             factory { SoundEffectHandler() }
             factory { MainActionCreator(get()) }
         }

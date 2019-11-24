@@ -7,3 +7,20 @@ package jp.bellware.echo.action
  * 効果音読み込み完了
  */
 object MainSoundLoadedAction : Action()
+
+
+/**
+ * 録音開始要求アクション
+ */
+object MainStartRecordRequestAction : Action()
+
+/**
+ * 録音開始アクション
+ */
+object MainRecordAction : Action()
+
+/**
+ * 録音停止要求アクション
+ */
+object MainStopRecordRequestAction : Action()
+

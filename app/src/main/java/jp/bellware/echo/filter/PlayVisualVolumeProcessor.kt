@@ -1,7 +1,7 @@
 package jp.bellware.echo.filter
 
 /**
- * 視覚的に分かりやすい音量表示を行う。録音用。
+ * 視覚的に分かりやすい音量表示を行う。再生用。
  */
 class PlayVisualVolumeProcessor : VisualVolumeProcessor {
 
