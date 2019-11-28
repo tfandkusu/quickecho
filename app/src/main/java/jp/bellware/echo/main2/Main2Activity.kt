@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import jp.bellware.echo.R
@@ -96,6 +97,23 @@ class Main2Activity : AppCompatActivity() {
         })
 
         // StoreとViewを繋げる
+        store.status.observe(this, Observer { flag ->
+            flag?.let {
+                if (it)
+                    statusFrame.visibility = View.VISIBLE
+                else
+                    statusFrame.visibility = View.INVISIBLE
+            }
+        })
+        store.icon.observe(this, Observer { resId ->
+            resId?.let {
+                statusImage.setImageResource(it)
+            }
+        })
+        store.explosion.observe(this, Observer {
+            if (it == true)
+                explosionView.startRecordAnimation()
+        })
         store.record.observe(this, Observer { flag ->
             flag?.let {
                 if (it)

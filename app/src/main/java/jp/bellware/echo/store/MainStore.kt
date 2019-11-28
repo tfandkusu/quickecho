@@ -1,6 +1,7 @@
 package jp.bellware.echo.store
 
 import androidx.lifecycle.MutableLiveData
+import jp.bellware.echo.R
 import jp.bellware.echo.action.MainRecordAction
 import jp.bellware.echo.action.MainSoundLoadedAction
 import jp.bellware.echo.action.MainStartRecordRequestAction
@@ -35,11 +36,24 @@ enum class VisualVolumeRequest {
 }
 
 class MainStore : Store() {
+    /**
+     * ステータス表示
+     */
+    val status = MutableLiveData<Boolean>()
 
-    // TODO ステータス表示とアイコン
+    /**
+     * アイコン表示
+     */
+    val icon = MutableLiveData<Int>()
+
+    /**
+     * 爆発エフェクト
+     */
+    val explosion = SingleLiveEvent<Boolean>()
 
     /**
      * 録音ボタン表示
+     * TODO 3ステータスにする
      */
     val record = MutableLiveData<Boolean>()
 
@@ -91,6 +105,8 @@ class MainStore : Store() {
 
     init {
         // 初期状態設定
+        status.value = false
+        icon.value = R.drawable.microphone_48dp
         record.value = true
         recordClickable.value = false
         play.value = false
@@ -111,14 +127,27 @@ class MainStore : Store() {
      * 録音開始要求
      */
     fun onEvent(action: MainStartRecordRequestAction) {
+        // 状態を表示
+        status.value = true
+        icon.value = R.drawable.microphone_48dp
+        // 爆発エフェクト
+        explosion.value = true
         // 録音効果音
         soundEffect.value = QrecSoundEffect.START
         // 再生していたら止める
         requestForPlay.value = RPRequest.STOP
         // 視覚的ボリュームをリセット
         visualVolume.value = VisualVolumeRequest.RESET
+        // 再生ボタンを表示
+        record.value = false
+        play.value = true
+        // 削除ボタンを表示
+
     }
 
+    /**
+     * 実際に録音
+     */
     fun onEvent(action: MainRecordAction) {
         requestForRecord.value = RPRequest.START
         visualVolume.value = VisualVolumeRequest.RECORD

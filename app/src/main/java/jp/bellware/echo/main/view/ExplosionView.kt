@@ -52,7 +52,7 @@ class ExplosionView : View {
     /**
      * アニメーション進行度を設定する
      */
-    fun setRadius(radius : Float){
+    fun setRadius(radius: Float) {
         this.radius = radius
         invalidate()
     }
@@ -83,7 +83,7 @@ class ExplosionView : View {
         } else {
             //縦画面
             centerX = viewWidth / 2
-            centerY = (viewHeight - 104 * dp) / 2
+            centerY = (viewHeight - (28 * dp)) / 2
         }
         //最大半径
         val radius = (Math.sqrt((centerY * centerY + centerX * centerX).toDouble()) * 1.2f).toFloat()
