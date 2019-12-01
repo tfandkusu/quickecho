@@ -26,7 +26,6 @@ class SingleLiveEvent<T> {
      * @param observer 監視イベント
      */
     fun observe(owner: LifecycleOwner, observer: Observer<T>) {
-        // Observe the internal MutableLiveData
         liveData.observe(owner, Observer<T> { t ->
             if (!onChangedFlag) {
                 observer.onChanged(t)

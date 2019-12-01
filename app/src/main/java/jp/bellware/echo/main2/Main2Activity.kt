@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import jp.bellware.echo.R
@@ -62,6 +61,11 @@ class Main2Activity : AppCompatActivity() {
      */
     private val delayTaskViewHelper: DelayTaskViewHelper by viewModel()
 
+    /**
+     * Viewのアニメーション担当
+     */
+    private val animatorViewHelper: AnimatorViewHelper by inject()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
@@ -96,13 +100,8 @@ class Main2Activity : AppCompatActivity() {
         })
 
         // StoreとViewを繋げる
-        store.status.observe(this, Observer { flag ->
-            flag?.let {
-                if (it)
-                    statusFrame.visibility = View.VISIBLE
-                else
-                    statusFrame.visibility = View.INVISIBLE
-            }
+        store.status.observe(this, Observer {
+            animatorViewHelper.apply(statusFrame, it)
         })
         store.icon.observe(this, Observer { resId ->
             resId?.let {
@@ -113,45 +112,20 @@ class Main2Activity : AppCompatActivity() {
             if (it == true)
                 explosionView.startRecordAnimation()
         })
-        store.record.observe(this, Observer { flag ->
-            flag?.let {
-                if (it)
-                    record.show()
-                else
-                    record.hide()
-            }
+        store.record.observe(this, Observer {
+            animatorViewHelper.apply(record, it)
         })
-        store.play.observe(this, Observer { flag ->
-            flag?.let {
-                if (it)
-                    play.show()
-                else
-                    play.hide()
-            }
+        store.play.observe(this, Observer {
+            animatorViewHelper.apply(play, it)
         })
-        store.stop.observe(this, Observer { flag ->
-            flag?.let {
-                if (it)
-                    stop.show()
-                else
-                    stop.hide()
-            }
+        store.stop.observe(this, Observer {
+            animatorViewHelper.apply(stop, it)
         })
-        store.replay.observe(this, Observer { flag ->
-            flag?.let {
-                if (it)
-                    replay.show()
-                else
-                    replay.hide()
-            }
+        store.replay.observe(this, Observer {
+            animatorViewHelper.apply(replay, it)
         })
-        store.delete.observe(this, Observer { flag ->
-            flag?.let {
-                if (it)
-                    delete.show()
-                else
-                    delete.hide()
-            }
+        store.delete.observe(this, Observer {
+            animatorViewHelper.apply(delete, it)
         })
         // StoreをViewHelperをつなげる
         store.soundEffect.observe(this, Observer {

@@ -39,7 +39,7 @@ class MainStore : Store() {
     /**
      * ステータス表示
      */
-    val status = MutableLiveData<Boolean>()
+    val status = AnimationLiveData()
 
     /**
      * アイコン表示
@@ -53,9 +53,8 @@ class MainStore : Store() {
 
     /**
      * 録音ボタン表示
-     * TODO 3ステータスにする
      */
-    val record = MutableLiveData<Boolean>()
+    val record = AnimationLiveData()
 
     /**
      * 録音ボタンが押せる
@@ -65,22 +64,22 @@ class MainStore : Store() {
     /**
      * 録音ボタン表示
      */
-    val play = MutableLiveData<Boolean>()
+    val play = AnimationLiveData()
 
     /**
      * 録音ボタン表示
      */
-    val stop = MutableLiveData<Boolean>()
+    val stop = AnimationLiveData()
 
     /**
      * 録音ボタン表示
      */
-    val replay = MutableLiveData<Boolean>()
+    val replay = AnimationLiveData()
 
     /**
      * 削除ボタン表示
      */
-    val delete = MutableLiveData<Boolean>()
+    val delete = AnimationLiveData()
 
     /**
      * 効果音
@@ -105,14 +104,14 @@ class MainStore : Store() {
 
     init {
         // 初期状態設定
-        status.value = false
+        status.value = AnimationStatus.INVISIBLE
         icon.value = R.drawable.microphone_48dp
-        record.value = true
+        record.value = AnimationStatus.VISIBLE
         recordClickable.value = false
-        play.value = false
-        stop.value = false
-        replay.value = false
-        delete.value = false
+        play.value = AnimationStatus.INVISIBLE
+        stop.value = AnimationStatus.INVISIBLE
+        replay.value = AnimationStatus.INVISIBLE
+        delete.value = AnimationStatus.INVISIBLE
     }
 
     /**
@@ -128,7 +127,7 @@ class MainStore : Store() {
      */
     fun onEvent(action: MainStartRecordRequestAction) {
         // 状態を表示
-        status.value = true
+        status.value = AnimationStatus.FI
         icon.value = R.drawable.microphone_48dp
         // 爆発エフェクト
         explosion.value = true
@@ -139,9 +138,10 @@ class MainStore : Store() {
         // 視覚的ボリュームをリセット
         visualVolume.value = VisualVolumeRequest.RESET
         // 再生ボタンを表示
-        record.value = false
-        play.value = true
+        record.value = AnimationStatus.INVISIBLE
+        play.value = AnimationStatus.VISIBLE
         // 削除ボタンを表示
+        delete.value = AnimationStatus.FI
 
     }
 

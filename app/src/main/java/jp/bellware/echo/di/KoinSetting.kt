@@ -38,6 +38,7 @@ object KoinSetting {
             viewModel { PlayViewHelper(get()) }
             viewModel { VisualVolumeViewHelper() }
             viewModel { DelayTaskViewHelper() }
+            single { AnimatorViewHelper() }
             factory { SoundEffectHandler() }
             factory { MainActionCreator(get()) }
         }
