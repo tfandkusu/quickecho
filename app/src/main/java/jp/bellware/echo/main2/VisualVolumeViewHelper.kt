@@ -77,13 +77,12 @@ class VisualVolumeViewHelper : ViewModel() {
     }
 
     fun onResume() {
-
+        if (playing || recording)
+            updateTask.run()
     }
 
     fun onPause() {
         handler.removeCallbacks(updateTask)
-        playing = false
-        recording = false
     }
 
     fun reset() {
