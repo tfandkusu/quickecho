@@ -9,10 +9,7 @@ import jp.bellware.echo.datastore.local.SoundLocalDatastore
 import jp.bellware.echo.datastore.local.SoundLocalDatastoreImpl
 import jp.bellware.echo.main.MainViewModel
 import jp.bellware.echo.main.SoundEffectHandler
-import jp.bellware.echo.main2.PlayViewHelper
-import jp.bellware.echo.main2.RecordViewHelper
-import jp.bellware.echo.main2.SoundEffectViewHelper
-import jp.bellware.echo.main2.VisualVolumeViewHelper
+import jp.bellware.echo.main2.*
 import jp.bellware.echo.repository.SettingRepository
 import jp.bellware.echo.repository.SettingRepositoryImpl
 import jp.bellware.echo.store.MainStore
@@ -40,6 +37,7 @@ object KoinSetting {
             viewModel { RecordViewHelper(get()) }
             viewModel { PlayViewHelper(get()) }
             viewModel { VisualVolumeViewHelper() }
+            viewModel { DelayTaskViewHelper() }
             factory { SoundEffectHandler() }
             factory { MainActionCreator(get()) }
         }

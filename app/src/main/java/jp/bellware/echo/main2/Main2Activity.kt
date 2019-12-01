@@ -2,7 +2,6 @@ package jp.bellware.echo.main2
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -59,9 +58,9 @@ class Main2Activity : AppCompatActivity() {
     private val visualVolumeViewHelper: VisualVolumeViewHelper by viewModel()
 
     /**
-     * TODO ViewHelperにする
+     * 遅延タスク担当ViewModel
      */
-    private val handler = Handler()
+    private val delayTaskViewHelper: DelayTaskViewHelper by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -160,9 +159,9 @@ class Main2Activity : AppCompatActivity() {
                 QrecSoundEffect.START -> {
                     soundEffect.start()
                     // 効果音が終わったら録音開始
-                    handler.postDelayed({
+                    delayTaskViewHelper.start(500) {
                         startRecord()
-                    }, 500)
+                    }
                 }
                 QrecSoundEffect.PLAY ->
                     soundEffect.play()
