@@ -1,5 +1,6 @@
 package jp.bellware.echo.actioncreator
 
+import jp.bellware.echo.action.MainDeleteAction
 import jp.bellware.echo.action.MainRecordAction
 import jp.bellware.echo.action.MainSoundLoadedAction
 import jp.bellware.echo.action.MainStartRecordRequestAction
@@ -26,5 +27,9 @@ class MainActionCreator(dispatcher: Dispatcher) : ActionCreator(dispatcher) {
      */
     fun startRecord() {
         dispatcher.dispatch(MainRecordAction)
+    }
+
+    fun onDeleteClick() {
+        dispatcher.dispatch(MainDeleteAction)
     }
 }

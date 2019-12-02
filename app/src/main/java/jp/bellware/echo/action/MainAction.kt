@@ -20,7 +20,11 @@ object MainStartRecordRequestAction : Action()
 object MainRecordAction : Action()
 
 /**
- * 録音停止要求アクション
+ * 録音停止アクション
  */
-object MainStopRecordRequestAction : Action()
+object MainStopRecordAction : Action()
 
+/**
+ * 削除アクション
+ */
+object MainDeleteAction : Action()

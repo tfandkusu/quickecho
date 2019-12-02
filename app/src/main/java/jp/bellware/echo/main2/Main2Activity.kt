@@ -182,6 +182,10 @@ class Main2Activity : AppCompatActivity() {
                 }
             }
         })
+        // クリックイベント
+        delete.setOnClickListener {
+            actionCreator.onDeleteClick()
+        }
     }
 
     override fun onResume() {
