@@ -1,35 +1,35 @@
 package jp.bellware.echo.actioncreator
 
 import jp.bellware.echo.action.MainDeleteAction
+import jp.bellware.echo.action.MainPreRecordAction
+import jp.bellware.echo.action.MainReadyAction
 import jp.bellware.echo.action.MainRecordAction
-import jp.bellware.echo.action.MainSoundLoadedAction
-import jp.bellware.echo.action.MainStartRecordRequestAction
 import jp.bellware.util.Dispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
-class MainActionCreator(dispatcher: Dispatcher) : ActionCreator(dispatcher) {
+class MainActionCreator(dispatcher: Dispatcher, private val delayActionCreatorHelper: DelayActionCreatorHelper) : ActionCreator(dispatcher) {
     /**
      * 音声の読み込みが完了
      */
     fun onSoundLoaded() {
-        dispatcher.dispatch(MainSoundLoadedAction)
+        dispatcher.dispatch(MainReadyAction)
     }
 
     /**
      * 録音ボタンが押された
      */
-    fun onRecordClick() {
-        dispatcher.dispatch(MainStartRecordRequestAction)
-    }
-
-    /**
-     * 実際に録音する。
-     * 効果音が録音音声に混ざるのを防ぐため録音開始を引っ張る意図。
-     */
-    fun startRecord() {
+    fun onRecordClick() = GlobalScope.launch(Dispatchers.Main) {
+        dispatcher.dispatch(MainPreRecordAction)
+        delayActionCreatorHelper.delay(500)
         dispatcher.dispatch(MainRecordAction)
     }
 
-    fun onDeleteClick() {
+
+    fun onDeleteClick() = GlobalScope.launch(Dispatchers.Main) {
         dispatcher.dispatch(MainDeleteAction)
+        delayActionCreatorHelper.delay(200)
+        dispatcher.dispatch(MainReadyAction)
     }
 }

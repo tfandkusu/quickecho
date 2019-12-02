@@ -89,16 +89,6 @@ class Main2Activity : AppCompatActivity() {
         soundEffect.onCreate(this) {
             actionCreator.onSoundLoaded()
         }
-        // 録音ボタンが押せる
-        store.recordClickable.observe(this, Observer {
-            if (it == true) {
-                // 録音ボタンが押された
-                record.setOnClickListener {
-                    actionCreator.onRecordClick()
-                }
-            }
-        })
-
         // StoreとViewを繋げる
         store.status.observe(this, Observer {
             animatorViewHelper.apply(statusFrame, it)
@@ -132,10 +122,6 @@ class Main2Activity : AppCompatActivity() {
             when (it) {
                 QrecSoundEffect.START -> {
                     soundEffect.start()
-                    // 効果音が終わったら録音開始
-                    delayTaskViewHelper.start(500) {
-                        startRecord()
-                    }
                 }
                 QrecSoundEffect.PLAY ->
                     soundEffect.play()
@@ -183,8 +169,14 @@ class Main2Activity : AppCompatActivity() {
             }
         })
         // クリックイベント
+        // 録音ボタンが押された
+        record.setOnClickListener {
+            if (store.clickable)
+                actionCreator.onRecordClick()
+        }
         delete.setOnClickListener {
-            actionCreator.onDeleteClick()
+            if (store.clickable)
+                actionCreator.onDeleteClick()
         }
     }
 
@@ -216,14 +208,6 @@ class Main2Activity : AppCompatActivity() {
         if (requestCode == CODE_SETTING) {
             soundEffect.onSettingUpdate()
         }
-    }
-
-    /**
-     * 録音開始(本番)
-     */
-    private fun startRecord() {
-        actionCreator.startRecord()
-        // TODO タイムアウトタスク予約
     }
 
     private fun callSettingActivity() {

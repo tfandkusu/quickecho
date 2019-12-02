@@ -2,6 +2,8 @@ package jp.bellware.echo.di
 
 import android.app.Application
 import android.preference.PreferenceManager
+import jp.bellware.echo.actioncreator.DelayActionCreatorHelper
+import jp.bellware.echo.actioncreator.DelayActionCreatorHelperImpl
 import jp.bellware.echo.actioncreator.MainActionCreator
 import jp.bellware.echo.datastore.local.SettingLocalDatastore
 import jp.bellware.echo.datastore.local.SettingLocalDatastoreImpl
@@ -40,7 +42,8 @@ object KoinSetting {
             viewModel { DelayTaskViewHelper() }
             single { AnimatorViewHelper() }
             factory { SoundEffectHandler() }
-            factory { MainActionCreator(get()) }
+            single { DelayActionCreatorHelperImpl() as DelayActionCreatorHelper }
+            single { MainActionCreator(get(), get()) }
         }
         startKoin {
             androidContext(application.applicationContext)

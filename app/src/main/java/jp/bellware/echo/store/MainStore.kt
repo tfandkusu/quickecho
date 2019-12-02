@@ -2,9 +2,10 @@ package jp.bellware.echo.store
 
 import androidx.lifecycle.MutableLiveData
 import jp.bellware.echo.R
+import jp.bellware.echo.action.MainDeleteAction
+import jp.bellware.echo.action.MainPreRecordAction
+import jp.bellware.echo.action.MainReadyAction
 import jp.bellware.echo.action.MainRecordAction
-import jp.bellware.echo.action.MainSoundLoadedAction
-import jp.bellware.echo.action.MainStartRecordRequestAction
 
 
 /**
@@ -57,9 +58,9 @@ class MainStore : Store() {
     val record = AnimationLiveData()
 
     /**
-     * 録音ボタンが押せる
+     * ボタンが押せる
      */
-    val recordClickable = MutableLiveData<Boolean>()
+    var clickable: Boolean = false
 
     /**
      * 録音ボタン表示
@@ -104,10 +105,17 @@ class MainStore : Store() {
 
     init {
         // 初期状態設定
+        clickable = false
+        init()
+    }
+
+    /**
+     * 録音ボタンだけの状態
+     */
+    private fun init() {
         status.value = AnimationStatus.INVISIBLE
         icon.value = R.drawable.microphone_48dp
         record.value = AnimationStatus.VISIBLE
-        recordClickable.value = false
         play.value = AnimationStatus.INVISIBLE
         stop.value = AnimationStatus.INVISIBLE
         replay.value = AnimationStatus.INVISIBLE
@@ -117,15 +125,18 @@ class MainStore : Store() {
     /**
      * 効果音読み込み完了
      */
-    fun onEvent(action: MainSoundLoadedAction) {
+    fun onEvent(action: MainReadyAction) {
         // 録音ボタンが押せるようになる
-        recordClickable.value = true
+        clickable = true
+        init()
     }
 
     /**
      * 録音開始要求
      */
-    fun onEvent(action: MainStartRecordRequestAction) {
+    fun onEvent(action: MainPreRecordAction) {
+        // クリック無効
+        clickable = false
         // 状態を表示
         status.value = AnimationStatus.FI
         icon.value = R.drawable.microphone_48dp
@@ -142,15 +153,35 @@ class MainStore : Store() {
         play.value = AnimationStatus.VISIBLE
         // 削除ボタンを表示
         delete.value = AnimationStatus.FI
-
     }
 
     /**
      * 実際に録音
      */
     fun onEvent(action: MainRecordAction) {
+        // クリックできる
+        clickable = true
+        // 録音する
         requestForRecord.value = RPRequest.START
         visualVolume.value = VisualVolumeRequest.RECORD
+    }
+
+    /**
+     * 削除
+     */
+    fun onEvent(action: MainDeleteAction) {
+        // クリックできない
+        clickable = false
+        // 削除効果音
+        soundEffect.value = QrecSoundEffect.DELETE
+        // 削除エフェクト
+        status.value = AnimationStatus.DELETE
+        replay.value = AnimationStatus.DELETE
+        stop.value = AnimationStatus.DELETE
+        delete.value = AnimationStatus.DELETE
+        // 録音再生を停止
+        requestForRecord.value = RPRequest.STOP
+        requestForPlay.value = RPRequest.STOP
     }
 
 }

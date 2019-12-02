@@ -4,27 +4,36 @@ package jp.bellware.echo.action
 
 
 /**
- * 効果音読み込み完了
+ * 準備完了アクション
  */
-object MainSoundLoadedAction : Action()
-
+object MainReadyAction : Action()
 
 /**
- * 録音開始要求アクション
+ * 録音演出アクション
  */
-object MainStartRecordRequestAction : Action()
+object MainPreRecordAction : Action()
 
 /**
- * 録音開始アクション
+ * 録音アクション
  */
 object MainRecordAction : Action()
 
 /**
- * 録音停止アクション
+ * 再生演出アクション
  */
-object MainStopRecordAction : Action()
+object MainPrePlayAction : Action()
 
 /**
- * 削除アクション
+ * 再生アクション
  */
 object MainDeleteAction : Action()
+
+/**
+ * 再再生アクション
+ */
+object MainReplayAction : Action()
+
+/**
+ * 停止アクション
+ */
+object MainStopAction : Action()

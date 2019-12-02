@@ -43,6 +43,7 @@ class AnimationLiveData {
      */
     fun observe(owner: LifecycleOwner, observer: Observer<AnimationStatus>) {
         liveData.observe(owner, Observer<AnimationStatus> { v ->
+            // 多重アニメーション防止
             if (lastValue == AnimationStatus.FI)
                 observer.onChanged(AnimationStatus.VISIBLE)
             else if (lastValue == AnimationStatus.DELETE)
@@ -55,10 +56,18 @@ class AnimationLiveData {
 
     var value: AnimationStatus?
         /**
-         * 値を更新する
+         * 値を更新する。不自然な挙動になる入力は自然な挙動に変換される。
          */
         set(v) {
-            liveData.value = v
+            if (liveData.value == AnimationStatus.INVISIBLE && v == AnimationStatus.DELETE) {
+                // 非表示から削除には遷移できない
+                liveData.value = AnimationStatus.INVISIBLE
+            } else if (liveData.value == AnimationStatus.VISIBLE && v == AnimationStatus.FI) {
+                // 表示からフェードインはできない
+                liveData.value = AnimationStatus.VISIBLE
+            } else {
+                liveData.value = v
+            }
             lastValue = null
         }
         /**
