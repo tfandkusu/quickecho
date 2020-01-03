@@ -2,6 +2,7 @@ package jp.bellware.echo.store
 
 import androidx.lifecycle.MutableLiveData
 import jp.bellware.echo.action.*
+import jp.bellware.util.ActionReceiver
 
 /**
  * 録音、再生状態アイコン
@@ -70,7 +71,7 @@ enum class WarningMessage {
     NO_RECORD
 }
 
-class MainStore : Store() {
+class MainStore(actionReceiver: ActionReceiver) : Store(actionReceiver) {
     /**
      * ステータス表示
      */
@@ -94,7 +95,7 @@ class MainStore : Store() {
     /**
      * ボタンが押せる
      */
-    var clickable: Boolean = false
+    var clickable = false
 
     /**
      * 録音ボタン表示
@@ -167,7 +168,6 @@ class MainStore : Store() {
      */
     private fun init() {
         status.value = AnimationStatus.INVISIBLE
-        icon.value = StatusIcon.PLAY
         record.value = AnimationStatus.VISIBLE
         play.value = AnimationStatus.INVISIBLE
         stop.value = AnimationStatus.INVISIBLE
@@ -201,7 +201,7 @@ class MainStore : Store() {
         requestForPlay.value = RPRequest.STOP
         // 視覚的ボリュームをリセット
         visualVolume.value = VisualVolumeRequest.RESET
-        // 再生ボタンを表示
+        // 再生ボタンと削除ボタンだけを表示
         record.value = AnimationStatus.INVISIBLE
         play.value = AnimationStatus.VISIBLE
         replay.value = AnimationStatus.INVISIBLE

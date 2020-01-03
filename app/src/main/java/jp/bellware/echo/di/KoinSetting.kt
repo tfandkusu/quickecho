@@ -15,6 +15,8 @@ import jp.bellware.echo.main2.*
 import jp.bellware.echo.repository.SettingRepository
 import jp.bellware.echo.repository.SettingRepositoryImpl
 import jp.bellware.echo.store.MainStore
+import jp.bellware.util.ActionReceiver
+import jp.bellware.util.ActionReceiverImpl
 import jp.bellware.util.Dispatcher
 import jp.bellware.util.DispatcherImpl
 import org.koin.android.ext.koin.androidContext
@@ -29,12 +31,13 @@ object KoinSetting {
     fun start(application: Application) {
         // DIの設定
         val myModule = module {
+            single { ActionReceiverImpl() as ActionReceiver }
             single { DispatcherImpl() as Dispatcher }
             single { SoundLocalDataStoreImpl() as SoundLocalDataStore }
             factory { SettingLocalDataStoreImpl(PreferenceManager.getDefaultSharedPreferences(androidContext())) as SettingLocalDataStore }
             factory { SettingRepositoryImpl(get()) as SettingRepository }
             viewModel { MainViewModel(androidContext()) }
-            viewModel { MainStore() }
+            viewModel { MainStore(get()) }
             viewModel { SoundEffectViewHelper(androidContext(), get()) }
             viewModel { RecordViewHelper(get()) }
             viewModel { PlayViewHelper(get()) }

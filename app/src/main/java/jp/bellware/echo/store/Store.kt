@@ -1,26 +1,23 @@
 package jp.bellware.echo.store
 
 import androidx.lifecycle.ViewModel
-import de.greenrobot.event.EventBus
+import jp.bellware.util.ActionReceiver
+
 
 /**
  * FluxのStoreはこちらを継承する
+ * 単体テストのためにこちらの設定が必要
+ * http://tools.android.com/tech-docs/unit-testing-support#TOC-Method-...-not-mocked.-
  */
-open class Store : ViewModel() {
+open class Store(private val actionReceiver: ActionReceiver) : ViewModel() {
 
     init {
         @Suppress("LeakingThis")
-        EventBus.getDefault().register(this)
+        actionReceiver.register(this)
     }
 
     override fun onCleared() {
-        EventBus.getDefault().unregister(this)
+        actionReceiver.unregister(this)
     }
 
-    /**
-     * 単体テストの時はこちらで購読解除する。
-     */
-    fun clear(){
-        EventBus.getDefault().unregister(this)
-    }
 }
