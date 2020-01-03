@@ -69,7 +69,7 @@ class MainStoreTest {
         store.requestForRecord.value shouldBe RPRequest.START
         store.visualVolume.value shouldBe VisualVolumeRequest.RECORD
         // タイマースタート
-        store.requestForTimer.value = TimerRequest.START
+        store.requestForTimer.value shouldBe TimerRequest.START
         // 再生する
         store.onEvent(MainPrePlayAction)
         // クリックできない
@@ -90,6 +90,13 @@ class MainStoreTest {
         store.visualVolume.value shouldBe VisualVolumeRequest.RESET
         // タイマーキャンセル
         store.requestForTimer.value shouldBe TimerRequest.CANCEL
+        // 再生開始
+        store.onEvent(MainPlayAction)
+        // クリックできる
+        store.clickable shouldBe true
+        // 再生する
+        store.requestForPlay.value shouldBe RPRequest.START
+        store.visualVolume.value shouldBe VisualVolumeRequest.PLAY
         // 削除する
         store.onEvent(MainDeleteAction)
         // クリックできない
@@ -137,6 +144,44 @@ class MainStoreTest {
         store.onEvent(MainStopAction)
         store.requestForPlay.value shouldBe RPRequest.STOP
         store.visualVolume.value shouldBe VisualVolumeRequest.RESET
+    }
+
+    /**
+     * ボリューム0の時
+     */
+    @Test
+    fun mute() {
+        store.onEvent(MainMuteAction)
+        store.warning.value shouldBe WarningMessage.MUTE
+    }
+
+    /**
+     * 録音可能時間超過(録音されている)
+     */
+    @Test
+    fun timeLimitIncludeSound() {
+        store.onEvent(MainMaxRecordTimeOverAction(true))
+        store.warning.value shouldBe WarningMessage.RECORD_TIME
+        store.clickPlay.value shouldBe true
+    }
+
+    /**
+     * 録音可能時間超過(録音されていない)
+     */
+    @Test
+    fun timeLimitNoSound() {
+        store.onEvent(MainMaxRecordTimeOverAction(false))
+        store.warning.value shouldBe WarningMessage.RECORD_TIME
+        store.clickDelete.value shouldBe true
+    }
+
+    /**
+     * 再生したときに録音されていないケース
+     */
+    @Test
+    fun noSound() {
+        store.onEvent(MainNoRecordAction)
+        store.warning.value shouldBe WarningMessage.NO_RECORD
     }
 
 }
