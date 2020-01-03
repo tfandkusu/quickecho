@@ -6,7 +6,7 @@ import android.media.AudioTrack
 import android.os.Handler
 import android.os.Process
 import androidx.lifecycle.ViewModel
-import jp.bellware.echo.datastore.local.SoundLocalDatastore
+import jp.bellware.echo.datastore.local.SoundLocalDataStore
 import jp.bellware.echo.filter.FadeOut
 import jp.bellware.echo.filter.FirstCut
 import jp.bellware.echo.filter.PacketConverter
@@ -17,7 +17,7 @@ import java.util.*
 /**
  * 音声再生担当ViewHelper
  */
-class PlayViewHelper(private val storage: SoundLocalDatastore) : ViewModel() {
+class PlayViewHelper(private val storage: SoundLocalDataStore) : ViewModel() {
     private var track: AudioTrack? = null
 
     private var thread: Thread? = null

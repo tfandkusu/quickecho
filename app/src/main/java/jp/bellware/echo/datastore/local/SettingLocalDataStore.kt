@@ -2,14 +2,14 @@ package jp.bellware.echo.datastore.local
 
 import android.content.SharedPreferences
 
-interface SettingLocalDatastore {
+interface SettingLocalDataStore {
     fun isSoundEffect(): Boolean
 }
 
 /**
  * ローカルファイルからの設定の出し入れを行う
  */
-class SettingLocalDatastoreImpl(private val pref: SharedPreferences) : SettingLocalDatastore {
+class SettingLocalDataStoreImpl(private val pref: SharedPreferences) : SettingLocalDataStore {
 
     companion object {
         private const val PREF_SOUND_EFFECT = "soundEffect"

@@ -5,10 +5,10 @@ import android.preference.PreferenceManager
 import jp.bellware.echo.actioncreator.DelayActionCreatorHelper
 import jp.bellware.echo.actioncreator.DelayActionCreatorHelperImpl
 import jp.bellware.echo.actioncreator.MainActionCreator
-import jp.bellware.echo.datastore.local.SettingLocalDatastore
-import jp.bellware.echo.datastore.local.SettingLocalDatastoreImpl
-import jp.bellware.echo.datastore.local.SoundLocalDatastore
-import jp.bellware.echo.datastore.local.SoundLocalDatastoreImpl
+import jp.bellware.echo.datastore.local.SettingLocalDataStore
+import jp.bellware.echo.datastore.local.SettingLocalDataStoreImpl
+import jp.bellware.echo.datastore.local.SoundLocalDataStore
+import jp.bellware.echo.datastore.local.SoundLocalDataStoreImpl
 import jp.bellware.echo.main.MainViewModel
 import jp.bellware.echo.main.SoundEffectHandler
 import jp.bellware.echo.main2.*
@@ -30,8 +30,8 @@ object KoinSetting {
         // DIの設定
         val myModule = module {
             single { DispatcherImpl() as Dispatcher }
-            single { SoundLocalDatastoreImpl() as SoundLocalDatastore }
-            factory { SettingLocalDatastoreImpl(PreferenceManager.getDefaultSharedPreferences(androidContext())) as SettingLocalDatastore }
+            single { SoundLocalDataStoreImpl() as SoundLocalDataStore }
+            factory { SettingLocalDataStoreImpl(PreferenceManager.getDefaultSharedPreferences(androidContext())) as SettingLocalDataStore }
             factory { SettingRepositoryImpl(get()) as SettingRepository }
             viewModel { MainViewModel(androidContext()) }
             viewModel { MainStore() }

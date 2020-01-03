@@ -6,7 +6,7 @@ import android.media.AudioRecord
 import android.media.AudioTrack
 import android.media.MediaRecorder
 import androidx.lifecycle.ViewModel
-import jp.bellware.echo.datastore.local.SoundLocalDatastore
+import jp.bellware.echo.datastore.local.SoundLocalDataStore
 import jp.bellware.echo.filter.FirstCut
 import jp.bellware.echo.filter.PacketConverter
 import jp.bellware.echo.filter.ZeroCrossRecordVisualVolumeProcessor
@@ -17,7 +17,7 @@ import jp.bellware.util.BWU
  * @param storage 記録担当
  */
 class RecordViewHelper(
-        private val storage: SoundLocalDatastore) : ViewModel() {
+        private val storage: SoundLocalDataStore) : ViewModel() {
 
     /**
      *
