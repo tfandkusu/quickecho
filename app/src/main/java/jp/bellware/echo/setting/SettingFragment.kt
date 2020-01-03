@@ -1,59 +1,56 @@
 package jp.bellware.echo.setting
 
+//import com.google.android.gms.appinvite.AppInviteInvitation;
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
-import android.preference.Preference
-import android.preference.PreferenceFragment
-import android.preference.PreferenceManager
-
-//import com.google.android.gms.appinvite.AppInviteInvitation;
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
 import jp.bellware.echo.R
 
 
 /**
  * 設定画面のフラグメント
  */
-class SettingFragment : PreferenceFragment() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+class SettingFragment : PreferenceFragmentCompat() {
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.setting)
         run {
             //紹介
-            val pref = findPreference(PREF_INVITE)
-            pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            val pref = findPreference<Preference>(PREF_INVITE)
+            pref?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 callInviteActivity()
                 true
             }
         }
         run {
             //商品情報
-            val pref = findPreference(PREF_ABOUT)
-            pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            val pref = findPreference<Preference>(PREF_ABOUT)
+            pref?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 callAboutActivity()
                 true
             }
         }
         run {
             //OSS
-            val pref = findPreference(PREF_OSS)
-            pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            val pref = findPreference<Preference>(PREF_OSS)
+            pref?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 callOSS()
                 true
             }
         }
         run {
             //プライバシーポリシー
-            val pref = findPreference(PREF_PP)
-            pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            val pref = findPreference<Preference>(PREF_PP)
+            pref?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 callPP()
                 true
             }
 
         }
+
     }
 
     private fun callInviteActivity() {

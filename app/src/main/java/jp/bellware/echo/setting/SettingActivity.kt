@@ -1,12 +1,10 @@
 package jp.bellware.echo.setting
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-
+import androidx.appcompat.app.AppCompatActivity
 import jp.bellware.echo.R
 import jp.bellware.echo.analytics.AnalyticsHandler
-
 import kotlinx.android.synthetic.main.activity_setting.*
 
 /**
@@ -25,7 +23,7 @@ class SettingActivity : AppCompatActivity() {
         lsab?.setHomeButtonEnabled(true)
         lsab?.setDisplayHomeAsUpEnabled(true)
         //フラグメントの追加
-        val ft = fragmentManager.beginTransaction()
+        val ft = supportFragmentManager.beginTransaction()
         ft.replace(R.id.preference_frame, SettingFragment())
         ft.commit()
         //Analytics
