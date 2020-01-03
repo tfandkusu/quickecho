@@ -54,4 +54,11 @@ class MainActionCreator(dispatcher: Dispatcher, private val delayActionCreatorHe
     fun onStopClick() {
         dispatcher.dispatch(MainStopAction)
     }
+
+    /**
+     * ボリュームが0の時に呼ばれる
+     */
+    fun onMute() {
+        dispatcher.dispatch(MainMuteAction)
+    }
 }

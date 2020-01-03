@@ -111,6 +111,10 @@ class MainStore : Store() {
      */
     val visualVolume = SingleLiveEvent<VisualVolumeRequest>()
 
+    /**
+     * ボリューム0の時の表示
+     */
+    val mute = SingleLiveEvent<Boolean>()
 
     init {
         // 初期状態設定
@@ -245,6 +249,14 @@ class MainStore : Store() {
         // 停止する
         requestForPlay.value = RPRequest.STOP
         visualVolume.value = VisualVolumeRequest.RESET
+    }
+
+
+    /**
+     * ボリューム0の時
+     */
+    fun onEvent(action: MainMuteAction) {
+        mute.value = true
     }
 
 }

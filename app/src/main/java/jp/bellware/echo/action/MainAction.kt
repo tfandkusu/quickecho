@@ -42,3 +42,8 @@ object MainReplayAction : Action()
  * 停止アクション
  */
 object MainStopAction : Action()
+
+/**
+ * ボリュームが0アクション
+ */
+object MainMuteAction : Action()

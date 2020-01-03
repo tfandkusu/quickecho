@@ -1,9 +1,13 @@
 package jp.bellware.echo.main2
 
+import android.animation.ObjectAnimator
+import android.content.Context
 import android.content.Intent
+import android.media.AudioManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import jp.bellware.echo.R
@@ -62,6 +66,8 @@ class Main2Activity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
         setSupportActionBar(toolbar)
+        //ボリューム調整を音楽にする
+        volumeControlStream = AudioManager.STREAM_MUSIC
         // ボリューム情報の接続
         visualVolumeViewHelper.callBack = object : VisualVolumeViewHelper.Callback {
             override fun getRecordVisualVolume(): Float {
@@ -167,6 +173,11 @@ class Main2Activity : AppCompatActivity() {
                 }
             }
         })
+        store.mute.observe(this, Observer {
+            if (it == true) {
+                showWarning(R.string.warning_volume)
+            }
+        })
         // クリックイベント
         // 録音ボタンが押された
         record.setOnClickListener {
@@ -198,6 +209,10 @@ class Main2Activity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         visualVolumeViewHelper.onResume()
+        val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        if (audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) == 0) {
+            actionCreator.onMute()
+        }
     }
 
     override fun onPause() {
@@ -228,5 +243,19 @@ class Main2Activity : AppCompatActivity() {
     private fun callSettingActivity() {
         val intent = Intent(this, SettingActivity::class.java)
         startActivityForResult(intent, CODE_SETTING)
+    }
+
+    /**
+     * 警告を表示する
+     * @param resId 文字列リソース
+     */
+    private fun showWarning(resId: Int) {
+        warning_card.visibility = View.VISIBLE
+        warning_text.setText(resId)
+        val animator = ObjectAnimator.ofFloat(warning_card, View.ALPHA, 1f, 0f)
+        animator.startDelay = 3000
+        animator.duration = 300
+        animator.start()
+
     }
 }
