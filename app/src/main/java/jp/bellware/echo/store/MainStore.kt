@@ -45,6 +45,27 @@ enum class VisualVolumeRequest {
     RECORD, PLAY, RESET, STOP
 }
 
+/**
+ * タイマーに対する要求
+ */
+enum class TimerRequest {
+    START, CANCEL
+}
+
+/**
+ * 警告表示
+ */
+enum class WarningMessage {
+    /**
+     * ボリュームが0
+     */
+    MUTE,
+    /**
+     * 録音時間オーバー
+     */
+    RECORD_TIME
+}
+
 class MainStore : Store() {
     /**
      * ステータス表示
@@ -112,9 +133,19 @@ class MainStore : Store() {
     val visualVolume = SingleLiveEvent<VisualVolumeRequest>()
 
     /**
-     * ボリューム0の時の表示
+     * タイマーに対する要求
      */
-    val mute = SingleLiveEvent<Boolean>()
+    val requestForTimer = SingleLiveEvent<TimerRequest>()
+
+    /**
+     * 警告表示
+     */
+    val warning = SingleLiveEvent<WarningMessage>()
+
+    /**
+     * 再生ボタンを強制的に押す
+     */
+    val forcePlay = SingleLiveEvent<Boolean>()
 
     init {
         // 初期状態設定
@@ -179,6 +210,8 @@ class MainStore : Store() {
         // 録音する
         requestForRecord.value = RPRequest.START
         visualVolume.value = VisualVolumeRequest.RECORD
+        // タイマースタート
+        requestForTimer.value = TimerRequest.START
     }
 
     /**
@@ -198,6 +231,8 @@ class MainStore : Store() {
         requestForRecord.value = RPRequest.STOP
         requestForPlay.value = RPRequest.STOP
         visualVolume.value = VisualVolumeRequest.STOP
+        // タイマーキャンセル
+        requestForTimer.value = TimerRequest.CANCEL
     }
 
     /**
@@ -220,6 +255,8 @@ class MainStore : Store() {
         requestForRecord.value = RPRequest.STOP
         // 視覚的ボリュームをリセット
         visualVolume.value = VisualVolumeRequest.RESET
+        // タイマーキャンセル
+        requestForTimer.value = TimerRequest.CANCEL
     }
 
     /**
@@ -256,7 +293,15 @@ class MainStore : Store() {
      * ボリューム0の時
      */
     fun onEvent(action: MainMuteAction) {
-        mute.value = true
+        warning.value = WarningMessage.MUTE
+    }
+
+    /**
+     * 録音時間超過
+     */
+    fun onEvent(action: MainMaxRecordTimeOverAction) {
+        warning.value = WarningMessage.RECORD_TIME
+        forcePlay.value = true
     }
 
 }

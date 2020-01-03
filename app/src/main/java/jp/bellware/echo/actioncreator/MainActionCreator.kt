@@ -61,4 +61,8 @@ class MainActionCreator(dispatcher: Dispatcher, private val delayActionCreatorHe
     fun onMute() {
         dispatcher.dispatch(MainMuteAction)
     }
+
+    fun onMaxRecordTimeOver() {
+        dispatcher.dispatch(MainMaxRecordTimeOverAction)
+    }
 }

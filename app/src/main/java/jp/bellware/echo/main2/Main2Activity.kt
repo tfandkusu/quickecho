@@ -62,6 +62,11 @@ class Main2Activity : AppCompatActivity() {
      */
     private val animatorViewHelper: AnimatorViewHelper by inject()
 
+    /**
+     * 録音時間計測担当
+     */
+    private val timerViewHelper: TimerViewHelper by viewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
@@ -173,10 +178,33 @@ class Main2Activity : AppCompatActivity() {
                 }
             }
         })
-        store.mute.observe(this, Observer {
-            if (it == true) {
-                showWarning(R.string.warning_volume)
+        store.warning.observe(this, Observer {
+            when (it) {
+                WarningMessage.MUTE ->
+                    showWarning(R.string.warning_volume)
+                WarningMessage.RECORD_TIME ->
+                    showWarning(R.string.warning_time_limit)
+                null -> {
+                }
             }
+        })
+        store.requestForTimer.observe(this, Observer {
+            when (it) {
+                TimerRequest.START -> {
+                    timerViewHelper.start {
+                        actionCreator.onMaxRecordTimeOver()
+                    }
+                }
+                TimerRequest.CANCEL -> {
+                    timerViewHelper.cancel()
+                }
+                null -> {
+                }
+            }
+        })
+        store.forcePlay.observe(this, Observer {
+            if (it == true)
+                play.performClick()
         })
         // クリックイベント
         // 録音ボタンが押された

@@ -47,3 +47,8 @@ object MainStopAction : Action()
  * ボリュームが0アクション
  */
 object MainMuteAction : Action()
+
+/**
+ * 最大録音時間オーバーアクション
+ */
+object MainMaxRecordTimeOverAction : Action()

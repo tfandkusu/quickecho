@@ -15,7 +15,7 @@ import jp.bellware.echo.main.RecordHandler
 import java.util.*
 
 /**
- * 音声再生担当ViewModel
+ * 音声再生担当ViewHelper
  */
 class PlayViewHelper(private val storage: SoundLocalDatastore) : ViewModel() {
     private var track: AudioTrack? = null
@@ -99,7 +99,7 @@ class PlayViewHelper(private val storage: SoundLocalDatastore) : ViewModel() {
         })
         thread?.start()
     }
-    
+
     /**
      * 再生を終了する
      */

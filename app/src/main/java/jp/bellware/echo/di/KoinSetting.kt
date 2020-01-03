@@ -39,7 +39,7 @@ object KoinSetting {
             viewModel { RecordViewHelper(get()) }
             viewModel { PlayViewHelper(get()) }
             viewModel { VisualVolumeViewHelper() }
-            viewModel { DelayTaskViewHelper() }
+            viewModel { TimerViewHelper() }
             single { AnimatorViewHelper() }
             factory { SoundEffectHandler() }
             single { DelayActionCreatorHelperImpl() as DelayActionCreatorHelper }
