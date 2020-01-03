@@ -218,4 +218,22 @@ class MainStore : Store() {
         visualVolume.value = VisualVolumeRequest.PLAY
     }
 
+    /**
+     * 再再生
+     */
+    fun onEvent(action: MainReplayAction) {
+        // 再生する
+        requestForPlay.value = RPRequest.START
+        visualVolume.value = VisualVolumeRequest.PLAY
+    }
+
+    /**
+     * 停止
+     */
+    fun onEvent(action: MainStopAction) {
+        // 停止する
+        requestForPlay.value = RPRequest.STOP
+        visualVolume.value = VisualVolumeRequest.RESET
+    }
+
 }

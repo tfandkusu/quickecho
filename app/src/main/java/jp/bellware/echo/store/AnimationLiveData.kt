@@ -44,31 +44,25 @@ class AnimationLiveData {
     fun observe(owner: LifecycleOwner, observer: Observer<AnimationStatus>) {
         liveData.observe(owner, Observer<AnimationStatus> { v ->
             // 多重アニメーション防止
-            if (lastValue == AnimationStatus.FI)
+            if (lastValue == AnimationStatus.FI && v == AnimationStatus.FI) {
                 observer.onChanged(AnimationStatus.VISIBLE)
-            else if (lastValue == AnimationStatus.DELETE)
+            } else if (lastValue == AnimationStatus.DELETE && v == AnimationStatus.DELETE) {
                 observer.onChanged(AnimationStatus.INVISIBLE)
-            else
+            } else if (lastValue == AnimationStatus.INVISIBLE && v == AnimationStatus.DELETE) {
+                observer.onChanged(AnimationStatus.INVISIBLE)
+            } else {
                 observer.onChanged(v)
-            lastValue = v
+                lastValue = v
+            }
         })
     }
 
     var value: AnimationStatus?
         /**
-         * 値を更新する。不自然な挙動になる入力は自然な挙動に変換される。
+         * 値を更新する
          */
         set(v) {
-            if (liveData.value == AnimationStatus.INVISIBLE && v == AnimationStatus.DELETE) {
-                // 非表示から削除には遷移できない
-                liveData.value = AnimationStatus.INVISIBLE
-            } else if (liveData.value == AnimationStatus.VISIBLE && v == AnimationStatus.FI) {
-                // 表示からフェードインはできない
-                liveData.value = AnimationStatus.VISIBLE
-            } else {
-                liveData.value = v
-            }
-            lastValue = null
+            liveData.value = v
         }
         /**
          * 値を取得する

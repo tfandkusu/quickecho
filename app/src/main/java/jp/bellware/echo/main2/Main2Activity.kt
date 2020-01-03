@@ -179,6 +179,16 @@ class Main2Activity : AppCompatActivity() {
             if (store.clickable)
                 actionCreator.onPlayClick()
         }
+        // 再再生ボタンが押された
+        replay.setOnClickListener {
+            if (store.clickable)
+                actionCreator.onReplayClick()
+        }
+        // 停止ボタンが押された
+        stop.setOnClickListener {
+            if (store.clickable)
+                actionCreator.onStopClick()
+        }
     }
 
     override fun onResume() {

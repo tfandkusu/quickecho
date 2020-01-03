@@ -40,4 +40,18 @@ class MainActionCreator(dispatcher: Dispatcher, private val delayActionCreatorHe
         delayActionCreatorHelper.delay(550)
         dispatcher.dispatch(MainPlayAction)
     }
+
+    /**
+     * 再再生ボタンが押された
+     */
+    fun onReplayClick() {
+        dispatcher.dispatch(MainReplayAction)
+    }
+
+    /**
+     * 停止ボタンが押された
+     */
+    fun onStopClick() {
+        dispatcher.dispatch(MainStopAction)
+    }
 }
