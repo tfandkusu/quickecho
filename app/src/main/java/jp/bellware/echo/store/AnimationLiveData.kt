@@ -6,9 +6,13 @@ import androidx.lifecycle.Observer
 
 enum class AnimationStatus {
     /**
-     * フェードインで表示する
+     * フェードインで表示する1
      */
-    FI,
+    FI1,
+    /**
+     * フェードインで表示する2。1と2はお互いに表示中にフェードインができる
+     */
+    FI2,
     /**
      * 削除アニメーションで退出する
      */
@@ -44,7 +48,9 @@ class AnimationLiveData {
     fun observe(owner: LifecycleOwner, observer: Observer<AnimationStatus>) {
         liveData.observe(owner, Observer<AnimationStatus> { v ->
             // 多重アニメーション防止
-            if (lastValue == AnimationStatus.FI && v == AnimationStatus.FI) {
+            if (lastValue == AnimationStatus.FI1 && v == AnimationStatus.FI1) {
+                observer.onChanged(AnimationStatus.VISIBLE)
+            } else if (lastValue == AnimationStatus.FI2 && v == AnimationStatus.FI2) {
                 observer.onChanged(AnimationStatus.VISIBLE)
             } else if (lastValue == AnimationStatus.DELETE && v == AnimationStatus.DELETE) {
                 observer.onChanged(AnimationStatus.INVISIBLE)

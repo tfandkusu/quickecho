@@ -191,7 +191,7 @@ class MainStore(actionReceiver: ActionReceiver) : Store(actionReceiver) {
         // クリック無効
         clickable = false
         // 状態を表示
-        status.value = AnimationStatus.FI
+        status.value = AnimationStatus.FI1
         icon.value = StatusIcon.RECORD
         // 爆発エフェクト
         explosion.value = true
@@ -207,7 +207,7 @@ class MainStore(actionReceiver: ActionReceiver) : Store(actionReceiver) {
         replay.value = AnimationStatus.INVISIBLE
         stop.value = AnimationStatus.INVISIBLE
         // 削除ボタンを表示
-        delete.value = AnimationStatus.FI
+        delete.value = AnimationStatus.FI1
     }
 
     /**
@@ -253,13 +253,13 @@ class MainStore(actionReceiver: ActionReceiver) : Store(actionReceiver) {
         // 再生効果音
         soundEffect.value = QrecSoundEffect.PLAY
         // ステータス表示変更
-        status.value = AnimationStatus.FI
+        status.value = AnimationStatus.FI2
         icon.value = StatusIcon.PLAY
         // ボタン表示変更
         record.value = AnimationStatus.VISIBLE
         play.value = AnimationStatus.INVISIBLE
-        replay.value = AnimationStatus.FI
-        stop.value = AnimationStatus.FI
+        replay.value = AnimationStatus.FI1
+        stop.value = AnimationStatus.FI1
         // 録音を停止
         requestForRecord.value = RPRequest.STOP
         // 視覚的ボリュームをリセット

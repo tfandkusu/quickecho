@@ -11,7 +11,7 @@ import jp.bellware.echo.store.AnimationStatus
 class AnimatorViewHelper {
     fun apply(view: View, status: AnimationStatus?) {
         when (status) {
-            AnimationStatus.FI -> {
+            AnimationStatus.FI1, AnimationStatus.FI2 -> {
                 view.visibility = View.VISIBLE
                 view.translationY = 0f
                 val a = ObjectAnimator.ofFloat(view, View.ALPHA, 0f, 1f)
