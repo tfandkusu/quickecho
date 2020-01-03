@@ -63,7 +63,11 @@ enum class WarningMessage {
     /**
      * 録音時間オーバー
      */
-    RECORD_TIME
+    RECORD_TIME,
+    /**
+     * 録音されていない
+     */
+    NO_RECORD
 }
 
 class MainStore : Store() {
@@ -143,9 +147,14 @@ class MainStore : Store() {
     val warning = SingleLiveEvent<WarningMessage>()
 
     /**
-     * 再生ボタンを強制的に押す
+     * 再生ボタンを押す
      */
-    val forcePlay = SingleLiveEvent<Boolean>()
+    val clickPlay = SingleLiveEvent<Boolean>()
+
+    /**
+     * 削除ボタンを押す
+     */
+    val clickDelete = SingleLiveEvent<Boolean>()
 
     init {
         // 初期状態設定
@@ -301,7 +310,17 @@ class MainStore : Store() {
      */
     fun onEvent(action: MainMaxRecordTimeOverAction) {
         warning.value = WarningMessage.RECORD_TIME
-        forcePlay.value = true
+        if (action.includeSound)
+            clickPlay.value = true
+        else
+            clickDelete.value = true
+    }
+
+    /**
+     * 録音されていない
+     */
+    fun onEvent(action: MainNoRecordAction) {
+        warning.value = WarningMessage.NO_RECORD
     }
 
 }

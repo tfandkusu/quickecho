@@ -145,7 +145,6 @@ class Main2Activity : AppCompatActivity() {
             when (it) {
                 RPRequest.START ->
                     playViewHelper.play {
-                        // TODO 終了時の処理
                     }
                 RPRequest.STOP ->
                     playViewHelper.stop()
@@ -184,6 +183,8 @@ class Main2Activity : AppCompatActivity() {
                     showWarning(R.string.warning_volume)
                 WarningMessage.RECORD_TIME ->
                     showWarning(R.string.warning_time_limit)
+                WarningMessage.NO_RECORD ->
+                    showWarning(R.string.warning_no_sound)
                 null -> {
                 }
             }
@@ -192,7 +193,7 @@ class Main2Activity : AppCompatActivity() {
             when (it) {
                 TimerRequest.START -> {
                     timerViewHelper.start {
-                        actionCreator.onMaxRecordTimeOver()
+                        actionCreator.onMaxRecordTimeOver(recordViewHelper.isIncludeSound)
                     }
                 }
                 TimerRequest.CANCEL -> {
@@ -202,9 +203,13 @@ class Main2Activity : AppCompatActivity() {
                 }
             }
         })
-        store.forcePlay.observe(this, Observer {
+        store.clickPlay.observe(this, Observer {
             if (it == true)
                 play.performClick()
+        })
+        store.clickDelete.observe(this, Observer {
+            if (it == true)
+                delete.performClick()
         })
         // クリックイベント
         // 録音ボタンが押された
@@ -219,8 +224,9 @@ class Main2Activity : AppCompatActivity() {
         }
         // 再生ボタンが押された
         play.setOnClickListener {
-            if (store.clickable)
-                actionCreator.onPlayClick()
+            if (store.clickable) {
+                actionCreator.onPlayClick(recordViewHelper.isIncludeSound)
+            }
         }
         // 再再生ボタンが押された
         replay.setOnClickListener {

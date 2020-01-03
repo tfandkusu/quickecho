@@ -27,18 +27,32 @@ class MainActionCreator(dispatcher: Dispatcher, private val delayActionCreatorHe
      * 削除ボタンが押された
      */
     fun onDeleteClick() = GlobalScope.launch(Dispatchers.Main) {
-        dispatcher.dispatch(MainDeleteAction)
-        delayActionCreatorHelper.delay(200)
-        dispatcher.dispatch(MainReadyAction)
+        delete()
     }
 
     /**
      * 再生ボタンが押された
+     * @param includeSound　録音されているフラグ
      */
-    fun onPlayClick() = GlobalScope.launch(Dispatchers.Main) {
-        dispatcher.dispatch(MainPrePlayAction)
-        delayActionCreatorHelper.delay(550)
-        dispatcher.dispatch(MainPlayAction)
+    fun onPlayClick(includeSound: Boolean) = GlobalScope.launch(Dispatchers.Main) {
+        if (includeSound) {
+            dispatcher.dispatch(MainPrePlayAction)
+            delayActionCreatorHelper.delay(550)
+            dispatcher.dispatch(MainPlayAction)
+        } else {
+            // 音声がなければ削除扱い。
+            dispatcher.dispatch(MainNoRecordAction)
+            delete()
+        }
+    }
+
+    /**
+     * 削除処理
+     */
+    private suspend fun delete() {
+        dispatcher.dispatch(MainDeleteAction)
+        delayActionCreatorHelper.delay(200)
+        dispatcher.dispatch(MainReadyAction)
     }
 
     /**
@@ -62,7 +76,11 @@ class MainActionCreator(dispatcher: Dispatcher, private val delayActionCreatorHe
         dispatcher.dispatch(MainMuteAction)
     }
 
-    fun onMaxRecordTimeOver() {
-        dispatcher.dispatch(MainMaxRecordTimeOverAction)
+    /**
+     * 録音可能時間を超過したケース
+     * @param includeSound　録音されているフラグ
+     */
+    fun onMaxRecordTimeOver(includeSound: Boolean) {
+        dispatcher.dispatch(MainMaxRecordTimeOverAction(includeSound))
     }
 }

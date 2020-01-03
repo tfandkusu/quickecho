@@ -49,6 +49,11 @@ object MainStopAction : Action()
 object MainMuteAction : Action()
 
 /**
+ * 録音されていないアクション
+ */
+object MainNoRecordAction : Action()
+
+/**
  * 最大録音時間オーバーアクション
  */
-object MainMaxRecordTimeOverAction : Action()
+data class MainMaxRecordTimeOverAction(val includeSound: Boolean) : Action()
