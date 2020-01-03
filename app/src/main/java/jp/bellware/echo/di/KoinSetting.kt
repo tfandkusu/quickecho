@@ -35,7 +35,7 @@ object KoinSetting {
             factory { SettingRepositoryImpl(get()) as SettingRepository }
             viewModel { MainViewModel(androidContext()) }
             viewModel { MainStore() }
-            viewModel { SoundEffectViewHelper(get()) }
+            viewModel { SoundEffectViewHelper(androidContext(), get()) }
             viewModel { RecordViewHelper(get()) }
             viewModel { PlayViewHelper(get()) }
             viewModel { VisualVolumeViewHelper() }

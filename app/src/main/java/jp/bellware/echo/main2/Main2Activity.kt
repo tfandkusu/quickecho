@@ -81,7 +81,7 @@ class Main2Activity : AppCompatActivity() {
 
         }
         // 効果音読み込み
-        soundEffect.onCreate(this) {
+        soundEffect.onCreate {
             actionCreator.onSoundLoaded()
         }
         // StoreとViewを繋げる
