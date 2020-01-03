@@ -1,21 +1,24 @@
 package jp.bellware.echo
 
+import io.kotlintest.shouldBe
 import jp.bellware.echo.filter.ZeroCross
-import junit.framework.TestCase
+import org.junit.Test
 
 /**
  * ゼロクロスのテスト。ユーザが話しているかいないかの判定はゼロクロスによって行われる。
  */
-class ZeroCrossTester : TestCase() {
-    fun testZero1() {
+class ZeroCrossTester {
+    @Test
+    fun zero1() {
         val zc = ZeroCross()
         for (i in 0..9999) {
             zc.add(0f)
         }
-        assertEquals(0, zc.cross)
+        zc.cross shouldBe 0
     }
 
-    fun testZero2() {
+    @Test
+    fun zero2() {
         val zc = ZeroCross()
         for (i in 0..9999) {
             if (i % 2 == 0)
@@ -23,10 +26,11 @@ class ZeroCrossTester : TestCase() {
             else
                 zc.add(-0.005f)
         }
-        assertEquals(0, zc.cross)
+        zc.cross shouldBe 0
     }
 
-    fun testSome() {
+    @Test
+    fun some() {
         val zc = ZeroCross()
         for (i in 0..4999) {
             if (i == 1)
@@ -48,7 +52,7 @@ class ZeroCrossTester : TestCase() {
             else
                 zc.add(0f)
         }
-        assertEquals(4, zc.cross)
+        zc.cross shouldBe 4
     }
 
 }

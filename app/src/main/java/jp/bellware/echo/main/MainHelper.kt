@@ -2,8 +2,6 @@ package jp.bellware.echo.main
 
 import android.content.Context
 import android.os.Handler
-import androidx.test.espresso.IdlingRegistry
-import androidx.test.espresso.idling.CountingIdlingResource
 import jp.bellware.echo.R
 import jp.bellware.echo.analytics.AnalyticsHandler
 import jp.bellware.echo.data.QRecStorage
@@ -46,16 +44,6 @@ class MainHelper(private val context: Context) {
      * 分析担当
      */
     private val ah = AnalyticsHandler()
-
-    /**
-     * Espressoの同期待ちを登録する
-     */
-    private val registry = IdlingRegistry.getInstance()
-
-    /**
-     * Espressoの同期待ちカウンター
-     */
-    private val cir = CountingIdlingResource("MainHelper")
 
     /**
      * 録音可能時間
@@ -110,8 +98,6 @@ class MainHelper(private val context: Context) {
         vvh.onResume()
         //分析
         ah.onCreate(context)
-        //Espressoの同期待ち登録
-        registry.register(cir)
         //初回更新
         update()
     }
@@ -140,8 +126,6 @@ class MainHelper(private val context: Context) {
         vvh.onPause()
         seh.onDestroy()
         handler.removeCallbacks(delayTask)
-        //Espressoの同期待ち解除
-        registry.unregister(cir)
     }
 
     /**
@@ -268,7 +252,6 @@ class MainHelper(private val context: Context) {
             //視覚的ボリューム
             vvh.stop()
         } else if (status == QRecStatus.STARTING_RECORD) {
-            cir.increment()
             //音を鳴らす
             seh.start()
             //再生終了
@@ -279,7 +262,6 @@ class MainHelper(private val context: Context) {
             delayTask = Runnable {
                 status = QRecStatus.RECORDING
                 update()
-                cir.decrement()
             }
             handler.postDelayed(delayTask, 500)
             //イベントを送る

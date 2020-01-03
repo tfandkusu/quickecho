@@ -29,19 +29,21 @@ android {
     dataBinding {
         enabled = true
     }
-
 }
+
+def lifecycle_version = "2.1.0"
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
     // Architecture Components
-    implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    testImplementation "androidx.arch.core:core-testing:$lifecycle_version"
     // ConstraintLayout
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
@@ -54,7 +56,7 @@ dependencies {
     implementation 'de.greenrobot:eventbus:2.4.1'
 
     // Kotlin Coroutine
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.2'
 
     //ソースコード公開用にFirebase使用部分は削除
@@ -66,11 +68,15 @@ dependencies {
     // Preference
     implementation 'androidx.preference:preference:1.1.0'
 
+    // テスト
+    testImplementation 'junit:junit:4.12'
+    // coroutine test
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.3'
+    // Kotlin Test
+    testImplementation 'io.kotlintest:kotlintest-runner-junit5:3.3.2'
+    // MockK
+    testImplementation "io.mockk:mockk:1.9.2"
 
-    //EspressoでUIテスト
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test:rules:1.2.0'
-    implementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
 
 kapt {
