@@ -1,9 +1,21 @@
 package jp.bellware.echo.store
 
 import androidx.lifecycle.MutableLiveData
-import jp.bellware.echo.R
 import jp.bellware.echo.action.*
 
+/**
+ * 録音、再生状態アイコン
+ */
+enum class StatusIcon {
+    /**
+     * 録音
+     */
+    RECORD,
+    /**
+     * 再生
+     */
+    PLAY
+}
 
 /**
  * 再生、録音担当に対する要求
@@ -42,7 +54,7 @@ class MainStore : Store() {
     /**
      * アイコン表示
      */
-    val icon = MutableLiveData<Int>()
+    val icon = MutableLiveData<StatusIcon>()
 
     /**
      * 爆発エフェクト
@@ -111,7 +123,7 @@ class MainStore : Store() {
      */
     private fun init() {
         status.value = AnimationStatus.INVISIBLE
-        icon.value = R.drawable.microphone_48dp
+        icon.value = StatusIcon.PLAY
         record.value = AnimationStatus.VISIBLE
         play.value = AnimationStatus.INVISIBLE
         stop.value = AnimationStatus.INVISIBLE
@@ -136,8 +148,7 @@ class MainStore : Store() {
         clickable = false
         // 状態を表示
         status.value = AnimationStatus.FI
-        // TODO enumにする
-        icon.value = R.drawable.microphone_48dp
+        icon.value = StatusIcon.RECORD
         // 爆発エフェクト
         explosion.value = true
         // 録音効果音
@@ -195,7 +206,7 @@ class MainStore : Store() {
         soundEffect.value = QrecSoundEffect.PLAY
         // ステータス表示変更
         status.value = AnimationStatus.FI
-        icon.value = R.drawable.speaker_48dp
+        icon.value = StatusIcon.PLAY
         // ボタン表示変更
         record.value = AnimationStatus.VISIBLE
         play.value = AnimationStatus.INVISIBLE

@@ -100,6 +100,5 @@ class SoundEffectViewHelper(private val context: Context,
     fun onSettingUpdate() {
         // 設定読み込み
         isEnabled = repository.isSoundEffect()
-
     }
 }

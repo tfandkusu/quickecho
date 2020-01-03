@@ -9,10 +9,7 @@ import androidx.lifecycle.Observer
 import jp.bellware.echo.R
 import jp.bellware.echo.actioncreator.MainActionCreator
 import jp.bellware.echo.setting.SettingActivity
-import jp.bellware.echo.store.MainStore
-import jp.bellware.echo.store.QrecSoundEffect
-import jp.bellware.echo.store.RPRequest
-import jp.bellware.echo.store.VisualVolumeRequest
+import jp.bellware.echo.store.*
 import kotlinx.android.synthetic.main.activity_main2.*
 import kotlinx.android.synthetic.main.main_control2.*
 import kotlinx.android.synthetic.main.main_status2.*
@@ -88,9 +85,16 @@ class Main2Activity : AppCompatActivity() {
         store.status.observe(this, Observer {
             animatorViewHelper.apply(statusFrame, it)
         })
-        store.icon.observe(this, Observer { resId ->
-            resId?.let {
-                statusImage.setImageResource(it)
+        store.icon.observe(this, Observer {
+            when (it) {
+                StatusIcon.RECORD -> {
+                    statusImage.setImageResource(R.drawable.microphone_48dp)
+                }
+                StatusIcon.PLAY -> {
+                    statusImage.setImageResource(R.drawable.speaker_48dp)
+                }
+                else -> {
+                }
             }
         })
         store.explosion.observe(this, Observer {
