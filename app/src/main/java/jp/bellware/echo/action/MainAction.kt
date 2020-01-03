@@ -26,6 +26,11 @@ object MainPrePlayAction : Action()
 /**
  * 再生アクション
  */
+object MainPlayAction : Action()
+
+/**
+ * 削除アクション
+ */
 object MainDeleteAction : Action()
 
 /**

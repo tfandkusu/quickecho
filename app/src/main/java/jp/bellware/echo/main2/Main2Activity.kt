@@ -57,11 +57,6 @@ class Main2Activity : AppCompatActivity() {
     private val visualVolumeViewHelper: VisualVolumeViewHelper by viewModel()
 
     /**
-     * 遅延タスク担当ViewModel
-     */
-    private val delayTaskViewHelper: DelayTaskViewHelper by viewModel()
-
-    /**
      * Viewのアニメーション担当
      */
     private val animatorViewHelper: AnimatorViewHelper by inject()
@@ -174,9 +169,15 @@ class Main2Activity : AppCompatActivity() {
             if (store.clickable)
                 actionCreator.onRecordClick()
         }
+        // 削除ボタンが押された
         delete.setOnClickListener {
             if (store.clickable)
                 actionCreator.onDeleteClick()
+        }
+        // 再生ボタンが押された
+        play.setOnClickListener {
+            if (store.clickable)
+                actionCreator.onPlayClick()
         }
     }
 

@@ -1,9 +1,6 @@
 package jp.bellware.echo.actioncreator
 
-import jp.bellware.echo.action.MainDeleteAction
-import jp.bellware.echo.action.MainPreRecordAction
-import jp.bellware.echo.action.MainReadyAction
-import jp.bellware.echo.action.MainRecordAction
+import jp.bellware.echo.action.*
 import jp.bellware.util.Dispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -26,10 +23,21 @@ class MainActionCreator(dispatcher: Dispatcher, private val delayActionCreatorHe
         dispatcher.dispatch(MainRecordAction)
     }
 
-
+    /**
+     * 削除ボタンが押された
+     */
     fun onDeleteClick() = GlobalScope.launch(Dispatchers.Main) {
         dispatcher.dispatch(MainDeleteAction)
         delayActionCreatorHelper.delay(200)
         dispatcher.dispatch(MainReadyAction)
+    }
+
+    /**
+     * 再生ボタンが押された
+     */
+    fun onPlayClick() = GlobalScope.launch(Dispatchers.Main) {
+        dispatcher.dispatch(MainPrePlayAction)
+        delayActionCreatorHelper.delay(550)
+        dispatcher.dispatch(MainPlayAction)
     }
 }

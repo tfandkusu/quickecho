@@ -2,10 +2,7 @@ package jp.bellware.echo.store
 
 import androidx.lifecycle.MutableLiveData
 import jp.bellware.echo.R
-import jp.bellware.echo.action.MainDeleteAction
-import jp.bellware.echo.action.MainPreRecordAction
-import jp.bellware.echo.action.MainReadyAction
-import jp.bellware.echo.action.MainRecordAction
+import jp.bellware.echo.action.*
 
 
 /**
@@ -139,6 +136,7 @@ class MainStore : Store() {
         clickable = false
         // 状態を表示
         status.value = AnimationStatus.FI
+        // TODO enumにする
         icon.value = R.drawable.microphone_48dp
         // 爆発エフェクト
         explosion.value = true
@@ -151,6 +149,8 @@ class MainStore : Store() {
         // 再生ボタンを表示
         record.value = AnimationStatus.INVISIBLE
         play.value = AnimationStatus.VISIBLE
+        replay.value = AnimationStatus.INVISIBLE
+        stop.value = AnimationStatus.INVISIBLE
         // 削除ボタンを表示
         delete.value = AnimationStatus.FI
     }
@@ -182,6 +182,40 @@ class MainStore : Store() {
         // 録音再生を停止
         requestForRecord.value = RPRequest.STOP
         requestForPlay.value = RPRequest.STOP
+        visualVolume.value = VisualVolumeRequest.STOP
+    }
+
+    /**
+     * 再生の準備
+     */
+    fun onEvent(action: MainPrePlayAction) {
+        // クリックできない
+        clickable = false
+        // 再生効果音
+        soundEffect.value = QrecSoundEffect.PLAY
+        // ステータス表示変更
+        status.value = AnimationStatus.FI
+        icon.value = R.drawable.speaker_48dp
+        // ボタン表示変更
+        record.value = AnimationStatus.VISIBLE
+        play.value = AnimationStatus.INVISIBLE
+        replay.value = AnimationStatus.FI
+        stop.value = AnimationStatus.FI
+        // 録音を停止
+        requestForRecord.value = RPRequest.STOP
+        // 視覚的ボリュームをリセット
+        visualVolume.value = VisualVolumeRequest.RESET
+    }
+
+    /**
+     * 再生そのもの
+     */
+    fun onEvent(action: MainPlayAction) {
+        // クリックできる
+        clickable = true
+        // 再生する
+        requestForPlay.value = RPRequest.START
+        visualVolume.value = VisualVolumeRequest.PLAY
     }
 
 }
