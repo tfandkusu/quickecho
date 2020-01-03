@@ -7,3 +7,4 @@
 /.idea/
 *.iml
 google-services.json
+app/.kotlintest/
