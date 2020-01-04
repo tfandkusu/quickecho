@@ -7,7 +7,7 @@ import org.junit.Before
 import org.junit.Test
 
 class SoundLocalDataStoreTest {
-    lateinit var dataStore: SoundLocalDataStore
+    private lateinit var dataStore: SoundLocalDataStore
 
     @Before
     fun setUp() {
