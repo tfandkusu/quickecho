@@ -19,6 +19,7 @@ class FadeOut(
      */
     fun filter(s: Float): Float {
         val v: Float
+        @Suppress("LiftReturnOrAssignment")
         if (index > length - duration) {
             v = s * (length - index) / duration
         } else {
