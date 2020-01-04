@@ -5,12 +5,14 @@ import android.media.AudioFormat
 import android.media.AudioRecord
 import android.media.AudioTrack
 import android.media.MediaRecorder
+import android.os.Process
 import androidx.lifecycle.ViewModel
 import jp.bellware.echo.datastore.local.SoundLocalDataStore
 import jp.bellware.echo.util.BWU
 import jp.bellware.echo.util.filter.FirstCut
 import jp.bellware.echo.util.filter.PacketConverter
 import jp.bellware.echo.util.filter.ZeroCrossRecordVisualVolumeProcessor
+import kotlin.math.max
 
 /**
  * 録音担当ViewHelper
@@ -19,11 +21,22 @@ import jp.bellware.echo.util.filter.ZeroCrossRecordVisualVolumeProcessor
 class RecordViewHelper(
         private val storage: SoundLocalDataStore) : ViewModel() {
 
+    companion object {
+        /**
+         * サンプル数
+         */
+        private const val SAMPLE_RATE = 44100
+
+        /**
+         * 視覚的ボリュームの適用範囲外サンプル数
+         */
+        private const val FC = 2 * SAMPLE_RATE / 10
+    }
+
     /**
-     *
+     * 録音API呼び出し
      */
     private var record: AudioRecord? = null
-
 
     /**
      * バッファサイズ
@@ -39,12 +52,10 @@ class RecordViewHelper(
      */
     private val fc = FirstCut(FC)
 
-
     /**
      * 視覚的ボリューム担当
      */
     private val vvp = ZeroCrossRecordVisualVolumeProcessor()
-
 
     /**
      * パケットの変換担当
@@ -81,21 +92,16 @@ class RecordViewHelper(
                 AudioFormat.ENCODING_PCM_16BIT)
         val playMinBufferSize = AudioTrack.getMinBufferSize(SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO,
                 AudioFormat.ENCODING_PCM_16BIT)
-        BWU.log("RecordHandler#onResume recordMinBufferSize = $recordMinBufferSize")
-        BWU.log("RecordHandler#onResume playMinBufferSize = $playMinBufferSize")
-        packetSize = Math.max(recordMinBufferSize, playMinBufferSize)
+        packetSize = max(recordMinBufferSize, playMinBufferSize)
         record = AudioRecord(MediaRecorder.AudioSource.DEFAULT, SAMPLE_RATE,
                 AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, packetSize * 2)
-        val lrecord = record
-        lrecord?.startRecording()
+        record?.startRecording()
         thread = Thread(Runnable {
             //これがないと音が途切れる
-            android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_URGENT_AUDIO)
+            Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_URGENT_AUDIO)
             while (true) {
                 val data = ShortArray(packetSize)
-                var size = 0
-                if (lrecord != null)
-                    size = lrecord.read(data, 0, packetSize)
+                val size = record?.read(data, 0, packetSize) ?: 0
                 if (size >= 1) {
                     addPacket(data)
                 } else {
@@ -104,8 +110,7 @@ class RecordViewHelper(
             }
             BWU.log("RecordHandler#onResume RecordThread end")
         })
-        val lthread = thread
-        lthread?.start()
+        thread?.start()
     }
 
 
@@ -113,19 +118,14 @@ class RecordViewHelper(
      * 録音を終了する
      */
     private fun stopRecord() {
-        val lrecord = record
-        val lthread = thread
-        if (lrecord != null && lthread != null) {
-            //これを呼び出すとreadメソッドの返り値が0となる
-            lrecord.stop()
-            try {
-                lthread.join()
-            } catch (e: InterruptedException) {
-            }
-            lrecord.release()
-            record = null
-            clear()
+        record?.stop()
+        try {
+            thread?.join()
+        } catch (e: InterruptedException) {
         }
+        record?.release()
+        record = null
+        clear()
     }
 
     /**
@@ -172,18 +172,4 @@ class RecordViewHelper(
     private fun clear() {
         storage.clear()
     }
-
-    companion object {
-        /**
-         * サンプル数
-         */
-        private const val SAMPLE_RATE = 44100
-
-        /**
-         * 視覚的ボリュームの適用範囲外サンプル数
-         */
-        private const val FC = 2 * SAMPLE_RATE / 10
-    }
-
-
 }
