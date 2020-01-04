@@ -6,7 +6,7 @@ import org.junit.Test
 /**
  * 一定のサイズを超えないキューのテスト
  */
-class StaticQueueTester {
+class StaticQueueTest {
     @Test
     fun test() {
         val queue = StaticQueue(3, 0)

@@ -6,7 +6,7 @@ import org.junit.Test
 /**
  * ゼロクロスのテスト。ユーザが話しているかいないかの判定はゼロクロスによって行われる。
  */
-class ZeroCrossTester {
+class ZeroCrossTest {
     @Test
     fun zero1() {
         val zc = ZeroCross()

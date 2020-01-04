@@ -14,6 +14,7 @@ class BasisStats(window: Int) {
     /**
      * 平均
      */
+    @Suppress("MemberVisibilityCanBePrivate")
     var average = 0f
         private set
 
@@ -41,10 +42,18 @@ class BasisStats(window: Int) {
      * 計算する
      */
     fun calculate() {
+        if (queue.size == 0) {
+            max = 0f
+            sum = 0f
+            average = 0f
+            return
+        }
         max = java.lang.Float.MIN_VALUE
         sum = 0f
         for (i in 0 until queue.size) {
-            val v = queue[i]
+            var v = queue[i]
+            if (v < 0)
+                v *= -1
             sum += v
             if (v > max)
                 max = v
