@@ -1,7 +1,7 @@
 package jp.bellware.echo.store
 
 import androidx.lifecycle.ViewModel
-import jp.bellware.util.ActionReceiver
+import jp.bellware.echo.util.ActionReceiver
 
 
 /**

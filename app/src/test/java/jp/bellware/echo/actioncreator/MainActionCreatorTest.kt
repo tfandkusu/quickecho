@@ -5,7 +5,7 @@ import io.mockk.coVerifySequence
 import io.mockk.impl.annotations.MockK
 import io.mockk.verifySequence
 import jp.bellware.echo.action.*
-import jp.bellware.util.Dispatcher
+import jp.bellware.echo.util.Dispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking

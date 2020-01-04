@@ -1,7 +1,7 @@
 package jp.bellware.echo.datastore.local
 
 import android.os.Environment
-import jp.bellware.echo.filter.GainDetector
+import jp.bellware.echo.util.filter.GainDetector
 import java.io.FileOutputStream
 import java.io.IOException
 import java.nio.ByteBuffer

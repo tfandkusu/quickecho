@@ -2,7 +2,7 @@ package jp.bellware.echo.store
 
 import androidx.lifecycle.MutableLiveData
 import jp.bellware.echo.action.*
-import jp.bellware.util.ActionReceiver
+import jp.bellware.echo.util.ActionReceiver
 
 /**
  * 録音、再生状態アイコン

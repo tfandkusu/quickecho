@@ -1,7 +1,7 @@
 package jp.bellware.echo.actioncreator
 
 import jp.bellware.echo.action.*
-import jp.bellware.util.Dispatcher
+import jp.bellware.echo.util.Dispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

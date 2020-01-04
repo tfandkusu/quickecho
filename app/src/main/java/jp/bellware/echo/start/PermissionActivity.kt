@@ -6,12 +6,12 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import jp.bellware.echo.R
-import jp.bellware.echo.main2.Main2Activity
+import jp.bellware.echo.view.main.MainActivity
 import kotlinx.android.synthetic.main.activity_permission.*
 
 /**
@@ -86,7 +86,7 @@ class PermissionActivity : AppCompatActivity() {
      * メイン画面を呼び出す
      */
     private fun callMainActivity() {
-        val intent = Intent(this, Main2Activity::class.java)
+        val intent = Intent(this, MainActivity::class.java)
         startActivityForResult(intent, CODE_MAIN)
     }
 

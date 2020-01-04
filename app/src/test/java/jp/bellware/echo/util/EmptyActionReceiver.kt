@@ -1,7 +1,5 @@
 package jp.bellware.echo.util
 
-import jp.bellware.util.ActionReceiver
-
 /**
  * テスト用に空実装
  */
