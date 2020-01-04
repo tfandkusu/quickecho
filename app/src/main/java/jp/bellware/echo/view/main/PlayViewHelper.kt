@@ -1,5 +1,6 @@
 package jp.bellware.echo.view.main
 
+import android.media.AudioAttributes
 import android.media.AudioFormat
 import android.media.AudioManager
 import android.media.AudioTrack
@@ -15,6 +16,7 @@ import java.util.*
 
 /**
  * 音声再生担当ViewHelper
+ * @param storage 録音データ格納
  */
 class PlayViewHelper(private val storage: SoundLocalDataStore) : ViewModel() {
 
@@ -34,13 +36,13 @@ class PlayViewHelper(private val storage: SoundLocalDataStore) : ViewModel() {
 
     private var thread: Thread? = null
 
-    private var playing = false
+    // private var playing = false
 
     private val vvp = PlayVisualVolumeProcessor()
 
     private val handler = Handler()
 
-    private var fo: FadeOut? = null
+    private lateinit var fo: FadeOut
 
     private val fc = FirstCut(FC)
 
@@ -69,37 +71,33 @@ class PlayViewHelper(private val storage: SoundLocalDataStore) : ViewModel() {
             onEndListener()
             return
         }
-        track = AudioTrack(AudioManager.STREAM_MUSIC,
-                SAMPLE_RATE,
-                AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT,
-                storage.packetSize * 2, AudioTrack.MODE_STREAM)
-        val ltrack = track
-        playing = true
+        val attributes = AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_MEDIA)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+                .build()
+        val format = AudioFormat.Builder().setChannelMask(AudioFormat.CHANNEL_OUT_MONO)
+                .setEncoding(AudioFormat.ENCODING_PCM_16BIT).setSampleRate(44100).build()
+        track = AudioTrack(attributes, format,
+                storage.packetSize * 2, AudioTrack.MODE_STREAM, AudioManager.AUDIO_SESSION_ID_GENERATE)
+        // playing = true
         //最初のパケットは効果音が入っていることがあるので捨てる
         index = 1
         thread = Thread(Runnable {
             //これがないと音が途切れる
-            android.os.Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_AUDIO)
+            Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_AUDIO)
             if (false) {
                 //デバッグ用セーブ
                 storage.save()
             }
-
             fo = FadeOut(storage.length, SAMPLE_RATE * 3 / 10)
             fc.reset()
-            if (ltrack != null) {
-                ltrack.play()
-                try {
-                    Thread.sleep((storage.packetSize * 1000 / 44100).toLong())
-                } catch (e: InterruptedException) {
-                }
-
+            track?.let {
+                it.play()
                 while (true) {
                     val packet = pullPacket(onEndListener)
                     if (packet != null) {
                         filter(packet)
-                        val sd = converter.convert(packet)
-                        val result = ltrack.write(sd, 0, sd.size)
+                        val shortPacket = converter.convert(packet)
+                        val result = it.write(shortPacket, 0, shortPacket.size)
                         if (result < 0)
                             break
                     } else {
@@ -116,18 +114,15 @@ class PlayViewHelper(private val storage: SoundLocalDataStore) : ViewModel() {
      * 再生を終了する
      */
     fun stop() {
-        val lthread = thread
-        val ltrack = track
-        if (lthread != null && ltrack != null) {
-            playing = false
-            try {
-                lthread.join()
-            } catch (e: InterruptedException) {
-            }
-
-            ltrack.release()
-            track = null
+        track?.stop()
+        // playing = false
+        try {
+            thread?.join()
+        } catch (e: InterruptedException) {
         }
+
+        track?.release()
+        track = null
     }
 
     override fun onCleared() {
@@ -135,20 +130,15 @@ class PlayViewHelper(private val storage: SoundLocalDataStore) : ViewModel() {
     }
 
     private fun pullPacket(onEndListener: () -> Unit): FloatArray? {
-        if (playing) {
-            val packet = storage[index]
-            ++index
-            if (packet == null) {
-                //終端
-                if (onEndListener != null) {
-                    handler.post { onEndListener() }
-                }
-                return null
-            } else {
-                return Arrays.copyOf(packet, packet.size)
-            }
-        } else
+        val packet = storage[index]
+        ++index
+        if (packet == null) {
+            //終端
+            handler.post { onEndListener() }
             return null
+        } else {
+            return Arrays.copyOf(packet, packet.size)
+        }
     }
 
 
@@ -164,9 +154,7 @@ class PlayViewHelper(private val storage: SoundLocalDataStore) : ViewModel() {
             var s = packet[i]
             s /= storage.gain
             //フェードアウト
-            val lfo = fo
-            if (lfo != null)
-                s = lfo.filter(s)
+            fo.filter(s)
             //視覚的ボリューム
             vvp.add(fc.filter(s))
             //置き換え
