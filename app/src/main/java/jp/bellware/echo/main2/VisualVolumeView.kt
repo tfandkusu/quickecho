@@ -1,4 +1,4 @@
-package jp.bellware.echo.main.view
+package jp.bellware.echo.main2
 
 import android.content.Context
 import android.graphics.Canvas

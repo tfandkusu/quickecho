@@ -1,4 +1,4 @@
-package jp.bellware.echo.data
+package jp.bellware.echo.filter
 
 /**
  * 一定サイズを超えないキュー。

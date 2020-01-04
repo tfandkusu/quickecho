@@ -11,13 +11,25 @@ import jp.bellware.echo.filter.FadeOut
 import jp.bellware.echo.filter.FirstCut
 import jp.bellware.echo.filter.PacketConverter
 import jp.bellware.echo.filter.PlayVisualVolumeProcessor
-import jp.bellware.echo.main.RecordHandler
 import java.util.*
 
 /**
  * 音声再生担当ViewHelper
  */
 class PlayViewHelper(private val storage: SoundLocalDataStore) : ViewModel() {
+
+    companion object {
+        /**
+         * サンプル数
+         */
+        private const val SAMPLE_RATE = 44100
+
+        /**
+         * 視覚的ボリュームの範囲外サンプル数
+         */
+        private const val FC = 2 * SAMPLE_RATE / 10
+    }
+
     private var track: AudioTrack? = null
 
     private var thread: Thread? = null
@@ -30,7 +42,7 @@ class PlayViewHelper(private val storage: SoundLocalDataStore) : ViewModel() {
 
     private var fo: FadeOut? = null
 
-    private val fc = FirstCut(RecordHandler.FC)
+    private val fc = FirstCut(FC)
 
     /**
      * パケットの変換担当
@@ -58,7 +70,7 @@ class PlayViewHelper(private val storage: SoundLocalDataStore) : ViewModel() {
             return
         }
         track = AudioTrack(AudioManager.STREAM_MUSIC,
-                RecordHandler.SAMPLE_RATE,
+                SAMPLE_RATE,
                 AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT,
                 storage.packetSize * 2, AudioTrack.MODE_STREAM)
         val ltrack = track
@@ -73,7 +85,7 @@ class PlayViewHelper(private val storage: SoundLocalDataStore) : ViewModel() {
                 storage.save()
             }
 
-            fo = FadeOut(storage.length, RecordHandler.SAMPLE_RATE * 3 / 10)
+            fo = FadeOut(storage.length, SAMPLE_RATE * 3 / 10)
             fc.reset()
             if (ltrack != null) {
                 ltrack.play()

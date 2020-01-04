@@ -1,7 +1,5 @@
 package jp.bellware.echo.filter
 
-import jp.bellware.echo.data.StaticQueue
-
 /**
  * 一定の窓内における基本統計
  * @param window 窓サイズ

@@ -9,8 +9,6 @@ import jp.bellware.echo.datastore.local.SettingLocalDataStore
 import jp.bellware.echo.datastore.local.SettingLocalDataStoreImpl
 import jp.bellware.echo.datastore.local.SoundLocalDataStore
 import jp.bellware.echo.datastore.local.SoundLocalDataStoreImpl
-import jp.bellware.echo.main.MainViewModel
-import jp.bellware.echo.main.SoundEffectHandler
 import jp.bellware.echo.main2.*
 import jp.bellware.echo.repository.SettingRepository
 import jp.bellware.echo.repository.SettingRepositoryImpl
@@ -36,7 +34,6 @@ object KoinSetting {
             single { SoundLocalDataStoreImpl() as SoundLocalDataStore }
             factory { SettingLocalDataStoreImpl(PreferenceManager.getDefaultSharedPreferences(androidContext())) as SettingLocalDataStore }
             factory { SettingRepositoryImpl(get()) as SettingRepository }
-            viewModel { MainViewModel(androidContext()) }
             viewModel { MainStore(get()) }
             viewModel { SoundEffectViewHelper(androidContext(), get()) }
             viewModel { RecordViewHelper(get()) }
@@ -44,7 +41,6 @@ object KoinSetting {
             viewModel { VisualVolumeViewHelper() }
             viewModel { TimerViewHelper() }
             single { AnimatorViewHelper() }
-            factory { SoundEffectHandler() }
             single { DelayActionCreatorHelperImpl() as DelayActionCreatorHelper }
             single { MainActionCreator(get(), get()) }
         }

@@ -1,8 +1,5 @@
 package jp.bellware.echo.filter
 
-import jp.bellware.echo.data.StaticQueue
-import jp.bellware.util.BWU
-
 /**
  * ゼロクロスを計算する
  */

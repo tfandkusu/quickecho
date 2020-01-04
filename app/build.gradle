@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
@@ -24,10 +23,6 @@ android {
         // Or, if you prefer, you can continue to check for errors in release builds,
         // but continue the build even when errors are found:
         abortOnError false
-    }
-    //データバインディングを使用する
-    dataBinding {
-        enabled = true
     }
 }
 
@@ -77,10 +72,6 @@ dependencies {
     // MockK
     testImplementation "io.mockk:mockk:1.9.2"
 
-}
-
-kapt {
-    generateStubs = true
 }
 
 

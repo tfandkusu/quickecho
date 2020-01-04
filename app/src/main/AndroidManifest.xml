@@ -42,9 +42,7 @@
             android:label="@string/app_name" />
         <!-- メイン画面 -->
         <activity
-            android:name=".main.MainActivity"
-            android:label="@string/app_name" />
-        <activity android:name=".main2.Main2Activity"
+            android:name=".main2.Main2Activity"
             android:label="@string/app_name" />
         <!-- 設定画面 -->
         <activity

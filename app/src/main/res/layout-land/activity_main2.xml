@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
     <!-- 爆発エフェクト表示 -->
-    <jp.bellware.echo.main.view.ExplosionView
+    <jp.bellware.echo.main2.ExplosionView
         android:id="@+id/explosionView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

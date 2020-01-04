@@ -1,4 +1,4 @@
-package jp.bellware.echo.main.view
+package jp.bellware.echo.main2
 
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
