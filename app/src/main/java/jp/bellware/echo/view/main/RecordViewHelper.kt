@@ -58,11 +58,6 @@ class RecordViewHelper(
     private val vvp = ZeroCrossRecordVisualVolumeProcessor()
 
     /**
-     * パケットの変換担当
-     */
-    private val converter = PacketConverter()
-
-    /**
      * 録音中フラグ
      */
     private var recording = false
@@ -157,7 +152,7 @@ class RecordViewHelper(
     @Synchronized
     private fun addPacket(packet: ShortArray) {
         if (recording) {
-            val fd = converter.convert(packet)
+            val fd = PacketConverter.convert(packet)
             storage.add(fd)
             for (s in fd) {
                 vvp.add(fc.filter(s))

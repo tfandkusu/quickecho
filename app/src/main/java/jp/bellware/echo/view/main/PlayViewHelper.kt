@@ -47,12 +47,6 @@ class PlayViewHelper(private val storage: SoundLocalDataStore) : ViewModel() {
     private val fc = FirstCut(FC)
 
     /**
-     * パケットの変換担当
-     */
-    private val converter = PacketConverter()
-
-
-    /**
      * 再生パケットインデックス
      */
     private var index: Int = 0
@@ -96,7 +90,7 @@ class PlayViewHelper(private val storage: SoundLocalDataStore) : ViewModel() {
                     val packet = pullPacket(onEndListener)
                     if (packet != null) {
                         filter(packet)
-                        val shortPacket = converter.convert(packet)
+                        val shortPacket = PacketConverter.convert(packet)
                         val result = it.write(shortPacket, 0, shortPacket.size)
                         if (result < 0)
                             break

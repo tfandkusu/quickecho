@@ -3,13 +3,11 @@ package jp.bellware.echo.util.filter
 /**
  * 音声パケットの型を変換する
  */
-class PacketConverter {
+object PacketConverter {
     /**
      * shortの最大値に1を足したもの
      */
-    companion object {
-        private const val SHORT_MAX_P1 = 32768
-    }
+    private const val SHORT_MAX_P1 = 32768
 
     /**
      * flaot型に変換する
