@@ -29,7 +29,9 @@ class TimerViewHelper : ViewModel() {
         runnable = Runnable {
             task()
         }
-        handler.postDelayed(runnable, MAX_RECORD_TIME)
+        runnable?.let {
+            handler.postDelayed(it, MAX_RECORD_TIME)
+        }
     }
 
     /**

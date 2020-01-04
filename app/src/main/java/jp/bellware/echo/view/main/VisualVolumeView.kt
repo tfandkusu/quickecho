@@ -11,6 +11,18 @@ import android.view.View
  */
 class VisualVolumeView : View {
 
+    companion object {
+
+        /**
+         * ボリューム0の時の半径
+         */
+        private const val ZERO_RADIUS_DP = 32
+
+        /**
+         * ボリュームMAXの時の半径
+         */
+        private const val MAX_RADIUS_DP = 64
+    }
 
     /**
      * 表示ボリューム
@@ -29,11 +41,11 @@ class VisualVolumeView : View {
 
     private val paint = Paint()
 
-    constructor(context: Context) : super(context) {}
+    constructor(context: Context) : super(context)
 
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     override fun onDraw(canvas: Canvas) {
         //円を描画する
@@ -60,16 +72,4 @@ class VisualVolumeView : View {
         invalidate()
     }
 
-    companion object {
-
-        /**
-         * ボリューム0の時の半径
-         */
-        private val ZERO_RADIUS_DP = 32
-
-        /**
-         * ボリュームMAXの時の半径
-         */
-        private val MAX_RADIUS_DP = 64
-    }
 }
