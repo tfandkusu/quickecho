@@ -18,10 +18,12 @@ import kotlinx.android.synthetic.main.activity_permission.*
  * 実行時パーミッションActivity
  */
 class PermissionActivity : AppCompatActivity() {
+    companion object {
+        private const val CODE_PERMISSION = 1
 
-    private val CODE_PERMISSION = 1
+        private const val CODE_MAIN = 2
+    }
 
-    private val CODE_MAIN = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +40,8 @@ class PermissionActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CODE_MAIN) {
             finish()
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
         }
     }
 
@@ -98,10 +102,10 @@ class PermissionActivity : AppCompatActivity() {
         adb.setTitle(R.string.title_permission)
         adb.setMessage(R.string.message_permission)
         adb.setCancelable(false)
-        adb.setPositiveButton(R.string.ok) { dialog, which ->
+        adb.setPositiveButton(R.string.ok) { _, _ ->
             callApplicationDetailActivity()
             finish()
-        }.setNegativeButton(R.string.cancel) { dialog, which -> finish() }
+        }.setNegativeButton(R.string.cancel) { _, _ -> finish() }
         adb.show()
     }
 
