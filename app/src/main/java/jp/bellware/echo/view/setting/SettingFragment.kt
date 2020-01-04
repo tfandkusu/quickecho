@@ -1,13 +1,11 @@
 package jp.bellware.echo.view.setting
 
 //import com.google.android.gms.appinvite.AppInviteInvitation;
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.PreferenceManager
 import jp.bellware.echo.R
 
 
@@ -80,26 +78,13 @@ class SettingFragment : PreferenceFragmentCompat() {
 
     companion object {
 
-        private val PREF_SOUND_EFFECT = "soundEffect"
+        private const val PREF_ABOUT = "about"
 
-        private val PREF_ABOUT = "about"
+        private const val PREF_INVITE = "invite"
 
-        private val PREF_INVITE = "invite"
+        private const val PREF_OSS = "oss"
 
-        private val PREF_OSS = "oss"
+        private const val PREF_PP = "pp"
 
-        private val PREF_PAGE = "page"
-
-        private val PREF_PP = "pp"
-
-        /**
-         * 効果音設定を取得する
-         * @param context
-         * @return
-         */
-        fun isSoundEffect(context: Context): Boolean {
-            val pref = PreferenceManager.getDefaultSharedPreferences(context)
-            return pref.getBoolean(PREF_SOUND_EFFECT, true)
-        }
     }
 }

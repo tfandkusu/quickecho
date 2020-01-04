@@ -1,7 +1,6 @@
-package jp.bellware.echo.data
+package jp.bellware.echo.util.filter
 
 import io.kotlintest.shouldBe
-import jp.bellware.echo.util.filter.StaticQueue
 import org.junit.Test
 
 /**

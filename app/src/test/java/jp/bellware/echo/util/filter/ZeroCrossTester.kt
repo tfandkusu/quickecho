@@ -1,7 +1,6 @@
-package jp.bellware.util.filter
+package jp.bellware.echo.util.filter
 
 import io.kotlintest.shouldBe
-import jp.bellware.echo.util.filter.ZeroCross
 import org.junit.Test
 
 /**

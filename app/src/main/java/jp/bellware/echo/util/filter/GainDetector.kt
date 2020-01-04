@@ -11,10 +11,10 @@ class GainDetector {
         private set
 
     /**
-     * パケットを追加する
+     * サンプルを追加する
      */
-    fun add(s: Float) {
-        var s = s
+    fun add(sample: Float) {
+        var s = sample
         if (s < 0)
             s *= -1f
         if (s > max) {

@@ -177,12 +177,12 @@ class RecordViewHelper(
         /**
          * サンプル数
          */
-        private val SAMPLE_RATE = 44100
+        private const val SAMPLE_RATE = 44100
 
         /**
          * 視覚的ボリュームの適用範囲外サンプル数
          */
-        private val FC = 2 * SAMPLE_RATE / 10
+        private const val FC = 2 * SAMPLE_RATE / 10
     }
 
 
