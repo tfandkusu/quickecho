@@ -36,8 +36,6 @@ class PlayViewHelper(private val storage: SoundLocalDataStore) : ViewModel() {
 
     private var thread: Thread? = null
 
-    // private var playing = false
-
     private val vvp = PlayVisualVolumeProcessor()
 
     private val handler = Handler()
@@ -72,7 +70,6 @@ class PlayViewHelper(private val storage: SoundLocalDataStore) : ViewModel() {
                 .setEncoding(AudioFormat.ENCODING_PCM_16BIT).setSampleRate(44100).build()
         track = AudioTrack(attributes, format,
                 storage.packetSize * 2, AudioTrack.MODE_STREAM, AudioManager.AUDIO_SESSION_ID_GENERATE)
-        // playing = true
         //最初のパケットは効果音が入っていることがあるので捨てる
         index = 1
         thread = Thread(Runnable {
@@ -109,7 +106,6 @@ class PlayViewHelper(private val storage: SoundLocalDataStore) : ViewModel() {
      */
     fun stop() {
         track?.stop()
-        // playing = false
         try {
             thread?.join()
         } catch (e: InterruptedException) {
