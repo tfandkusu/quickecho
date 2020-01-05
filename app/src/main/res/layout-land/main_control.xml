@@ -2,9 +2,8 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content">
 
     <!-- 削除ボタン -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -26,6 +25,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="48dp"
+        app:fabSize="normal"
         android:src="@drawable/ic_mic_white_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/delete"
@@ -39,6 +39,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="48dp"
+        app:fabSize="normal"
         android:src="@drawable/ic_play_arrow_white_24dp"
         app:backgroundTint="@color/play_button2"
         app:layout_constraintBottom_toBottomOf="parent"
