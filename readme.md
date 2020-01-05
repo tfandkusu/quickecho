@@ -46,7 +46,15 @@ RecordViewHelperとPlayViewHelperはメモリに音声を保存して再生時�
 - [Kotlin Coroutine](https://github.com/Kotlin/kotlinx.coroutines) 音声の録音と再生を除く非同期処理全般で使用しています。
 - [Koin](https://insert-koin.io/) DIコンテナです。
 - [MockK](https://mockk.io/) 単体テストの時に依存するクラスをモック化しています。
+- [CircleCI](https://circleci.com/)
 - [KotlinTest](https://github.com/kotlintest/kotlintest) 単体テストの時に `actual shouldBe expected` のように中間値表記で検証ができます。
 - [Material Components](https://material.io/components/) [Floating Action Button](https://material.io/develop/android/components/floating-action-button/)と[CardView](https://material.io/develop/android/components/material-card-view/)の実装に使用しています。
 - [ConstraintLayout](https://developer.android.com/reference/androidx/constraintlayout/widget/ConstraintLayout.html)
 - [EventBus](https://github.com/greenrobot/EventBus) FluxのDispatcherの実装に使っています。
+
+# 今後の予定
+
+- 録音音声を保存して再生する機能の追加
+- リリースの自動化
+
+
