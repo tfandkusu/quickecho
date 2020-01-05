@@ -1,87 +1,80 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:bind="http://schemas.android.com/apk/res-auto">
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.main.MainActivity">
 
-    <data>
-
-        <variable
-            name="viewModel"
-            type="jp.bellware.echo.main.MainViewModel" />
-    </data>
-
-    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:orientation="vertical"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".main.MainActivity">
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:elevation="5dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <!-- 爆発エフェクト表示 -->
+    <jp.bellware.echo.view.main.ExplosionView
+        android:id="@+id/explosionView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
+    <!-- 状態表示 -->
+    <include
+        layout="@layout/main_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="28dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+    <!-- コントール表示 -->
+    <include
+        layout="@layout/main_control"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+    <!-- 警告表示 -->
+    <!-- TODO Android 9 では陰が表示されない -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/warning_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="120dp"
+        android:elevation="4dp"
+        app:cardBackgroundColor="@color/warning"
+        android:visibility="invisible"
+        tools:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/warning_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="top" />
+            android:layout_gravity="center"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            android:singleLine="true"
+            android:text="@string/warning_time_limit" />
+    </androidx.cardview.widget.CardView>
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-            <!-- ツールバーの影 -->
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="6dp"
-                android:src="@drawable/shadow" />
-            <!-- コンテンツ -->
 
-            <!-- 爆発エフェクトレイヤー -->
-            <jp.bellware.echo.main.view.ExplosionView
-                android:id="@+id/explosion"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-            <!-- ステータス表示 -->
-            <include
-                layout="@layout/main_status"
-                bind:viewModel="@{viewModel}" />
-            <!-- コントロール -->
-            <include
-                layout="@layout/main_control"
-                bind:viewModel="@{viewModel}" />
-
-            <!-- 警告表示 -->
-            <FrameLayout
-                android:id="@+id/warning_mute"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="104dp">
-
-                <jp.bellware.echo.main.view.MyCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    app:myCardColor="@color/warning" />
-
-                <TextView
-                    android:id="@+id/warning_mute_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:singleLine="true"
-                    android:text="@string/warning_time_limit" />
-            </FrameLayout>
-
-            <!--
-            広告はしばらくなしにする
-                    <com.google.android.gms.ads.AdView android:id="@+id/ad"
-                                                       android:layout_width="wrap_content"
-                                                       android:layout_height="wrap_content"
-                                                       android:layout_gravity="center_horizontal|top"
-                                                       app:adUnitId="@string/banner_ad_unit_id"
-                                                       android:layout_marginBottom="@dimen/activity_margin"
-                                                       app:adSize="BANNER"/>
-                                                       -->
-
-        </FrameLayout>
-    </LinearLayout>
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>

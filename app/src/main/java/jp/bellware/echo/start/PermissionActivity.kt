@@ -6,22 +6,24 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import jp.bellware.echo.R
-import jp.bellware.echo.main.MainActivity
+import jp.bellware.echo.view.main.MainActivity
 import kotlinx.android.synthetic.main.activity_permission.*
 
 /**
  * 実行時パーミッションActivity
  */
 class PermissionActivity : AppCompatActivity() {
+    companion object {
+        private const val CODE_PERMISSION = 1
 
-    private val CODE_PERMISSION = 1
+        private const val CODE_MAIN = 2
+    }
 
-    private val CODE_MAIN = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +40,8 @@ class PermissionActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CODE_MAIN) {
             finish()
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
         }
     }
 
@@ -98,10 +102,10 @@ class PermissionActivity : AppCompatActivity() {
         adb.setTitle(R.string.title_permission)
         adb.setMessage(R.string.message_permission)
         adb.setCancelable(false)
-        adb.setPositiveButton(R.string.ok) { dialog, which ->
+        adb.setPositiveButton(R.string.ok) { _, _ ->
             callApplicationDetailActivity()
             finish()
-        }.setNegativeButton(R.string.cancel) { dialog, which -> finish() }
+        }.setNegativeButton(R.string.cancel) { _, _ -> finish() }
         adb.show()
     }
 

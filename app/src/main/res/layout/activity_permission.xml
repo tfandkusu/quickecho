@@ -9,7 +9,7 @@
         android:src="@drawable/shadow"
         />
     
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_gravity="top"
             android:layout_width="match_parent"

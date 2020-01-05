@@ -1,65 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="jp.bellware.echo">
+    package="jp.bellware.echo">
 
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <!-- For admob -->
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- For admob -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <!-- For debug -->
-    <!--
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    -->
     <application
-            android:allowBackup="true"
-            android:icon="@drawable/ic_launcher"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme">
-        <activity
-                android:name="jp.bellware.echo.start.StartActivity"
-                android:label="@string/app_name"
-                android:launchMode="singleInstance"
-                android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+        android:name=".di.QuickEchoApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+        <activity
+            android:name=".start.StartActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleInstance"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:scheme="https" android:host="quickecho.bellware.jp"
-                      android:path="/android"/>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="quickecho.bellware.jp"
+                    android:path="/android"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <!-- 実行時パーミッション画面 -->
         <activity
-                android:name="jp.bellware.echo.start.PermissionActivity"
-                android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-                android:label="@string/app_name"/>
+            android:name=".start.PermissionActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:label="@string/app_name" />
         <!-- メイン画面 -->
         <activity
-                android:name="jp.bellware.echo.main.MainActivity"
-                android:label="@string/app_name"/>
+            android:name=".view.main.MainActivity"
+            android:label="@string/app_name" />
         <!-- 設定画面 -->
         <activity
-                android:name="jp.bellware.echo.setting.SettingActivity"
-                android:label="@string/title_setting"/>
+            android:name=".view.setting.SettingActivity"
+            android:label="@string/title_setting" />
         <!-- HTML Viewer画面(OSSライセンス) -->
         <activity
-                android:name="jp.bellware.echo.setting.HtmlViewerActivity"
-                android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-                android:label="@string/pref_oss"/>
+            android:name=".view.setting.HtmlViewerActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:label="@string/pref_oss" />
         <!-- アプリについて画面 -->
         <activity
-                android:name="jp.bellware.echo.setting.AboutActivity"
-                android:label="@string/pref_information"/>
-        <!-- メインサービス -->
-        <service android:name="jp.bellware.echo.main.MainService"
-                 android:exported="false"/>
+            android:name=".view.setting.AboutActivity"
+            android:label="@string/pref_information" />
     </application>
 
 </manifest>

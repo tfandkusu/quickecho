@@ -14,7 +14,6 @@
     <string name="pr">広告</string>
     <string name="login">ログイン</string>
     <string name="message_login">ログインすると、台本を編集できます。</string>
-    <string name="copyright" translatable="false"></string>
     <string name="error_auth">ユーザ認証に失敗しました。</string>
     <string name="error_internet_connection">インターネット接続がありません。</string>
     <string name="error_unknown_response">未知のレスポンス</string>
