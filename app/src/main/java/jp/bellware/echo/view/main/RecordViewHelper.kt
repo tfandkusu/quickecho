@@ -93,7 +93,7 @@ class RecordViewHelper(
         record?.startRecording()
         thread = Thread(Runnable {
             //これがないと音が途切れる
-            Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_URGENT_AUDIO)
+            Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_AUDIO)
             while (true) {
                 val data = ShortArray(packetSize)
                 val size = record?.read(data, 0, packetSize) ?: 0
