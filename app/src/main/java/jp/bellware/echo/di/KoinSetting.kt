@@ -1,7 +1,7 @@
 package jp.bellware.echo.di
 
 import android.app.Application
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import jp.bellware.echo.actioncreator.DelayActionCreatorHelper
 import jp.bellware.echo.actioncreator.DelayActionCreatorHelperImpl
 import jp.bellware.echo.actioncreator.MainActionCreator
