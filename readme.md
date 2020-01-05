@@ -30,7 +30,7 @@ https://play.google.com/store/apps/details?id=jp.bellware.echo
 
 <img src="https://github.com/tfandkusu/quickecho/blob/master/images/MainActivity.png?raw=true">
 
-このアプリは音声の録音再生、インタラクティブなエフェクトなどView層が大きいため、役割別にViewHelperに処理を分けています。
+このアプリは音声の録音再生、インタラクティブなエフェクトなどView層が大きいため、役割別ViewHelperに処理を分けています。
 
 - RecordViewHelper 音声の録音
 - PlayViewHelper 音声の再生
