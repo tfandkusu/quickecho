@@ -157,6 +157,11 @@ class MainStore(actionReceiver: ActionReceiver) : Store(actionReceiver) {
      */
     val clickDelete = SingleLiveEvent<Boolean>()
 
+    /**
+     * バックキーのデフォルト挙動を防ぐ
+     */
+    var overrideBackKey = false
+
     init {
         // 初期状態設定
         clickable = false
@@ -182,6 +187,9 @@ class MainStore(actionReceiver: ActionReceiver) : Store(actionReceiver) {
         // 録音ボタンが押せるようになる
         clickable = true
         init()
+        // バックキーをオーバーライド
+        overrideBackKey = false
+
     }
 
     /**
@@ -221,6 +229,8 @@ class MainStore(actionReceiver: ActionReceiver) : Store(actionReceiver) {
         visualVolume.value = VisualVolumeRequest.RECORD
         // タイマースタート
         requestForTimer.value = TimerRequest.START
+        // バックキーをオーバーライド
+        overrideBackKey = true
     }
 
     /**
@@ -321,6 +331,16 @@ class MainStore(actionReceiver: ActionReceiver) : Store(actionReceiver) {
      */
     fun onEvent(action: MainNoRecordAction) {
         warning.value = WarningMessage.NO_RECORD
+    }
+
+    /**
+     * バックキーが押された
+     */
+    fun onEvent(action: MainBackPressedAction) {
+        // バックキーを終了にする
+        overrideBackKey = false
+        // 削除ボタンを押した扱いにする
+        clickDelete.value = true
     }
 
 }
