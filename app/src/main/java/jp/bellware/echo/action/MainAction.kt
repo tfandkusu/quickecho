@@ -54,6 +54,11 @@ object MainMuteAction : Action()
 object MainNoRecordAction : Action()
 
 /**
+ * バックキーが押されたアクション
+ */
+object MainBackPressedAction : Action()
+
+/**
  * 最大録音時間オーバーアクション
  */
 data class MainMaxRecordTimeOverAction(val includeSound: Boolean) : Action()

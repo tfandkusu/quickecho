@@ -83,4 +83,11 @@ class MainActionCreator(dispatcher: Dispatcher, private val delayActionCreatorHe
     fun onMaxRecordTimeOver(includeSound: Boolean) {
         dispatcher.dispatch(MainMaxRecordTimeOverAction(includeSound))
     }
+
+    /**
+     * バックキーが押された
+     */
+    fun onBackPressed() {
+        dispatcher.dispatch(MainBackPressedAction)
+    }
 }

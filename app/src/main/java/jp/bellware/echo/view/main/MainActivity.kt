@@ -240,6 +240,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        if (store.overrideBackKey)
+            actionCreator.onBackPressed()
+        else
+            super.onBackPressed()
+    }
+
     override fun onResume() {
         super.onResume()
         visualVolumeViewHelper.onResume()
@@ -271,6 +278,8 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CODE_SETTING) {
             soundEffect.onSettingUpdate()
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
         }
     }
 

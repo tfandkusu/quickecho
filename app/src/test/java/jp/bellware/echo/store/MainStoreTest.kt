@@ -37,13 +37,16 @@ class MainStoreTest {
         store.replay.value shouldBe AnimationStatus.INVISIBLE
         store.delete.value shouldBe AnimationStatus.INVISIBLE
         store.clickable shouldBe false
+        store.overrideBackKey shouldBe false
         // 準備完了
         store.onEvent(MainReadyAction)
         store.clickable shouldBe true
+        store.overrideBackKey shouldBe false
         // 録音開始要求
         store.onEvent(MainPreRecordAction)
         // クリック無効
         store.clickable shouldBe false
+        store.overrideBackKey shouldBe false
         // 状態を表示
         store.status.value shouldBe AnimationStatus.FI1
         store.icon.value shouldBe StatusIcon.RECORD
@@ -65,6 +68,8 @@ class MainStoreTest {
         store.onEvent(MainRecordAction)
         // クリックできる
         store.clickable shouldBe true
+        // バックキーをオーバーライド
+        store.overrideBackKey shouldBe true
         // 録音する
         store.requestForRecord.value shouldBe RPRequest.START
         store.visualVolume.value shouldBe VisualVolumeRequest.RECORD
@@ -118,6 +123,7 @@ class MainStoreTest {
         store.onEvent(MainReadyAction)
         // 録音だけ表示されている
         store.clickable shouldBe true
+        store.overrideBackKey shouldBe false
         store.status.value shouldBe AnimationStatus.INVISIBLE
         store.record.value shouldBe AnimationStatus.VISIBLE
         store.play.value shouldBe AnimationStatus.INVISIBLE
@@ -182,6 +188,14 @@ class MainStoreTest {
     fun noSound() {
         store.onEvent(MainNoRecordAction)
         store.warning.value shouldBe WarningMessage.NO_RECORD
+    }
+
+    @Test
+    fun backPressed() {
+        store.overrideBackKey = true
+        store.onEvent(MainBackPressedAction)
+        store.overrideBackKey shouldBe false
+        store.clickDelete.value shouldBe true
     }
 
 }
