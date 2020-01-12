@@ -2,6 +2,11 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+def major = 1
+def minor = 3
+def patch = 0
+
+
 android {
     compileSdkVersion 29
 
@@ -9,9 +14,8 @@ android {
         applicationId "jp.bellware.echo"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 8
-        versionName "1.2.1"
-
+        versionCode major * 10000 + minor * 100 + patch
+        versionName "${major}.${minor}.${patch}"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
@@ -32,7 +36,6 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            // コミット増やすためのダミー記載
         }
     }
     lintOptions {
