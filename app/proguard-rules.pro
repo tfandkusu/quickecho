@@ -16,3 +16,8 @@
 #   public *;
 #}
 -keepattributes Signature
+
+# onEventメソッドの名前を変えない
+-keepclassmembers class ** {
+    public void onEvent*(***);
+}
