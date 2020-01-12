@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/tfandkusu/quickecho/tree/master.svg?style=svg)](https://circleci.com/gh/tfandkusu/quickecho/tree/master)
+<img src="https://app.bitrise.io/app/805a7c4c7fef0ab7/status.svg?token=UKtO3dk7OQ6LgQlxoKp4pA&branch=master">
 
 クイックエコー
 ====
