@@ -21,7 +21,6 @@
     <string name="error">エラー</string>
     <string name="ok">OK</string>
     <string name="error_google_auth">Googleアカウント認証が</string>
-    <string name="pref_invite">友人にアプリを紹介する</string>
     <string name="message_permission">このアプリはマイクの権限が必要です。</string>
     <string name="title_permission">情報</string>
     <string name="cancel">キャンセル</string>

@@ -16,14 +16,6 @@ class SettingFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.setting)
         run {
-            //紹介
-            val pref = findPreference<Preference>(PREF_INVITE)
-            pref?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                callInviteActivity()
-                true
-            }
-        }
-        run {
             //商品情報
             val pref = findPreference<Preference>(PREF_ABOUT)
             pref?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
@@ -51,14 +43,6 @@ class SettingFragment : PreferenceFragmentCompat() {
 
     }
 
-    private fun callInviteActivity() {
-        //ソースコード公開用に招待は無効
-        //        Intent intent = new AppInviteInvitation.IntentBuilder(getString(R.string.pref_invite))
-        //                .setDeepLink(Uri.parse("https://cp999.app.goo.gl/cffF"))
-        //                .build();
-        //        startActivityForResult(intent,1);
-    }
-
     private fun callAboutActivity() {
         val intent = Intent(activity, AboutActivity::class.java)
         startActivity(intent)
@@ -79,8 +63,6 @@ class SettingFragment : PreferenceFragmentCompat() {
     companion object {
 
         private const val PREF_ABOUT = "about"
-
-        private const val PREF_INVITE = "invite"
 
         private const val PREF_OSS = "oss"
 
