@@ -2,6 +2,11 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+def major = 1
+def minor = 3
+def patch = 0
+
+
 android {
     compileSdkVersion 29
 
@@ -9,15 +14,30 @@ android {
         applicationId "jp.bellware.echo"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 8
-        versionName "1.2.1"
-
+        versionCode major * 10000 + minor * 100 + patch
+        versionName "${major}.${minor}.${patch}"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
 
-    //ソースコード公開用なので、署名設定は削除。
+    signingConfigs {
+        release {
+            storeFile file(System.getenv("HOME") + "/keystores/echo.jks")
+            storePassword System.getenv("BITRISEIO_ANDROID_KEYSTORE_PASSWORD")
+            keyAlias System.getenv("BITRISEIO_ANDROID_KEYSTORE_ALIAS")
+            keyPassword System.getenv("BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD")
+        }
+    }
 
+    buildTypes {
+        debug {
+        }
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
     lintOptions {
         checkReleaseBuilds false
         // Or, if you prefer, you can continue to check for errors in release builds,
