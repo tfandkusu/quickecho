@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'io.fabric'
 
 def major = 1
 def minor = 3
@@ -79,6 +80,8 @@ dependencies {
     // google-services.jsonがソースコード公開のためにモックになっているため。
     releaseImplementation 'com.google.firebase:firebase-core:17.2.1'
     releaseImplementation 'com.google.firebase:firebase-messaging:20.1.0'
+    // Add dependency
+    releaseImplementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
     // Preference
     implementation 'androidx.preference:preference:1.1.0'
