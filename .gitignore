@@ -1,4 +1,3 @@
-/material-preference/build
 .gradle
 /local.properties
 .DS_Store
@@ -6,5 +5,4 @@
 /captures
 /.idea/
 *.iml
-google-services.json
 app/.kotlintest/
