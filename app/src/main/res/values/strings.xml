@@ -19,7 +19,6 @@
     <!-- 設定画面 -->
     <string name="title_setting">Settings</string>
     <string name="pref_sound">Sound effect</string>
-    <string name="pref_invite">Tell this app</string>
     <string name="pref_information">Information</string>
     <string name="pref_oss">Open source license</string>
     <string name="version" translatable="false">Version</string>

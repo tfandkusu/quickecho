@@ -5,9 +5,6 @@
         android:key="soundEffect"
         android:title="@string/pref_sound" />
     <Preference
-        android:key="invite"
-        android:title="@string/pref_invite" />
-    <Preference
         android:key="about"
         android:title="@string/pref_information" />
     <Preference
