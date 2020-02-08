@@ -55,7 +55,6 @@ RecordViewHelperとPlayViewHelperはメモリに音声を保存して再生時�
 
 # 今後の予定
 
-- BitriseによるGithubリリースの記載
 - 録音音声を保存して再生する機能の追加
 
 
