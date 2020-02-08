@@ -5,7 +5,7 @@ apply plugin: 'io.fabric'
 
 def major = 1
 def minor = 3
-def patch = 1
+def patch = 3
 
 
 android {
@@ -97,4 +97,3 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
-
