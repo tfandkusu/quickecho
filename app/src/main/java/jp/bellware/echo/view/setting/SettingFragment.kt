@@ -49,9 +49,8 @@ class SettingFragment : PreferenceFragmentCompat() {
     }
 
     private fun callOSS() {
-        val intent = Intent(activity, HtmlViewerActivity::class.java)
-        intent.putExtra(HtmlViewerActivity.EXTRA_URL, "file:///android_asset/license.txt")
-        startActivity(intent)
+        val action = SettingFragmentDirections.actionSettingFragmentToHtmlViewerFragment("file:///android_asset/license.txt")
+        findNavController().navigate(action)
     }
 
     private fun callPP() {

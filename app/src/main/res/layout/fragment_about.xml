@@ -5,11 +5,6 @@
     android:orientation="vertical"
     tools:context="jp.bellware.echo.view.setting.AboutFragment">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
