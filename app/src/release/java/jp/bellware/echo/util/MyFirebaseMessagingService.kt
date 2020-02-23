@@ -8,15 +8,12 @@ import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import jp.bellware.echo.R
+import jp.bellware.echo.start.StartActivity
 
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     companion object {
-        /**
-         * 通知のチャンネルID
-         */
-        const val CHANNEL_ID = "main"
 
         private const val NOTIFICATION_ID = 1
     }
@@ -32,7 +29,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(url)
             val pendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
-            val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+            val notification = NotificationCompat.Builder(this, StartActivity.CHANNEL_ID)
                     .setSmallIcon(R.drawable.notification_small_icon)
                     .setContentTitle(getString(R.string.app_name_long))
                     .setContentText(message)

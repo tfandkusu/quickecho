@@ -16,7 +16,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import jp.bellware.echo.R
 import jp.bellware.echo.util.EchoFirebaseDynamicLinksUtil
-import jp.bellware.echo.util.MyFirebaseMessagingService
 import jp.bellware.echo.view.main.MainActivity
 import kotlinx.android.synthetic.main.activity_start.*
 
@@ -28,6 +27,11 @@ class StartActivity : AppCompatActivity() {
         private const val CODE_PERMISSION = 1
 
         private const val CODE_MAIN = 2
+
+        /**
+         * 通知のチャンネルID
+         */
+        const val CHANNEL_ID = "main"
 
     }
 
@@ -145,7 +149,7 @@ class StartActivity : AppCompatActivity() {
             val name = getString(R.string.channel_name)
             val descriptionText = getString(R.string.channel_description)
             val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(MyFirebaseMessagingService.CHANNEL_ID, name, importance).apply {
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
                 description = descriptionText
             }
             notificationManager.createNotificationChannel(channel)
