@@ -25,7 +25,11 @@
     <string name="version_sample" translatable="false">Version 1.0.0</string>
     <string name="copyright" translatable="false">&#169; 2015 Bellware</string>
     <string name="pref_privacy_policy">Privacy Policy</string>
-    <!-- 紹介 -->
+
+    <!-- 通知 -->
+    <string name="channel_name">Main</string>
+    <string name="channel_description">Main channel</string>
+
 
     <!-- 台本 -->
     <string name="login">Login</string>
