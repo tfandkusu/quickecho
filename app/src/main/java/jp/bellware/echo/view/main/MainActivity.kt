@@ -14,6 +14,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        /**
+         * Firebase Dynamic Linksから送られてきた画面タイプ
+         */
+        const val EXTRA_TYPE = "type"
+    }
+
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {

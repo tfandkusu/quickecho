@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import jp.bellware.echo.R
+import jp.bellware.echo.util.EchoFirebaseDymanicLinksUtil
 import jp.bellware.echo.view.main.MainActivity
 import kotlinx.android.synthetic.main.activity_start.*
 
@@ -52,7 +53,7 @@ class StartActivity : AppCompatActivity() {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // permission was granted, yay! Do the
                 // contacts-related task you need to do.
-                callMainActivity()
+                callMainActivityWithLinks()
             } else {
                 // permission denied, boo! Disable the
                 // functionality that depends on this permission.
@@ -82,17 +83,22 @@ class StartActivity : AppCompatActivity() {
             }
         } else {
             //すでに許可されている
-            callMainActivity()
+            callMainActivityWithLinks()
         }
     }
 
     /**
-     * メイン画面を呼び出す
+     * メイン画面をFirebase Dynamic Linksのパラメータを持って呼び出す
      */
-    private fun callMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
-        startActivityForResult(intent, CODE_MAIN)
+    private fun callMainActivityWithLinks() {
+        EchoFirebaseDymanicLinksUtil.process(this, intent) { type ->
+            val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
+            type?.let {
+                intent.putExtra(MainActivity.EXTRA_TYPE, it)
+            }
+            startActivityForResult(intent, CODE_MAIN)
+        }
     }
 
     /**
