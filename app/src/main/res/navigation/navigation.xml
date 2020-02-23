@@ -13,7 +13,11 @@
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_settingFragment"
-            app:destination="@id/settingNavigation" />
+            app:destination="@id/settingNavigation"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right" />
         <!-- 別のNavigationに飛べるが、別のNavigationのFragmentには飛べない -->
     </fragment>
     <navigation
