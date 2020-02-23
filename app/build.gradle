@@ -51,6 +51,10 @@ android {
     }
 }
 
+repositories {
+    maven { url "https://jitpack.io" }
+}
+
 def lifecycle_version = "2.1.0"
 
 dependencies {
@@ -93,7 +97,9 @@ dependencies {
 
     // Preference
     implementation 'androidx.preference:preference:1.1.0'
-
+    // Flow Preferences
+    implementation 'com.github.tfcporciuncula:flow-preferences:1.0.0'
+    
     // テスト
     testImplementation 'junit:junit:4.12'
     // coroutine test

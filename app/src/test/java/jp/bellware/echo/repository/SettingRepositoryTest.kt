@@ -6,6 +6,10 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.verifySequence
 import jp.bellware.echo.datastore.local.SettingLocalDataStore
+import jp.bellware.echo.util.testFlow
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
@@ -21,15 +25,17 @@ class SettingRepositoryTest {
         repository = SettingRepositoryImpl(localDataStore)
     }
 
+    @InternalCoroutinesApi
     @Test
-    fun isSoundEffect() {
+    fun isSoundEffect() = runBlocking {
         every {
             localDataStore.isSoundEffect()
-        } returns true
-        repository.isSoundEffect() shouldBe true
+        } returns testFlow(true)
+        repository.isSoundEffect().collect {
+            it shouldBe true
+        }
         verifySequence {
             localDataStore.isSoundEffect()
         }
     }
-
 }

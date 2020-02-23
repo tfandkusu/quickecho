@@ -3,7 +3,6 @@ package jp.bellware.echo.view.main
 
 import android.animation.ObjectAnimator
 import android.content.Context
-import android.content.Intent
 import android.media.AudioManager
 import android.os.Bundle
 import android.view.*
@@ -17,6 +16,7 @@ import jp.bellware.echo.store.*
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.main_control.*
 import kotlinx.android.synthetic.main.main_status.*
+import kotlinx.coroutines.InternalCoroutinesApi
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -89,8 +89,10 @@ class MainFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
+    @InternalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         // ボリューム情報の接続
         visualVolumeViewHelper.callBack = object : VisualVolumeViewHelper.Callback {
@@ -285,14 +287,6 @@ class MainFragment : Fragment() {
             return true
         }
         return false
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == CODE_SETTING) {
-            soundEffect.onSettingUpdate()
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
-        }
     }
 
     private fun callSettingFragment() {

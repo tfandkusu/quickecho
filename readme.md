@@ -22,7 +22,7 @@ https://play.google.com/store/apps/details?id=jp.bellware.echo
 
 <img src="https://github.com/tfandkusu/quickecho/blob/master/images/flux.png?raw=true">
 
-ボタンが押される等のユーザ操作が行われるとActionCreatorのメソッドが呼ばれます。ActionCreatorは処理の途中経過や結果をActionとして発行します。StoreはActionを受け取り、内容に応じてLiveDataを変更します。ActivityはLiveDataを監視し、内容に応じて表示や音声デバイス制御を行います。
+ボタンが押される等のユーザ操作が行われるとActionCreatorのメソッドが呼ばれます。ActionCreatorは処理の途中経過や結果をActionとして発行します。StoreはActionを受け取り、内容に応じてLiveDataを変更します。FragmentはLiveDataを監視し、内容に応じて表示や音声デバイス制御を行います。
 
 このアプリはAPI呼び出しやファイル書き込みがまだ無いため、ActionCreatorがそれに使用するRepositoryとその具体的実装になるDataStoreがまだ無いです。
 
@@ -52,6 +52,7 @@ RecordViewHelperとPlayViewHelperはメモリに音声を保存して再生時�
 - [ConstraintLayout](https://developer.android.com/reference/androidx/constraintlayout/widget/ConstraintLayout.html)
 - [Jetpack Navigation](https://developer.android.com/guide/navigation)
 - [EventBus](https://github.com/greenrobot/EventBus) FluxのDispatcherの実装に使っています。
+- [Flow Preferences](https://github.com/tfcporciuncula/flow-preferences/) 設定画面での効果音設定をメイン画面に反映させることに使っています。
 - [PyGithub](https://github.com/PyGithub/PyGithub) [Release](https://github.com/tfandkusu/quickecho/releases)の自動作成に使っています。
 
 # 今後の予定
