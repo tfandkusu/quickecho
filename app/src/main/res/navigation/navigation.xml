@@ -9,6 +9,6 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="jp.bellware.echo.view.main.MainFragment"
-        android:label="fragment_main"
+        android:label="@string/app_name"
         tools:layout="@layout/fragment_main" />
 </navigation>
