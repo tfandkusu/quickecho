@@ -17,6 +17,8 @@
     <color name="play">#76FF03</color>
     <color name="play_pressed">#65f10c</color>
     <color name="play_light">#CCFF90</color>
+    <!-- FABのripple color-->
+    <color name="ripple">#11000000</color>
 
     <!-- 白 -->
     <color name="white">#ffffff</color>
