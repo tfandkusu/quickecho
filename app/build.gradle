@@ -94,9 +94,9 @@ dependencies {
     // Debugビルドでは実行できないためReleaseビルドでしか使わない。
     // google-services.jsonがソースコード公開のためにモックになっているため。
     releaseImplementation 'com.google.firebase:firebase-core:17.2.2'
-    releaseImplementation 'com.google.firebase:firebase-messaging:20.1.0'
     releaseImplementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
     releaseImplementation 'com.google.firebase:firebase-messaging:20.1.0'
+    releaseImplementation 'com.google.firebase:firebase-dynamic-links:19.1.0'
 
     // Preference
     implementation 'androidx.preference:preference:1.1.0'

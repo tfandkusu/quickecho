@@ -14,11 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme">
 
+        <!-- 実行時パーミッション画面 -->
         <activity
             android:name=".start.StartActivity"
-            android:label="@string/app_name"
-            android:launchMode="singleInstance"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,21 +31,18 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="quickecho.bellware.jp"
-                    android:path="/android"
+                    android:host="quickecho.page.link"
                     android:scheme="https" />
             </intent-filter>
         </activity>
-        <!-- 実行時パーミッション画面 -->
-        <activity
-            android:name=".start.PermissionActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:label="@string/app_name" />
 
         <!-- メイン画面 -->
         <activity
             android:name=".view.main.MainActivity"
-            android:label="@string/app_name" />
+            android:label="@string/app_name">
+            <!-- このやり方は最初の画面を飛ばしてしまう -->
+            <!-- <nav-graph android:value="@navigation/navigation" /> -->
+        </activity>
 
         <!-- Firebase Messaging Service -->
         <service
@@ -55,6 +52,7 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
     </application>
 
 </manifest>

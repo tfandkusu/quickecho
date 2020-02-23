@@ -14,6 +14,10 @@ import kotlinx.android.synthetic.main.fragment_about.*
  */
 class AboutFragment : Fragment() {
 
+    companion object {
+        const val LINK_TYPE = "about"
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_about, container, false)
     }

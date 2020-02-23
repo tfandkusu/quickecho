@@ -290,7 +290,8 @@ class MainFragment : Fragment() {
     }
 
     private fun callSettingFragment() {
-        findNavController().navigate(R.id.action_mainFragment_to_settingFragment)
+        val action = MainFragmentDirections.actionMainFragmentToSettingFragment(null)
+        findNavController().navigate(action)
     }
 
     /**
