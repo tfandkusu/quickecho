@@ -5,7 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 
-object EchoFirebaseDymanicLinksUtil {
+object EchoFirebaseDynamicLinksUtil {
     /**
      * Firebase Dynamic LinksのIntentを処理する
      * @param activity

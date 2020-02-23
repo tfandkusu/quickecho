@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import jp.bellware.echo.R
-import jp.bellware.echo.util.EchoFirebaseDymanicLinksUtil
+import jp.bellware.echo.util.EchoFirebaseDynamicLinksUtil
 import jp.bellware.echo.view.main.MainActivity
 import kotlinx.android.synthetic.main.activity_start.*
 
@@ -91,7 +91,7 @@ class StartActivity : AppCompatActivity() {
      * メイン画面をFirebase Dynamic Linksのパラメータを持って呼び出す
      */
     private fun callMainActivityWithLinks() {
-        EchoFirebaseDymanicLinksUtil.process(this, intent) { type ->
+        EchoFirebaseDynamicLinksUtil.process(this, intent) { type ->
             val intent = Intent(this, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
             type?.let {
