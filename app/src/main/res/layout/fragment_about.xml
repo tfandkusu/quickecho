@@ -3,12 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="jp.bellware.echo.view.setting.AboutActivity">
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    tools:context="jp.bellware.echo.view.setting.AboutFragment">
 
     <ImageView
         android:layout_width="match_parent"

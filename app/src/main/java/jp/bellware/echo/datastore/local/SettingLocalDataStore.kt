@@ -1,9 +1,12 @@
 package jp.bellware.echo.datastore.local
 
 import android.content.SharedPreferences
+import com.tfcporciuncula.flow.FlowSharedPreferences
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 
 interface SettingLocalDataStore {
-    fun isSoundEffect(): Boolean
+    fun isSoundEffect(): Flow<Boolean>
 }
 
 /**
@@ -18,7 +21,10 @@ class SettingLocalDataStoreImpl(private val pref: SharedPreferences) : SettingLo
     /**
      * 効果音が有効か否かを取得する
      */
-    override fun isSoundEffect(): Boolean {
-        return pref.getBoolean(PREF_SOUND_EFFECT, true)
+    @ExperimentalCoroutinesApi
+    override fun isSoundEffect(): Flow<Boolean> {
+        val flowSharedPreferences = FlowSharedPreferences(pref)
+        val prefSoundEffect = flowSharedPreferences.getBoolean(PREF_SOUND_EFFECT, true)
+        return prefSoundEffect.asFlow()
     }
 }

@@ -17,12 +17,14 @@
     <color name="play">#76FF03</color>
     <color name="play_pressed">#65f10c</color>
     <color name="play_light">#CCFF90</color>
+    <!-- FABのripple color-->
+    <color name="ripple">#11000000</color>
 
     <!-- 白 -->
     <color name="white">#ffffff</color>
     <!-- テキスト色 -->
-    <color name="text">@color/abc_secondary_text_material_light</color>
-    <color name="text_dark">@color/abc_primary_text_material_light</color>
+    <color name="text">#666</color>
+    <color name="text_dark">#222</color>
     <!-- スクリーンショットの吹き出し色 -->
     <color name="ss_card">#C5CAE9</color>
     <!-- スクリーンショットの矢印色 -->

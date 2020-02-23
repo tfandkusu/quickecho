@@ -4,8 +4,13 @@ import android.content.Context
 import android.media.AudioManager
 import android.media.SoundPool
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import jp.bellware.echo.R
 import jp.bellware.echo.repository.SettingRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 /**
  * 効果音担当ViewModel
@@ -45,22 +50,28 @@ class SoundEffectViewHelper(private val context: Context,
     /**
      * ActivityのonCreateから呼ばれる
      */
-    fun onCreate(onLoadFinished: () -> Unit) {
+    @InternalCoroutinesApi
+    fun onCreate(onLoadFinished: () -> Unit) = viewModelScope.launch(Dispatchers.Main) {
         // プロセスで1度だけ事項
-        if (startId != 0 || playId != 0 || deleteId != 0)
-            return
-        //サウンドプール
-        soundPool = SoundPool(1, AudioManager.STREAM_MUSIC, 0)
-        soundPool.setOnLoadCompleteListener { _, _, _ ->
-            ++count
-            if (count >= 3)
-                onLoadFinished()
-        }
-        startId = soundPool.load(context, R.raw.start, 1)
-        playId = soundPool.load(context, R.raw.play, 1)
-        deleteId = soundPool.load(context, R.raw.delete, 1)
+        if (startId != 0 || playId != 0 || deleteId != 0) {
 
-        onSettingUpdate()
+        } else {
+            //サウンドプール
+            soundPool = SoundPool(1, AudioManager.STREAM_MUSIC, 0)
+            soundPool.setOnLoadCompleteListener { _, _, _ ->
+                ++count
+                if (count >= 3)
+                    onLoadFinished()
+            }
+            startId = soundPool.load(context, R.raw.start, 1)
+            playId = soundPool.load(context, R.raw.play, 1)
+            deleteId = soundPool.load(context, R.raw.delete, 1)
+
+            repository.isSoundEffect().collect {
+                isEnabled = it
+            }
+        }
+
     }
 
     /**
@@ -97,8 +108,4 @@ class SoundEffectViewHelper(private val context: Context,
         }
     }
 
-    fun onSettingUpdate() {
-        // 設定読み込み
-        isEnabled = repository.isSoundEffect()
-    }
 }
