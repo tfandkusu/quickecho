@@ -76,8 +76,11 @@ class MainFragment : Fragment() {
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
-        callback.isEnabled = true
-        // TODO overrideBackKeyをLiveDataにする
+        store.overrideBackKey.observe(this, Observer { flag ->
+            flag?.let {
+                callback.isEnabled = it
+            }
+        })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

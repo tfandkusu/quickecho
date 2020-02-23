@@ -160,7 +160,7 @@ class MainStore(actionReceiver: ActionReceiver) : Store(actionReceiver) {
     /**
      * バックキーのデフォルト挙動を防ぐ
      */
-    var overrideBackKey = false
+    val overrideBackKey = MutableLiveData<Boolean>(false)
 
     init {
         // 初期状態設定
@@ -188,7 +188,7 @@ class MainStore(actionReceiver: ActionReceiver) : Store(actionReceiver) {
         clickable = true
         init()
         // バックキーをオーバーライド
-        overrideBackKey = false
+        overrideBackKey.value = false
 
     }
 
@@ -230,7 +230,7 @@ class MainStore(actionReceiver: ActionReceiver) : Store(actionReceiver) {
         // タイマースタート
         requestForTimer.value = TimerRequest.START
         // バックキーをオーバーライド
-        overrideBackKey = true
+        overrideBackKey.value = true
     }
 
     /**
@@ -338,7 +338,7 @@ class MainStore(actionReceiver: ActionReceiver) : Store(actionReceiver) {
      */
     fun onEvent(action: MainBackPressedAction) {
         // バックキーを終了にする
-        overrideBackKey = false
+        overrideBackKey.value = false
         // 削除ボタンを押した扱いにする
         clickDelete.value = true
     }
