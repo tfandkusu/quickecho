@@ -1,9 +1,13 @@
 package jp.bellware.echo.start
 
 import android.Manifest
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import androidx.appcompat.app.AlertDialog
@@ -12,6 +16,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import jp.bellware.echo.R
 import jp.bellware.echo.util.EchoFirebaseDynamicLinksUtil
+import jp.bellware.echo.util.MyFirebaseMessagingService
 import jp.bellware.echo.view.main.MainActivity
 import kotlinx.android.synthetic.main.activity_start.*
 
@@ -23,6 +28,7 @@ class StartActivity : AppCompatActivity() {
         private const val CODE_PERMISSION = 1
 
         private const val CODE_MAIN = 2
+
     }
 
 
@@ -32,8 +38,10 @@ class StartActivity : AppCompatActivity() {
         //ツールバー設定
         this.setSupportActionBar(toolbar)
         if (savedInstanceState == null) {
-            //起動時のみ
+            // 起動時のみ
             checkPermission()
+            // 通知チャンネルの登録
+            createNotificationChannel()
         }
     }
 
@@ -124,5 +132,23 @@ class StartActivity : AppCompatActivity() {
                 Uri.parse("package:$packageName"))
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
+    }
+
+
+    /**
+     * 通知チャンネルを登録する
+     */
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationManager =
+                    getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val name = getString(R.string.channel_name)
+            val descriptionText = getString(R.string.channel_description)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(MyFirebaseMessagingService.CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+            }
+            notificationManager.createNotificationChannel(channel)
+        }
     }
 }
