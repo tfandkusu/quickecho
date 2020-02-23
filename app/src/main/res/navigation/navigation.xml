@@ -10,5 +10,18 @@
         android:id="@+id/mainFragment"
         android:name="jp.bellware.echo.view.main.MainFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_settingFragment"
+            app:destination="@id/settingNavigation" />
+        <!-- 別のNavigationに飛べるが、別のNavigationのFragmentには飛べない -->
+    </fragment>
+    <navigation
+        app:startDestination="@+id/settingFragment"
+        android:id="@+id/settingNavigation">
+        <fragment
+            android:id="@+id/settingFragment"
+            android:name="jp.bellware.echo.view.setting.SettingFragment"
+            android:label="@string/title_setting" />
+    </navigation>
 </navigation>

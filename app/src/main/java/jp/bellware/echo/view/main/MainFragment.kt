@@ -10,10 +10,10 @@ import android.view.*
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import jp.bellware.echo.R
 import jp.bellware.echo.actioncreator.MainActionCreator
 import jp.bellware.echo.store.*
-import jp.bellware.echo.view.setting.SettingActivity
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.main_control.*
 import kotlinx.android.synthetic.main.main_status.*
@@ -281,7 +281,7 @@ class MainFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         if (id == R.id.setting) {
-            callSettingActivity()
+            callSettingFragment()
             return true
         }
         return false
@@ -295,9 +295,8 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun callSettingActivity() {
-        val intent = Intent(requireContext(), SettingActivity::class.java)
-        startActivityForResult(intent, CODE_SETTING)
+    private fun callSettingFragment() {
+        findNavController().navigate(R.id.action_mainFragment_to_settingFragment)
     }
 
     /**
