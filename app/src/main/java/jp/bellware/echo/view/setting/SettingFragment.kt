@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import jp.bellware.echo.R
@@ -39,13 +40,17 @@ class SettingFragment : PreferenceFragmentCompat() {
                 callPP()
                 true
             }
-
         }
-
+        val safeArgs: SettingFragmentArgs by navArgs()
+        if (safeArgs.type == AboutFragment.LINK_TYPE) {
+            val action = SettingFragmentDirections.actionSettingFragmentToAboutFragmentWithNoAnimation()
+            findNavController().navigate(action)
+        }
     }
 
     private fun callAboutFragment() {
-        findNavController().navigate(R.id.action_settingFragment_to_aboutFragment)
+        val action = SettingFragmentDirections.actionSettingFragmentToAboutFragment()
+        findNavController().navigate(action)
     }
 
     private fun callOSS() {

@@ -9,6 +9,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import jp.bellware.echo.R
+import jp.bellware.echo.view.setting.AboutFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -37,6 +38,12 @@ class MainActivity : AppCompatActivity() {
 
         //ボリューム調整を音楽にする
         volumeControlStream = AudioManager.STREAM_MUSIC
+        // ディープリンクを処理する
+        val type = intent.getStringExtra(EXTRA_TYPE)
+        if (type == AboutFragment.LINK_TYPE) {
+            val action = MainFragmentDirections.actionMainFragmentToSettingNavigationWithNoAnimation(AboutFragment.LINK_TYPE)
+            navController.navigate(action)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

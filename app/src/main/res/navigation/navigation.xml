@@ -13,49 +13,61 @@
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_settingFragment"
-            app:destination="@id/settingNavigation"
+            app:destination="@id/settingFragment"
             app:enterAnim="@anim/slide_in_from_right"
             app:exitAnim="@anim/slide_out_to_left"
             app:popEnterAnim="@anim/slide_in_from_left"
             app:popExitAnim="@anim/slide_out_to_right" />
-        <!-- 別のNavigationに飛べるが、別のNavigationのFragmentには飛べない -->
+        <action
+            android:id="@+id/action_mainFragment_to_settingNavigation_withNoAnimation"
+            app:destination="@id/settingFragment"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right" />
     </fragment>
-    <navigation
-        app:startDestination="@+id/settingFragment"
-        android:id="@+id/settingNavigation">
-        <fragment
-            android:id="@+id/settingFragment"
-            android:name="jp.bellware.echo.view.setting.SettingFragment"
-            android:label="@string/title_setting">
-            <action
-                android:id="@+id/action_settingFragment_to_aboutFragment"
-                app:destination="@id/aboutFragment"
-                app:enterAnim="@anim/slide_in_from_right"
-                app:exitAnim="@anim/slide_out_to_left"
-                app:popEnterAnim="@anim/slide_in_from_left"
-                app:popExitAnim="@anim/slide_out_to_right" />
-            <action
-                android:id="@+id/action_settingFragment_to_htmlViewerFragment"
-                app:destination="@id/htmlViewerFragment"
-                app:enterAnim="@anim/slide_in_from_right"
-                app:exitAnim="@anim/slide_out_to_left"
-                app:popEnterAnim="@anim/slide_in_from_left"
-                app:popExitAnim="@anim/slide_out_to_right" />
-        </fragment>
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="jp.bellware.echo.view.setting.SettingFragment"
+        android:label="@string/title_setting">
+        <action
+            android:id="@+id/action_settingFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right" />
+        <action
+            android:id="@+id/action_settingFragment_to_aboutFragment_withNoAnimation"
+            app:destination="@id/aboutFragment"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right" />
+        <action
+            android:id="@+id/action_settingFragment_to_htmlViewerFragment"
+            app:destination="@id/htmlViewerFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right" />
+        <argument
+            android:name="type"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 
-        <fragment
-            android:id="@+id/aboutFragment"
-            android:name="jp.bellware.echo.view.setting.AboutFragment"
-            android:label="@string/pref_information"
-            tools:layout="@layout/fragment_about" />
-        <fragment
-            android:id="@+id/htmlViewerFragment"
-            android:name="jp.bellware.echo.view.setting.HtmlViewerFragment"
-            android:label="@string/pref_oss">
-            <argument
-                android:name="url"
-                app:argType="string" />
-        </fragment>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="jp.bellware.echo.view.setting.AboutFragment"
+        android:label="@string/pref_information"
+        tools:layout="@layout/fragment_about">
+        <!-- このやり方は最初の画面を飛ばしてしまう -->
+        <!-- <deepLink app:uri="quickecho.page.link/?type=about" /> -->
+    </fragment>
+    <fragment
+        android:id="@+id/htmlViewerFragment"
+        android:name="jp.bellware.echo.view.setting.HtmlViewerFragment"
+        android:label="@string/pref_oss">
+        <argument
+            android:name="url"
+            app:argType="string" />
+    </fragment>
 
-    </navigation>
 </navigation>
