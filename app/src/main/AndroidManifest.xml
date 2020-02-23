@@ -51,10 +51,6 @@
             android:name=".view.setting.HtmlViewerActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:label="@string/pref_oss" />
-        <!-- アプリについて画面 -->
-        <activity
-            android:name=".view.setting.AboutActivity"
-            android:label="@string/pref_information" />
 
         <!-- Firebase Messaging Service -->
         <service

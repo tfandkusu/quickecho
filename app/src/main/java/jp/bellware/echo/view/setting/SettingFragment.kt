@@ -4,6 +4,7 @@ package jp.bellware.echo.view.setting
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import jp.bellware.echo.R
@@ -19,7 +20,7 @@ class SettingFragment : PreferenceFragmentCompat() {
             //商品情報
             val pref = findPreference<Preference>(PREF_ABOUT)
             pref?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                callAboutActivity()
+                callAboutFragment()
                 true
             }
         }
@@ -43,9 +44,8 @@ class SettingFragment : PreferenceFragmentCompat() {
 
     }
 
-    private fun callAboutActivity() {
-        val intent = Intent(activity, AboutActivity::class.java)
-        startActivity(intent)
+    private fun callAboutFragment() {
+        findNavController().navigate(R.id.action_settingFragment_to_aboutFragment)
     }
 
     private fun callOSS() {
