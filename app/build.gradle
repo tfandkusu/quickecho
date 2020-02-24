@@ -5,8 +5,8 @@ apply plugin: 'io.fabric'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 
 def major = 1
-def minor = 3
-def patch = 3
+def minor = 4
+def patch = 0
 
 
 android {
