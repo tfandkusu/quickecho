@@ -49,8 +49,7 @@ class StartActivity : AppCompatActivity() {
             createNotificationChannel()
         }
 
-        val c = ClassInModule()
-        c.func()
+        ClassInModule.func()
     }
 
 
