@@ -111,6 +111,9 @@ dependencies {
     testImplementation 'io.kotlintest:kotlintest-runner-junit5:3.3.2'
     // MockK
     testImplementation "io.mockk:mockk:1.9.2"
+
+    // Module
+    implementation project(':mymodule')
 }
 
 apply plugin: 'com.google.gms.google-services'

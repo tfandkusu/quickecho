@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.tfandkusu.mymodule.ClassInModule
 import jp.bellware.echo.R
 import jp.bellware.echo.util.EchoFirebaseDynamicLinksUtil
 import jp.bellware.echo.view.main.MainActivity
@@ -47,6 +48,9 @@ class StartActivity : AppCompatActivity() {
             // 通知チャンネルの登録
             createNotificationChannel()
         }
+
+        val c = ClassInModule()
+        c.func()
     }
 
 
