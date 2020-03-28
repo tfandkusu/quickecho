@@ -28,7 +28,7 @@ https://play.google.com/store/apps/details?id=jp.bellware.echo
 
 ## メイン画面View層の設計
 
-<img src="https://github.com/tfandkusu/quickecho/blob/master/images/MainActivity.png?raw=true">
+<img src="https://github.com/tfandkusu/quickecho/blob/master/images/MainFragment.png?raw=true">
 
 このアプリは音声の録音再生、インタラクティブなエフェクトなどView層が大きいため、役割別ViewHelperに処理を分けています。
 
