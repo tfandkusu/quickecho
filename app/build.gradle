@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'io.fabric'
 apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
 def major = 1
 def minor = 4
@@ -102,6 +103,8 @@ dependencies {
     implementation 'androidx.preference:preference:1.1.0'
     // Flow Preferences
     implementation 'com.github.tfcporciuncula:flow-preferences:1.0.0'
+    // oss-license
+    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
 
     // テスト
     testImplementation 'junit:junit:4.12'
