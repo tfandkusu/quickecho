@@ -55,6 +55,7 @@ class SettingFragment : PreferenceFragmentCompat() {
     }
 
     private fun callOSS() {
+        OssLicensesMenuActivity.setActivityTitle(getString(R.string.pref_oss));
         val intent = Intent(requireContext(), OssLicensesMenuActivity::class.java)
         intent.putExtra("title", getString(R.string.oss_license_title))
         startActivity(intent)
