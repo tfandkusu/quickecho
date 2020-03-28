@@ -1,6 +1,7 @@
 package jp.bellware.echo.view.setting
 
 //import com.google.android.gms.appinvite.AppInviteInvitation;
+
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -8,8 +9,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import jp.bellware.echo.R
-
 
 /**
  * 設定画面のフラグメント
@@ -54,8 +55,10 @@ class SettingFragment : PreferenceFragmentCompat() {
     }
 
     private fun callOSS() {
-        val action = SettingFragmentDirections.actionSettingFragmentToHtmlViewerFragment("file:///android_asset/license.txt")
-        findNavController().navigate(action)
+        OssLicensesMenuActivity.setActivityTitle(getString(R.string.pref_oss));
+        val intent = Intent(requireContext(), OssLicensesMenuActivity::class.java)
+        intent.putExtra("title", getString(R.string.oss_license_title))
+        startActivity(intent)
     }
 
     private fun callPP() {
