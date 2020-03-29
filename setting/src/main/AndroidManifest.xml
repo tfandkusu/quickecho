@@ -1,2 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="jp.bellware.echo.setting" />
+    package="jp.bellware.echo.setting">
+
+    <application>
+        <!-- Open Source License -->
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
+            android:theme="@style/OSSLicenseTheme" />
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+            android:theme="@style/OSSLicenseTheme" />
+    </application>
+</manifest>
