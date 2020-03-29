@@ -1,17 +1,17 @@
 package jp.bellware.echo.data.local
 
 import io.kotlintest.shouldBe
-import jp.bellware.echo.datastore.local.SoundLocalDataStore
-import jp.bellware.echo.datastore.local.SoundLocalDataStoreImpl
+import jp.bellware.echo.datastore.local.SoundMemoryLocalDataStore
+import jp.bellware.echo.datastore.local.SoundMemoryLocalDataStoreImpl
 import org.junit.Before
 import org.junit.Test
 
-class SoundLocalDataStoreTest {
-    private lateinit var dataStore: SoundLocalDataStore
+class SoundMemoryLocalDataStoreTest {
+    private lateinit var dataStore: SoundMemoryLocalDataStore
 
     @Before
     fun setUp() {
-        dataStore = SoundLocalDataStoreImpl()
+        dataStore = SoundMemoryLocalDataStoreImpl()
     }
 
     @Test

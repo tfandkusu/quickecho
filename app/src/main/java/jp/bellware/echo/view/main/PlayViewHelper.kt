@@ -7,7 +7,7 @@ import android.media.AudioTrack
 import android.os.Handler
 import android.os.Process
 import androidx.lifecycle.ViewModel
-import jp.bellware.echo.datastore.local.SoundLocalDataStore
+import jp.bellware.echo.repository.SoundRepository
 import jp.bellware.echo.util.filter.FadeOut
 import jp.bellware.echo.util.filter.FirstCut
 import jp.bellware.echo.util.filter.PacketConverter
@@ -16,9 +16,9 @@ import java.util.*
 
 /**
  * 音声再生担当ViewHelper
- * @param storage 録音データ格納
+ * @param repository 録音データ格納
  */
-class PlayViewHelper(private val storage: SoundLocalDataStore) : ViewModel() {
+class PlayViewHelper(private val repository: SoundRepository) : ViewModel() {
 
     companion object {
         /**
@@ -58,7 +58,7 @@ class PlayViewHelper(private val storage: SoundLocalDataStore) : ViewModel() {
      */
     fun play(onEndListener: () -> Unit) {
         stop()
-        if (storage.length == 0) {
+        if (repository.length == 0) {
             //長さ0の時はすぐに終わる
             onEndListener()
             return
@@ -69,7 +69,7 @@ class PlayViewHelper(private val storage: SoundLocalDataStore) : ViewModel() {
         val format = AudioFormat.Builder().setChannelMask(AudioFormat.CHANNEL_OUT_MONO)
                 .setEncoding(AudioFormat.ENCODING_PCM_16BIT).setSampleRate(44100).build()
         track = AudioTrack(attributes, format,
-                storage.packetSize * 2, AudioTrack.MODE_STREAM, AudioManager.AUDIO_SESSION_ID_GENERATE)
+                repository.packetSize * 2, AudioTrack.MODE_STREAM, AudioManager.AUDIO_SESSION_ID_GENERATE)
         //最初のパケットは効果音が入っていることがあるので捨てる
         index = 1
         thread = Thread(Runnable {
@@ -77,9 +77,9 @@ class PlayViewHelper(private val storage: SoundLocalDataStore) : ViewModel() {
             Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_AUDIO)
             if (false) {
                 //デバッグ用セーブ
-                storage.save()
+                repository.saveForDebug()
             }
-            fo = FadeOut(storage.length, SAMPLE_RATE * 3 / 10)
+            fo = FadeOut(repository.length, SAMPLE_RATE * 3 / 10)
             fc.reset()
             track?.let {
                 it.play()
@@ -120,7 +120,7 @@ class PlayViewHelper(private val storage: SoundLocalDataStore) : ViewModel() {
     }
 
     private fun pullPacket(onEndListener: () -> Unit): FloatArray? {
-        val packet = storage[index]
+        val packet = repository[index]
         ++index
         if (packet == null) {
             //終端
@@ -142,7 +142,7 @@ class PlayViewHelper(private val storage: SoundLocalDataStore) : ViewModel() {
         for (i in packet.indices) {
             //ボリューム調整
             var s = packet[i]
-            s /= storage.gain
+            s /= repository.gain
             //フェードアウト
             fo.filter(s)
             //視覚的ボリューム
