@@ -1,0 +1,12 @@
+apply plugin: 'com.android.library'
+apply from: rootProject.file('gradle/view-common.gradle')
+
+dependencies {
+    implementation project(':flux')
+    implementation project(':repository')
+    testImplementation project(':test')
+    // Preference
+    implementation "androidx.preference:preference:$preference_version"
+    // oss-license
+    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
+}

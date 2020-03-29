@@ -4,6 +4,8 @@ import android.app.Application
 import jp.bellware.echo.actioncreator.DelayActionCreatorHelper
 import jp.bellware.echo.actioncreator.DelayActionCreatorHelperImpl
 import jp.bellware.echo.actioncreator.MainActionCreator
+import jp.bellware.echo.navigation.SettingNavigation
+import jp.bellware.echo.navigation.SettingNavigationImpl
 import jp.bellware.echo.store.MainStore
 import jp.bellware.echo.view.main.*
 import org.koin.android.ext.koin.androidContext
@@ -18,6 +20,8 @@ object KoinSetting {
     fun start(application: Application) {
         // DIの設定
         val appModule = module {
+            // Navigation
+            single { SettingNavigationImpl() as SettingNavigation }
             // ActionCreator
             single { DelayActionCreatorHelperImpl() as DelayActionCreatorHelper }
             single { MainActionCreator(get(), get()) }

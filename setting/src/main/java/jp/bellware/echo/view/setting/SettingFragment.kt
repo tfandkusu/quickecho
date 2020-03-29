@@ -5,24 +5,27 @@ package jp.bellware.echo.view.setting
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
-import jp.bellware.echo.R
+import jp.bellware.echo.navigation.SettingNavigation
+import jp.bellware.echo.setting.R
+import org.koin.android.ext.android.inject
 
 /**
  * 設定画面のフラグメント
  */
 class SettingFragment : PreferenceFragmentCompat() {
+
+    private val navigation: SettingNavigation by inject()
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.setting)
         run {
             //商品情報
             val pref = findPreference<Preference>(PREF_ABOUT)
             pref?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                callAboutFragment()
+                navigation.navigateToAbout(this)
                 true
             }
         }
@@ -42,16 +45,7 @@ class SettingFragment : PreferenceFragmentCompat() {
                 true
             }
         }
-        val safeArgs: SettingFragmentArgs by navArgs()
-        if (safeArgs.type == AboutFragment.LINK_TYPE) {
-            val action = SettingFragmentDirections.actionSettingFragmentToAboutFragmentWithNoAnimation()
-            findNavController().navigate(action)
-        }
-    }
-
-    private fun callAboutFragment() {
-        val action = SettingFragmentDirections.actionSettingFragmentToAboutFragment()
-        findNavController().navigate(action)
+        navigation.navigateToLink(this)
     }
 
     private fun callOSS() {
