@@ -7,7 +7,7 @@ apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
 def major = 1
 def minor = 4
-def patch = 0
+def patch = 1
 
 
 android {
