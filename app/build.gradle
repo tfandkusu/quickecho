@@ -43,7 +43,7 @@ def lifecycle_version = "2.2.0"
 def arch_version = "2.1.0"
 
 dependencies {
-    implementation project(':localDataStore')
+    implementation project(':repository')
     testImplementation project(':test')
 
     implementation 'androidx.cardview:cardview:1.0.0'
@@ -58,11 +58,6 @@ dependencies {
     // Material Component
     // TODO アップデートする
     implementation 'com.google.android.material:material:1.0.0'
-
-    // KOIN
-    def koin_version = '2.0.1'
-    implementation "org.koin:koin-android:$koin_version"
-    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
 
     // FluxのためにEventBusを使う
     implementation 'de.greenrobot:eventbus:2.4.1'
