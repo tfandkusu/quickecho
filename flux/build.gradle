@@ -1,0 +1,9 @@
+apply plugin: 'com.android.library'
+apply from: rootProject.file('gradle/view-common.gradle')
+
+
+dependencies {
+    testImplementation project(':test')
+    // FluxのためにEventBusを使う
+    implementation 'de.greenrobot:eventbus:2.4.1'
+}
