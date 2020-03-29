@@ -10,9 +10,9 @@ import java.util.*
 
 
 /**
- * 録音音声を保持する
+ * 録音音声をメモリーに保持する
  */
-interface SoundLocalDataStore {
+interface SoundMemoryLocalDataStore {
 
     /**
      * 最大のパケットの大きさ
@@ -54,7 +54,7 @@ interface SoundLocalDataStore {
 /**
  * 録音音声を保持する
  */
-class SoundLocalDataStoreImpl : SoundLocalDataStore {
+class SoundMemoryLocalDataStoreImpl : SoundMemoryLocalDataStore {
 
     /**
      * 最大のパケットの大きさ

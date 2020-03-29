@@ -7,7 +7,7 @@ import android.media.AudioTrack
 import android.media.MediaRecorder
 import android.os.Process
 import androidx.lifecycle.ViewModel
-import jp.bellware.echo.datastore.local.SoundLocalDataStore
+import jp.bellware.echo.repository.SoundRepository
 import jp.bellware.echo.util.BWU
 import jp.bellware.echo.util.filter.FirstCut
 import jp.bellware.echo.util.filter.PacketConverter
@@ -16,10 +16,10 @@ import kotlin.math.max
 
 /**
  * 録音担当ViewHelper
- * @param storage 記録担当
+ * @param repository 記録担当
  */
 class RecordViewHelper(
-        private val storage: SoundLocalDataStore) : ViewModel() {
+        private val repository: SoundRepository) : ViewModel() {
 
     companion object {
         /**
@@ -153,7 +153,7 @@ class RecordViewHelper(
     private fun addPacket(packet: ShortArray) {
         if (recording) {
             val fd = PacketConverter.convert(packet)
-            storage.add(fd)
+            repository.add(fd)
             for (s in fd) {
                 vvp.add(fc.filter(s))
             }
@@ -165,6 +165,6 @@ class RecordViewHelper(
      */
     @Synchronized
     private fun clear() {
-        storage.clear()
+        repository.clear()
     }
 }
