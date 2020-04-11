@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="warning_time_limit">録音可能時間は最長2分です。</string>
+    <string name="warning_volume">音楽ボリュームがミュートになっています。</string>
+    <string name="warning_no_sound">なにも録音されていません。</string>
+</resources>

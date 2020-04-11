@@ -1,15 +1,11 @@
 package jp.bellware.echo.di
 
 import android.app.Application
-import jp.bellware.echo.actioncreator.DelayActionCreatorHelper
-import jp.bellware.echo.actioncreator.DelayActionCreatorHelperImpl
-import jp.bellware.echo.actioncreator.MainActionCreator
+import jp.bellware.echo.navigation.MainNavigation
+import jp.bellware.echo.navigation.MainNavigationImpl
 import jp.bellware.echo.navigation.SettingNavigation
 import jp.bellware.echo.navigation.SettingNavigationImpl
-import jp.bellware.echo.store.MainStore
-import jp.bellware.echo.view.main.*
 import org.koin.android.ext.koin.androidContext
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 
@@ -22,22 +18,11 @@ object KoinSetting {
         val appModule = module {
             // Navigation
             single { SettingNavigationImpl() as SettingNavigation }
-            // ActionCreator
-            single { DelayActionCreatorHelperImpl() as DelayActionCreatorHelper }
-            single { MainActionCreator(get(), get()) }
-            // Store
-            viewModel { MainStore(get()) }
-            // ViewHelper
-            viewModel { SoundEffectViewHelper(androidContext(), get()) }
-            viewModel { RecordViewHelper(get()) }
-            viewModel { PlayViewHelper(get()) }
-            viewModel { VisualVolumeViewHelper() }
-            viewModel { TimerViewHelper() }
-            single { AnimatorViewHelper() }
+            single { MainNavigationImpl() as MainNavigation }
         }
         startKoin {
             androidContext(application.applicationContext)
-            modules(listOf(appModule, fluxModule, repositoryModule, localDataStoreModuleInRepositoryModule))
+            modules(listOf(appModule, localDataStoreModuleInMainModule, repositoryModuleInMainModule, fluxModule, mainModule))
         }
     }
 }

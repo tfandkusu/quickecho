@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">エコー</string>
+    <string name="app_name_long">クイックエコー</string>
+    <string name="error">エラー</string>
+    <string name="ok">OK</string>
+    <string name="cancel">キャンセル</string>
+    <string name="title_setting">設定</string>
+</resources>
