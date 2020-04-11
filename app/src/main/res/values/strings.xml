@@ -1,62 +1,9 @@
 <resources>
-    <string name="app_name">Echo</string>
-    <string name="app_name_long">Quick Echo</string>
-
     <!-- 実行時許可 -->
     <string name="title_permission">Information</string>
     <string name="message_permission">This app needs microphone permission.</string>
-    <!-- メイン画面 -->
-    <string name="black">Black</string>
-    <string name="script">Script</string>
-    <string name="pr">PR</string>
-
-    <!-- 警告表示 -->
-    <string name="warning_time_limit">The max recording length is 2 min.</string>
-    <string name="warning_volume">The music volume is mute.</string>
-    <string name="warning_no_sound">No sound is recorded.</string>
-    <string name="warning_tongue_twister" translatable="false">It has only in Japanese</string>
-
-    <!-- 設定画面 -->
-    <string name="title_setting">Settings</string>
-    <string name="pref_sound">Sound effect</string>
-    <string name="pref_information">Information</string>
-    <string name="pref_oss">Open source license</string>
-    <string name="version" translatable="false">Version</string>
-    <string name="version_sample" translatable="false">Version 1.0.0</string>
-    <string name="copyright" translatable="false">&#169; 2015 Bellware</string>
-    <string name="pref_privacy_policy">Privacy Policy</string>
 
     <!-- 通知 -->
     <string name="channel_name">Main</string>
     <string name="channel_description">Main channel</string>
-
-
-    <!-- 台本 -->
-    <string name="login">Login</string>
-    <string name="error">Error</string>
-    <string name="ok">OK</string>
-    <string name="cancel">Cancel</string>
-    <string name="message_login">You can edit the script when you log in.</string>
-    <string name="server_client_id" translatable="false">805799102419-e6b73aagj0b6kri74ctolv8l268p2t1h.apps.googleusercontent.com</string>
-    <string name="error_internet_connection">Internet connection is required.</string>
-    <string name="error_auth">Authentication failed.</string>
-    <string name="error_google_auth">Google authentication failed. There may be no Internet connection.</string>
-    <string name="error_unknown_response">Unknown response.</string>
-    <string name="error_unknown_error">Unknown error.</string>
-
-    <!-- 広告 -->
-    <!-- テスト用バナー -->
-    <string name="banner_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
-    <!-- 分析 -->
-    <string name="tracking_id" translatable="false">UA-66898906-2</string>
-
-    <!-- 自動生成 -->
-    <string name="hello_world" translatable="false">Hello world!</string>
-    <string name="action_settings" translatable="false">Settings</string>
-    <string name="title_activity_start" translatable="false">StartActivity</string>
-    <string name="title_activity_setting" translatable="false">SettingActivity</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
-    <string name="title_activity_about" translatable="false">AboutActivity</string>
 </resources>

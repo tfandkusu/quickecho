@@ -1,0 +1,16 @@
+apply plugin: 'com.android.library'
+apply from: rootProject.file('gradle/view-common.gradle')
+
+dependencies {
+    implementation project(':flux')
+    implementation project(':repository')
+    testImplementation project(':test')
+
+    implementation 'androidx.cardview:cardview:1.0.0'
+
+    // ConstraintLayout
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+
+    releaseImplementation "com.google.firebase:firebase-core:$firebase_core_version"
+
+}

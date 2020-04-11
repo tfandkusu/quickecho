@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pref_oss">オープンソースライセンス</string>
+    <string name="pref_sound">効果音</string>
+    <string name="pref_information">アプリについて</string>
+    <string name="pref_privacy_policy">プライバシーポリシー</string>
+</resources>

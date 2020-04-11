@@ -1,1 +1,7 @@
 include ':app'
+include ':localDataStore'
+include ':test'
+include ':repository'
+include ':flux'
+include ':setting'
+include ':main'

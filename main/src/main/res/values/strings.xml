@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 警告表示 -->
+    <string name="warning_time_limit">The max recording length is 2 min.</string>
+    <string name="warning_volume">The music volume is mute.</string>
+    <string name="warning_no_sound">No sound is recorded.</string>
+    <string name="warning_tongue_twister" translatable="false">It has only in Japanese</string>
+</resources>
