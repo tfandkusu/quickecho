@@ -24,7 +24,7 @@ https://play.google.com/store/apps/details?id=jp.bellware.echo
 
 ボタンが押される等のユーザ操作が行われるとActionCreatorのメソッドが呼ばれます。ActionCreatorは処理の途中経過や結果をActionとして発行します。StoreはActionを受け取り、内容に応じてLiveDataを変更します。FragmentはLiveDataを監視し、内容に応じて表示や音声デバイス制御を行います。
 
-このアプリはAPI呼び出しやファイル書き込みがまだ無いため、ActionCreatorがそれに使用するRepositoryとその具体的実装になるDataStoreがまだ無いです。
+このアプリはAPI呼び出しやファイル書き込みがまだ無いため、ActionCreatorがそれに使用するRepositoryとその具体的実装になるDataStoreがまだ無いです。(後述するView層に配置している録音や効果音機能から呼ばれるRepositoryはあります。)
 
 ## メイン画面View層の設計
 
@@ -40,6 +40,38 @@ https://play.google.com/store/apps/details?id=jp.bellware.echo
 - TimerViewHelper 最大録音時間の管理
 
 RecordViewHelperとPlayViewHelperはメモリに音声を保存して再生時に読み出すために、お互いシングルインスタンスなSoundLocalDataStoreを持っています。
+
+## マルチモジュール
+
+<img src="https://github.com/tfandkusu/quickecho/blob/master/images/MultiModule.png?raw=true">
+
+このアプリは機能別とレイヤー別のマルチモジュールが採用されています。
+
+## app
+
+DIコンテナの[Koin](https://insert-koin.io/)の設定を行います。
+Activityを呼び出し[Jetpack Navigation](https://developer.android.com/guide/navigation)を構築します。
+画面遷移のためのオブジェクトはDIを使い各機能に注入します。
+
+## main
+
+音声の録音と再生を行うメインとなるFragmentを担当します。
+
+## setting
+
+設定画面のFragmentを担当します。
+
+## flux
+
+画面構築のために共通で使われるクラスとリソースを提供します。
+
+## repository
+
+情報の出し入れを担当します。どこに情報があるかについては使用者は関与しません。
+
+## localDataStore
+
+端末内のメモリまたはファイルにある情報の出し入れを担当します。
 
 # 使用技術
 
@@ -58,5 +90,3 @@ RecordViewHelperとPlayViewHelperはメモリに音声を保存して再生時�
 # 今後の予定
 
 - 録音音声を保存して再生する機能の追加
-
-
