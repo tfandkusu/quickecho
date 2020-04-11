@@ -47,29 +47,29 @@ RecordViewHelperとPlayViewHelperはメモリに音声を保存して再生時�
 
 このアプリは機能別とレイヤー別のマルチモジュールが採用されています。
 
-## app
+### app
 
 DIコンテナの[Koin](https://insert-koin.io/)の設定を行います。
 Activityを呼び出し[Jetpack Navigation](https://developer.android.com/guide/navigation)を構築します。
 画面遷移のためのオブジェクトはDIを使い各機能に注入します。
 
-## main
+### main
 
 音声の録音と再生を行うメインとなるFragmentを担当します。
 
-## setting
+### setting
 
 設定画面のFragmentを担当します。
 
-## flux
+### flux
 
 画面構築のために共通で使われるクラスとリソースを提供します。
 
-## repository
+### repository
 
 情報の出し入れを担当します。どこに情報があるかについては使用者は関与しません。
 
-## localDataStore
+### localDataStore
 
 端末内のメモリまたはファイルにある情報の出し入れを担当します。
 
