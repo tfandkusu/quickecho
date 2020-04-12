@@ -43,7 +43,7 @@ GEM
     multipart-post (2.1.1)
     nap (1.1.0)
     no_proxy_fix (0.1.2)
-    octokit (4.18.0)
+    octokit (4.16.0)
       faraday (>= 0.9)
       sawyer (~> 0.8.0, >= 0.5.3)
     oga (3.2)
@@ -68,6 +68,7 @@ PLATFORMS
 DEPENDENCIES
   danger (= 6.2.2)
   danger-android_lint (= 0.0.8)
+  octokit (= 4.16.0)
 
 BUNDLED WITH
    2.1.4
