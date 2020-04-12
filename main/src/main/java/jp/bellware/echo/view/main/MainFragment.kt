@@ -23,14 +23,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainFragment : Fragment() {
 
-
-    companion object {
-        /**
-         * 不使用としてDangerが指摘すると思う
-         */
-        private const val CODE_SETTING = 1
-    }
-
     /**
      * 画面遷移担当
      */
