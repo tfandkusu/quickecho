@@ -86,6 +86,7 @@ Activityを呼び出し[Jetpack Navigation](https://developer.android.com/guide/
 - [EventBus](https://github.com/greenrobot/EventBus) FluxのDispatcherの実装に使っています。
 - [Flow Preferences](https://github.com/tfcporciuncula/flow-preferences/) 設定画面での効果音設定をメイン画面に反映させることに使っています。
 - [PyGithub](https://github.com/PyGithub/PyGithub) [Release](https://github.com/tfandkusu/quickecho/releases)の自動作成に使っています。
+- [Danger](https://github.com/danger/danger)
 
 # 今後の予定
 
