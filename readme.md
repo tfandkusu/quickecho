@@ -39,7 +39,7 @@ https://play.google.com/store/apps/details?id=jp.bellware.echo
 - AnimatorViewHelper ボタンと中心にある状態表示の表示非表示アニメーション
 - TimerViewHelper 最大録音時間の管理
 
-RecordViewHelperとPlayViewHelperはメモリに音声を保存して再生時に読み出すために、お互いシングルインスタンスなSoundLocalDataStoreを持っています。
+RecordViewHelperとPlayViewHelperはメモリに音声を保存して再生時に読み出すために、お互いシングルインスタンスなSoundRepositoryを持っています。
 
 ## マルチモジュール
 
