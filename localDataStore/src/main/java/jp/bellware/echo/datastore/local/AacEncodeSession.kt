@@ -37,16 +37,16 @@ class AacEncodeSession {
 
 
     fun start(context: Context) {
-        // Make media codec
+        // MediaCodecの作成
         val mediaCodecList = MediaCodecList(MediaCodecList.REGULAR_CODECS)
         val audioFormatName = mediaCodecList.findEncoderForFormat(MediaFormat.createAudioFormat(MediaFormat.MIMETYPE_AUDIO_AAC,
                 SAMPLE_RATE, CHANNEL))
         mediaCodec = MediaCodec.createByCodecName(audioFormatName)
         val audioFormat = MediaFormat.createAudioFormat(MediaFormat.MIMETYPE_AUDIO_AAC, SAMPLE_RATE, CHANNEL)
         audioFormat.setInteger(MediaFormat.KEY_BIT_RATE, 128 * 1024)
-        audioFormat.setInteger(MediaFormat.KEY_MAX_INPUT_SIZE, 0)
+        // AAC LCが一般的なプロファイル
         audioFormat.setInteger(MediaFormat.KEY_AAC_PROFILE,
-                MediaCodecInfo.CodecProfileLevel.AACObjectLC /* TODO あとで意味を確認する */)
+                MediaCodecInfo.CodecProfileLevel.AACObjectLC)
         mediaCodec?.configure(audioFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE)
         // Open file to write
         context.getExternalFilesDir(Environment.DIRECTORY_MUSIC)?.let {
@@ -58,6 +58,7 @@ class AacEncodeSession {
                 Timber.d(e)
             }
         }
+        // 非同期処理のためのコールバックを設定する
         mediaCodec?.setCallback(object : MediaCodec.Callback() {
 
             private var presentationTimeUs = 0L
@@ -93,9 +94,14 @@ class AacEncodeSession {
                 Timber.d(e)
             }
         })
+        // 録音開始
         mediaCodec?.start()
     }
 
+    /**
+     * 音声パケットを追加する
+     * @param data 音声パケット
+     */
     @Synchronized
     fun add(data: ShortArray) {
         queue.add(data)
@@ -125,6 +131,9 @@ class AacEncodeSession {
         }
     }
 
+    /**
+     * 録音を終了する
+     */
     fun stop() {
         Timber.d("stop %d".format(queue.size))
         Timber.d(path)
@@ -137,6 +146,8 @@ class AacEncodeSession {
     /**
      *
      * From https://github.com/HelloHuDi/AudioCapture/blob/master/audiocapture/src/main/java/com/hd/audiocapture/writer/AccFileWriter.java
+     *
+     * TODO Apacheライセンスを表示する
      *
      * add acc file header
      * Add ADTS header at the beginning of each and every AAC packet. This is
