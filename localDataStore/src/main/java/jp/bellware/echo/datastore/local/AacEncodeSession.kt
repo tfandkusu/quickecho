@@ -186,8 +186,6 @@ class AacEncodeSession {
      *
      * From https://github.com/HelloHuDi/AudioCapture/blob/master/audiocapture/src/main/java/com/hd/audiocapture/writer/AccFileWriter.java
      *
-     * TODO Apacheライセンスを表示する
-     *
      * add acc file header
      * Add ADTS header at the beginning of each and every AAC packet. This is
      * needed as MediaCodec encoder generates a packet of raw AAC data.
