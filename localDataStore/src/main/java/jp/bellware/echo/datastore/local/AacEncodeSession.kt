@@ -36,6 +36,10 @@ class AacEncodeSession {
     var path: String = ""
 
 
+    /**
+     * 録音を開始する
+     * @param context Application Context
+     */
     fun start(context: Context) {
         // MediaCodecの作成
         val mediaCodecList = MediaCodecList(MediaCodecList.REGULAR_CODECS)
