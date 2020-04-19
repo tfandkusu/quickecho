@@ -1,7 +1,6 @@
 package jp.bellware.echo.datastore.local
 
 import android.content.Context
-import timber.log.Timber
 
 
 /**
@@ -41,11 +40,8 @@ class SoundFileLocalDataStoreImpl(private val context: Context) : SoundFileLocal
 
 
     override fun stop() {
-        val st = System.currentTimeMillis()
         session?.stop()
         session = null
-        Timber.d("stop time = %d".format(System.currentTimeMillis() - st))
-        // TODO すぐ終わるか確認する
     }
 
 }

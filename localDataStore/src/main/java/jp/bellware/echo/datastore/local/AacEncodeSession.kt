@@ -8,6 +8,7 @@ import android.media.MediaFormat
 import android.os.Environment
 import timber.log.Timber
 import java.io.FileOutputStream
+import java.util.concurrent.Executors
 
 /**
  * 1ファイル分のAACファイル作成担当
@@ -31,10 +32,14 @@ class AacEncodeSession {
 
     private var mediaCodec: MediaCodec? = null
 
-    var fos: FileOutputStream? = null
+    private var fos: FileOutputStream? = null
 
-    var path: String = ""
+    private var path: String = ""
 
+    /**
+     * 保存用タスクの非同期実行担当
+     */
+    private var executor = Executors.newSingleThreadExecutor()
 
     /**
      * 録音を開始する
@@ -52,16 +57,8 @@ class AacEncodeSession {
         audioFormat.setInteger(MediaFormat.KEY_AAC_PROFILE,
                 MediaCodecInfo.CodecProfileLevel.AACObjectLC)
         mediaCodec?.configure(audioFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE)
-        // Open file to write
-        context.getExternalFilesDir(Environment.DIRECTORY_MUSIC)?.let {
-            val path = "%s/output.aac".format(it.absolutePath)
-            try {
-                fos = FileOutputStream(path)
-                this.path = path
-            } catch (e: Throwable) {
-                Timber.d(e)
-            }
-        }
+        // 書き出し用ファイルを非同期で開く
+        openFileAsync(context)
         // 非同期処理のためのコールバックを設定する
         mediaCodec?.setCallback(object : MediaCodec.Callback() {
 
@@ -79,14 +76,15 @@ class AacEncodeSession {
             }
 
             override fun onOutputBufferAvailable(codec: MediaCodec, index: Int, info: MediaCodec.BufferInfo) {
+                // ここはメインスレッド
                 val outputBuffer = codec.getOutputBuffer(index)
                 outputBuffer?.let {
                     @Suppress("SpellCheckingInspection") val adtsSize = 7
                     val array = ByteArray(it.remaining() + adtsSize)
                     addADTStoPacket(array, array.size, SAMPLE_RATE, CHANNEL)
                     it.get(array, adtsSize, array.size - adtsSize)
-                    // TODO 時間がかかるとどうなるか確認する
-                    fos?.write(array)
+                    // エンコードされた配列を非同期で保存する
+                    writeArrayAsync(array)
                     codec.releaseOutputBuffer(index, false)
                 }
             }
@@ -118,9 +116,9 @@ class AacEncodeSession {
      */
     @Synchronized
     private fun pull(size: Int): ShortArray {
-        if (queue.isNotEmpty()) {
+        return if (queue.isNotEmpty()) {
             val packet = queue.removeAt(0)
-            return if (size >= packet.size) {
+            if (size >= packet.size) {
                 // パケットをすべて返却できる
                 packet
             } else {
@@ -131,7 +129,46 @@ class AacEncodeSession {
                 ret
             }
         } else {
-            return shortArrayOf()
+            shortArrayOf()
+        }
+    }
+
+    /**
+     * 非同期で書き出しファイルを開く
+     */
+    private fun openFileAsync(context: Context) {
+        executor.submit {
+            // Open file to write
+            context.getExternalFilesDir(Environment.DIRECTORY_MUSIC)?.let {
+                val path = "%s/output.aac".format(it.absolutePath)
+                try {
+                    fos = FileOutputStream(path)
+                    this.path = path
+                } catch (e: Throwable) {
+                    Timber.d(e)
+                }
+            }
+        }
+    }
+
+    /**
+     * 非同期でファイル保存する
+     */
+    private fun writeArrayAsync(array: ByteArray) {
+        executor.submit {
+            fos?.write(array)
+        }
+    }
+
+    /**
+     * 非同期でファイルを閉じる
+     */
+    private fun closeFileAsync() {
+        executor.submit {
+            fos?.close()
+            fos = null
+            Timber.d("stop %d".format(queue.size))
+            Timber.d(path)
         }
     }
 
@@ -139,11 +176,9 @@ class AacEncodeSession {
      * 録音を終了する
      */
     fun stop() {
-        Timber.d("stop %d".format(queue.size))
-        Timber.d(path)
         mediaCodec?.stop()
         mediaCodec?.release()
-        fos?.close()
+        closeFileAsync()
     }
 
 
