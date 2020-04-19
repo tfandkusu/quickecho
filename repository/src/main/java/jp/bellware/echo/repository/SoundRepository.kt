@@ -1,5 +1,6 @@
 package jp.bellware.echo.repository
 
+import jp.bellware.echo.datastore.local.SoundFileLocalDataStore
 import jp.bellware.echo.datastore.local.SoundMemoryLocalDataStore
 
 /**
@@ -23,6 +24,16 @@ interface SoundRepository {
     val gain: Float
 
     /**
+     * 録音を開始
+     */
+    fun start()
+
+    /**
+     * 録音を終了
+     */
+    fun stop()
+
+    /**
      * 録音をクリア
      */
     fun clear()
@@ -30,7 +41,7 @@ interface SoundRepository {
     /**
      * 音声パケットを追加
      */
-    fun add(data: FloatArray)
+    fun add(shortData: ShortArray, floatData: FloatArray)
 
     /**
      * 音声パケットを取得。記録されているパケット数以上のインデックスを設定すると、nullが返却される。
@@ -44,7 +55,8 @@ interface SoundRepository {
     fun saveForDebug()
 }
 
-class SoundRepositoryImpl(private val soundMemoryLocalDataStore: SoundMemoryLocalDataStore) : SoundRepository {
+class SoundRepositoryImpl(private val soundMemoryLocalDataStore: SoundMemoryLocalDataStore,
+                          private val soundFileLocalDataStore: SoundFileLocalDataStore) : SoundRepository {
     override val packetSize: Int
         get() = soundMemoryLocalDataStore.packetSize
     override val length: Int
@@ -52,12 +64,21 @@ class SoundRepositoryImpl(private val soundMemoryLocalDataStore: SoundMemoryLoca
     override val gain: Float
         get() = soundMemoryLocalDataStore.gain
 
+    override fun start() {
+        soundFileLocalDataStore.start()
+    }
+
+    override fun stop() {
+        soundFileLocalDataStore.stop()
+    }
+
     override fun clear() {
         soundMemoryLocalDataStore.clear()
     }
 
-    override fun add(data: FloatArray) {
-        soundMemoryLocalDataStore.add(data)
+    override fun add(shortData: ShortArray, floatData: FloatArray) {
+        soundMemoryLocalDataStore.add(floatData)
+        soundFileLocalDataStore.add(shortData)
     }
 
     override fun get(index: Int): FloatArray? {

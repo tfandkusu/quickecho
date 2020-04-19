@@ -42,6 +42,7 @@ class RecordViewHelper(
      * バッファサイズ
      */
     private var packetSize = 0
+
     /**
      * 録音スレッド
      */
@@ -132,6 +133,7 @@ class RecordViewHelper(
         vvp.reset()
         fc.reset()
         clear()
+        repository.start()
     }
 
     /**
@@ -140,6 +142,7 @@ class RecordViewHelper(
     @Synchronized
     fun stop() {
         recording = false
+        repository.stop()
     }
 
     override fun onCleared() {
@@ -153,7 +156,7 @@ class RecordViewHelper(
     private fun addPacket(packet: ShortArray) {
         if (recording) {
             val fd = PacketConverter.convert(packet)
-            repository.add(fd)
+            repository.add(packet, fd)
             for (s in fd) {
                 vvp.add(fc.filter(s))
             }

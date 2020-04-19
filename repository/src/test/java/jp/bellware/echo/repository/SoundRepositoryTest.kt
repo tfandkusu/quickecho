@@ -5,6 +5,7 @@ import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.verifySequence
+import jp.bellware.echo.datastore.local.SoundFileLocalDataStore
 import jp.bellware.echo.datastore.local.SoundMemoryLocalDataStore
 import org.junit.Before
 import org.junit.Test
@@ -13,12 +14,15 @@ class SoundRepositoryTest {
     @MockK(relaxed = true)
     lateinit var memoryLocalDataStore: SoundMemoryLocalDataStore
 
+    @MockK(relaxed = true)
+    lateinit var fileLocalDataStore: SoundFileLocalDataStore
+
     private lateinit var repository: SoundRepository
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        repository = SoundRepositoryImpl(memoryLocalDataStore)
+        repository = SoundRepositoryImpl(memoryLocalDataStore, fileLocalDataStore)
     }
 
     @Test
@@ -55,9 +59,17 @@ class SoundRepositoryTest {
 
     @Test
     fun add() {
-        repository.add(floatArrayOf(0.7f, -0.8f, 0.9f))
+        repository.add(
+                shortArrayOf((Short.MAX_VALUE * 7 / 10).toShort(),
+                        (Short.MIN_VALUE * 8 / 10).toShort(),
+                        (Short.MAX_VALUE * 9 / 10).toShort()),
+                floatArrayOf(0.7f, -0.8f, 0.9f))
         verifySequence {
             memoryLocalDataStore.add(floatArrayOf(0.7f, -0.8f, 0.9f))
+            fileLocalDataStore.add(
+                    shortArrayOf((Short.MAX_VALUE * 7 / 10).toShort(),
+                            (Short.MIN_VALUE * 8 / 10).toShort(),
+                            (Short.MAX_VALUE * 9 / 10).toShort()))
         }
     }
 
