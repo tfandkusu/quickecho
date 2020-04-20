@@ -68,6 +68,13 @@ class MainFragment : Fragment() {
      */
     private val timerViewHelper: TimerViewHelper by viewModel()
 
+    companion object {
+        /**
+         * 再生中または停止中
+         */
+        private const val EXTRA_PLAY_OR_STOP = "playOrStop"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val callback = object : OnBackPressedCallback(false) {
@@ -109,9 +116,11 @@ class MainFragment : Fragment() {
             }
 
         }
+        // 再生または停止状態でプロセスキルフラグの取得
+        val playOrStop = savedInstanceState?.getBoolean(EXTRA_PLAY_OR_STOP, false) ?: false
         // 効果音読み込み
         soundEffect.onCreate {
-            actionCreator.onSoundLoaded()
+            actionCreator.onSoundLoaded(playOrStop)
         }
         // StoreとViewを繋げる
         store.status.observe(viewLifecycleOwner, Observer {
@@ -289,6 +298,10 @@ class MainFragment : Fragment() {
         return false
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean(EXTRA_PLAY_OR_STOP, store.playOrStop)
+    }
 
     /**
      * 警告を表示する

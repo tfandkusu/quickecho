@@ -9,9 +9,12 @@ import kotlinx.coroutines.launch
 class MainActionCreator(dispatcher: Dispatcher, private val delayActionCreatorHelper: DelayActionCreatorHelper) : ActionCreator(dispatcher) {
     /**
      * 音声の読み込みが完了
+     * @param playOrStop 再生または停止状態でプロセスキル発生フラグ
      */
-    fun onSoundLoaded() {
+    fun onSoundLoaded(playOrStop: Boolean) {
         dispatcher.dispatch(MainReadyAction)
+        if (playOrStop)
+            restore()
     }
 
     /**
@@ -89,5 +92,14 @@ class MainActionCreator(dispatcher: Dispatcher, private val delayActionCreatorHe
      */
     fun onBackPressed() {
         dispatcher.dispatch(MainBackPressedAction)
+    }
+
+    /**
+     * プロセスキルからの復帰を行う
+     */
+    private fun restore() {
+        // TODO 音声読み込み処理
+        // 停止状態にする
+        dispatcher.dispatch(MainStopAction)
     }
 }

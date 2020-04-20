@@ -36,10 +36,22 @@ class MainActionCreatorTest {
     }
 
     @Test
-    fun onSoundLoaded() {
-        actionCreator.onSoundLoaded()
+    fun onSoundLoadedFirstTime() {
+        actionCreator.onSoundLoaded(false)
         verifySequence {
             dispatcher.dispatch(MainReadyAction)
+        }
+    }
+
+    /**
+     * 再生または停止状態でプロセスキルして、そこからの復帰ケース
+     */
+    @Test
+    fun onSoundLoadedRestore() {
+        actionCreator.onSoundLoaded(true)
+        verifySequence {
+            dispatcher.dispatch(MainReadyAction)
+            dispatcher.dispatch(MainStopAction)
         }
     }
 

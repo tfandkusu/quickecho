@@ -14,6 +14,7 @@ class MainStoreTest {
      */
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
+
     /**
      * テスト対象
      */
@@ -38,6 +39,7 @@ class MainStoreTest {
         store.delete.value shouldBe AnimationStatus.INVISIBLE
         store.clickable shouldBe false
         store.overrideBackKey.value shouldBe false
+        store.playOrStop shouldBe false
         // 準備完了
         store.onEvent(MainReadyAction)
         store.clickable shouldBe true
@@ -102,6 +104,8 @@ class MainStoreTest {
         // 再生する
         store.requestForPlay.value shouldBe RPRequest.START
         store.visualVolume.value shouldBe VisualVolumeRequest.PLAY
+        // 再生または停止中
+        store.playOrStop shouldBe true
         // 削除する
         store.onEvent(MainDeleteAction)
         // クリックできない
@@ -119,6 +123,8 @@ class MainStoreTest {
         store.visualVolume.value shouldBe VisualVolumeRequest.STOP
         // タイマーキャンセル
         store.requestForTimer.value shouldBe TimerRequest.CANCEL
+        // 再生または停止中を解除
+        store.playOrStop shouldBe false
         // 初期状態に戻る
         store.onEvent(MainReadyAction)
         // 録音だけ表示されている
@@ -130,6 +136,7 @@ class MainStoreTest {
         store.stop.value shouldBe AnimationStatus.INVISIBLE
         store.replay.value shouldBe AnimationStatus.INVISIBLE
         store.delete.value shouldBe AnimationStatus.INVISIBLE
+        store.playOrStop shouldBe false
     }
 
     /**
@@ -150,7 +157,18 @@ class MainStoreTest {
         store.onEvent(MainStopAction)
         store.requestForPlay.value shouldBe RPRequest.STOP
         store.visualVolume.value shouldBe VisualVolumeRequest.RESET
+        // 以下、プロセス復帰用
+        // ステータス表示再現
+        store.status.value shouldBe AnimationStatus.VISIBLE
+        store.icon.value shouldBe StatusIcon.PLAY
+        // ボタン表示状態再現
+        store.record.value shouldBe AnimationStatus.VISIBLE
+        store.delete.value shouldBe AnimationStatus.VISIBLE
+        store.play.value shouldBe AnimationStatus.INVISIBLE
+        store.replay.value shouldBe AnimationStatus.VISIBLE
+        store.stop.value shouldBe AnimationStatus.VISIBLE
     }
+
 
     /**
      * ボリューム0の時
