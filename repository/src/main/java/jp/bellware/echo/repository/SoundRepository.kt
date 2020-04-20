@@ -6,8 +6,6 @@ import android.media.AudioTrack
 import jp.bellware.echo.datastore.local.SoundFileLocalDataStore
 import jp.bellware.echo.datastore.local.SoundMemoryLocalDataStore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.take
 import kotlin.math.max
 
 /**
@@ -123,8 +121,7 @@ class SoundRepositoryImpl(private val soundMemoryLocalDataStore: SoundMemoryLoca
 
     @ExperimentalCoroutinesApi
     override suspend fun restore() {
-        soundFileLocalDataStore.load().take(1).collect {
-        }
+        soundFileLocalDataStore.load()
     }
 
 }

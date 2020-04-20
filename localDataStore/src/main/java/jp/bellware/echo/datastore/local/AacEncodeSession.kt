@@ -16,12 +16,12 @@ import java.util.concurrent.Executors
 class AacEncodeSession {
 
     companion object {
-        private const val SAMPLE_RATE = 44100
+        const val SAMPLE_RATE = 44100
 
         /**
          * モノラル録音
          */
-        private const val CHANNEL = 1
+        const val CHANNEL = 1
     }
 
 
