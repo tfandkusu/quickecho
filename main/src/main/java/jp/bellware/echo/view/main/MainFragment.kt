@@ -36,7 +36,7 @@ class MainFragment : Fragment() {
     /**
      * ユーザ操作、音声系ViewHelperからのコールバックを受けて、アクションを発行する担当
      */
-    private val actionCreator: MainActionCreator by inject()
+    private val actionCreator: MainActionCreator by viewModel()
 
     /**
      * 効果音担当ViewHelper
