@@ -121,7 +121,7 @@ class SoundRepositoryImpl(private val soundMemoryLocalDataStore: SoundMemoryLoca
 
     @ExperimentalCoroutinesApi
     override suspend fun restore() {
-        soundFileLocalDataStore.load()
+        val data = soundFileLocalDataStore.load()
     }
 
 }
