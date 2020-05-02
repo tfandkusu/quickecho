@@ -1,14 +1,14 @@
 version: 0.2
-
+env:
+  variables:
+    GIT_REPOSITORY_URL: git@github.com/tfandkusu/quickecho.git
 phases:
   install:
     runtime-versions:
       android: latest
-  pre_build:
-    commands:
-      - echo "Hello World"
   build:
     commands:
       - ./gradlew testDebug
-
-# PUSH実行用3
+      - gem install bundler --force --no-document --version 2.1.4
+      - bundle install --path vendor/bundle
+      - bundle exec danger
