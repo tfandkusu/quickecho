@@ -12,3 +12,5 @@ phases:
       - gem install bundler --force --no-document --version 2.1.4
       - bundle install --path vendor/bundle
       - bundle exec danger
+
+# 環境変数を更新
