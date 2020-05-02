@@ -10,4 +10,4 @@ phases:
       - bundle install --path vendor/bundle
       - bundle exec danger
 
-# 15 GB メモリ、8 vCPUにする
+# Chatbotで結果をSlackに通知する。
