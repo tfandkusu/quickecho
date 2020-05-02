@@ -80,7 +80,6 @@ Activityを呼び出し[Jetpack Navigation](https://developer.android.com/guide/
 - [Kotlin Coroutine](https://github.com/Kotlin/kotlinx.coroutines) 音声の録音と再生を除く非同期処理全般で使用しています。
 - [Koin](https://insert-koin.io/) DIコンテナです。
 - [MockK](https://mockk.io/) 単体テストの時に依存するクラスをモック化しています。
-github.com/tfandkusu/quickecho/releases)の自動作成に使っています。
 - [KotlinTest](https://github.com/kotlintest/kotlintest) 単体テストの時に `actual shouldBe expected` のように中間値表記で検証ができます。
 - [Material Components](https://material.io/components/) [Floating Action Button](https://material.io/develop/android/components/floating-action-button/)と[CardView](https://material.io/develop/android/components/material-card-view/)の実装に使用しています。
 - [ConstraintLayout](https://developer.android.com/reference/androidx/constraintlayout/widget/ConstraintLayout.html)
@@ -92,7 +91,7 @@ github.com/tfandkusu/quickecho/releases)の自動作成に使っています。
 
 ## CI
 
-- [AWS CodeBuild](https://aws.amazon.com/jp/codebuild/) CIとしてPUSH毎の単体テストとlint結果投稿([Danger](https://github.com/danger/danger))に使っています。
+- [AWS CodeBuild](https://aws.amazon.com/jp/codebuild/) PUSH毎の単体テストとlint結果投稿([Danger](https://github.com/danger/danger))を行います。
 - [AWS Chatbot](https://aws.amazon.com/jp/chatbot/) CIの結果をSlackに投稿します。
 
 ## CD
