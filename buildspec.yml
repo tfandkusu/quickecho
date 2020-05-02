@@ -10,4 +10,4 @@ phases:
       - bundle install --path vendor/bundle
       - bundle exec danger
 
-# Gitクローンの深さを設定
+# Gitクローンの深さをFullにした。
