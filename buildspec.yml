@@ -9,7 +9,7 @@ phases:
   build:
     commands:
       - ./gradlew testDebug
-      - gem install bundler --force --no-document --version 2.1.4
+      - gem install bundler
       - bundle install --path vendor/bundle
       - bundle exec danger
 
