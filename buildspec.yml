@@ -10,3 +10,5 @@ phases:
   build:
     commands:
       - ./gradlew testDebug
+
+# PUSH実行用
