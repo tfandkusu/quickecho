@@ -92,12 +92,12 @@ github.com/tfandkusu/quickecho/releases)の自動作成に使っています。
 
 ## CI
 
-- [AWS CodeBuild](https://aws.amazon.com/jp/codebuild/) PUSH毎の単体テストとlint結果投稿([Danger](https://github.com/danger/danger))に使っています。
+- [AWS CodeBuild](https://aws.amazon.com/jp/codebuild/) CIとしてPUSH毎の単体テストとlint結果投稿([Danger](https://github.com/danger/danger))に使っています。
 - [AWS Chatbot](https://aws.amazon.com/jp/chatbot/) CIの結果をSlackに投稿します。
 
 ## CD
 
-- [Bitrise](https://www.bitrise.io/) Google Playへの自動公開、[Release](https://
+- [Bitrise](https://www.bitrise.io/) Google Playへの自動公開と[Release](https://github.com/tfandkusu/quickecho/releases)の自動作成。
 - [PyGithub](https://github.com/PyGithub/PyGithub) [Release](https://github.com/tfandkusu/quickecho/releases)の自動作成に使っています。
 
 # 今後の予定
