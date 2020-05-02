@@ -1,4 +1,4 @@
-<img src="https://app.bitrise.io/app/805a7c4c7fef0ab7/status.svg?token=UKtO3dk7OQ6LgQlxoKp4pA&branch=master">
+<img src="https://codebuild.ap-northeast-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiRy85TjhGUW4zOGwwZ3FqSkt3TzBNeEt6SFhGY2lCQ0liejBsaGJSY0U2UGtNWEtLRktGN0RYczJqODdSbDg5QkdCTDFtRWErS3llZ1pPR1B1cGFXbVJrPSIsIml2UGFyYW1ldGVyU3BlYyI6IlpSdjZ1WVdxM1hNemJLbSsiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master">
 
 クイックエコー
 ====
@@ -75,20 +75,29 @@ Activityを呼び出し[Jetpack Navigation](https://developer.android.com/guide/
 
 # 使用技術
 
+## アプリ
+
 - [Kotlin Coroutine](https://github.com/Kotlin/kotlinx.coroutines) 音声の録音と再生を除く非同期処理全般で使用しています。
 - [Koin](https://insert-koin.io/) DIコンテナです。
 - [MockK](https://mockk.io/) 単体テストの時に依存するクラスをモック化しています。
-- [Bitrise](https://www.bitrise.io/) push毎に単体テスト、Google Playへの自動公開、[Release](https://github.com/tfandkusu/quickecho/releases)の自動作成に使っています。
 - [KotlinTest](https://github.com/kotlintest/kotlintest) 単体テストの時に `actual shouldBe expected` のように中間値表記で検証ができます。
 - [Material Components](https://material.io/components/) [Floating Action Button](https://material.io/develop/android/components/floating-action-button/)と[CardView](https://material.io/develop/android/components/material-card-view/)の実装に使用しています。
 - [ConstraintLayout](https://developer.android.com/reference/androidx/constraintlayout/widget/ConstraintLayout.html)
 - [Jetpack Navigation](https://developer.android.com/guide/navigation)
 - [EventBus](https://github.com/greenrobot/EventBus) FluxのDispatcherの実装に使っています。
 - [Flow Preferences](https://github.com/tfcporciuncula/flow-preferences/) 設定画面での効果音設定をメイン画面に反映させることに使っています。
-- [PyGithub](https://github.com/PyGithub/PyGithub) [Release](https://github.com/tfandkusu/quickecho/releases)の自動作成に使っています。
-- [Danger](https://github.com/danger/danger)
 - [Timber](https://github.com/JakeWharton/timber)
 - [Flipper](https://fbflipper.com/)
+
+## CI
+
+- [AWS CodeBuild](https://aws.amazon.com/jp/codebuild/) PUSH毎の単体テストとlint結果投稿([Danger](https://github.com/danger/danger))を行います。
+- [AWS Chatbot](https://aws.amazon.com/jp/chatbot/) CIの結果をSlackに投稿します。
+
+## CD
+
+- [Bitrise](https://www.bitrise.io/) Google Playへの自動公開と[Release](https://github.com/tfandkusu/quickecho/releases)の自動作成。
+- [PyGithub](https://github.com/PyGithub/PyGithub) [Release](https://github.com/tfandkusu/quickecho/releases)の自動作成に使っています。
 
 # 今後の予定
 
