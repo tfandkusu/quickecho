@@ -6,7 +6,6 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.verifySequence
 import jp.bellware.echo.datastore.local.SoundMemoryLocalDataStore
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
@@ -76,13 +75,5 @@ class SoundRepositoryTest {
         verifySequence {
             memoryLocalDataStore.save()
         }
-    }
-
-    /**
-     * わざと落ちるテストを作成する
-     */
-    @Test
-    fun fail() {
-        Assert.fail()
     }
 }
