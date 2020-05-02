@@ -1,0 +1,12 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      android: latest
+  pre_build:
+    commands:
+      - echo "Hello World"
+  build:
+    commands:
+      - ./gradlew testDebug
