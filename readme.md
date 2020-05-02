@@ -102,3 +102,7 @@ Activityを呼び出し[Jetpack Navigation](https://developer.android.com/guide/
 # 今後の予定
 
 - 録音音声を保存して再生する機能の追加
+
+# テスト中
+
+masterブランチでもCIを動かすテスト中
