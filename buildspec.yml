@@ -10,4 +10,4 @@ phases:
       - bundle install --path vendor/bundle
       - bundle exec danger
 
-# キャッシュの確認
+# 15 GB メモリ、8 vCPUにする
