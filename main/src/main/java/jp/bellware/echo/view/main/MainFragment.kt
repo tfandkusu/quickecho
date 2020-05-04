@@ -198,7 +198,7 @@ class MainFragment : Fragment() {
                 }
             }
         })
-        store.warning.observe(viewLifecycleOwner, Observer {
+        store.warning.observe(viewLifecycleOwner) {
             when (it) {
                 WarningMessage.MUTE ->
                     showWarning(R.string.warning_volume)
@@ -209,7 +209,7 @@ class MainFragment : Fragment() {
                 null -> {
                 }
             }
-        })
+        }
         store.requestForTimer.observe(viewLifecycleOwner, Observer {
             when (it) {
                 TimerRequest.START -> {

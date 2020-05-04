@@ -12,6 +12,7 @@ enum class StatusIcon {
      * 録音
      */
     RECORD,
+
     /**
      * 再生
      */
@@ -26,6 +27,7 @@ enum class RPRequest {
      * 開始する
      */
     START,
+
     /**
      * 終了する
      */
@@ -61,10 +63,12 @@ enum class WarningMessage {
      * ボリュームが0
      */
     MUTE,
+
     /**
      * 録音時間オーバー
      */
     RECORD_TIME,
+
     /**
      * 録音されていない
      */
@@ -143,9 +147,14 @@ class MainStore(actionReceiver: ActionReceiver) : Store(actionReceiver) {
     val requestForTimer = SingleLiveEvent<TimerRequest>()
 
     /**
+     * 警告表示の書き込み用
+     */
+    private val _warning = MutableLiveData<WarningMessage>()
+
+    /**
      * 警告表示
      */
-    val warning = SingleLiveEvent<WarningMessage>()
+    val warning = ImmutableSingleLiveEvent<WarningMessage>(_warning)
 
     /**
      * 再生ボタンを押す
@@ -312,14 +321,14 @@ class MainStore(actionReceiver: ActionReceiver) : Store(actionReceiver) {
      * ボリューム0の時
      */
     fun onEvent(action: MainMuteAction) {
-        warning.value = WarningMessage.MUTE
+        _warning.value = WarningMessage.MUTE
     }
 
     /**
      * 録音時間超過
      */
     fun onEvent(action: MainMaxRecordTimeOverAction) {
-        warning.value = WarningMessage.RECORD_TIME
+        _warning.value = WarningMessage.RECORD_TIME
         if (action.includeSound)
             clickPlay.value = true
         else
@@ -330,7 +339,7 @@ class MainStore(actionReceiver: ActionReceiver) : Store(actionReceiver) {
      * 録音されていない
      */
     fun onEvent(action: MainNoRecordAction) {
-        warning.value = WarningMessage.NO_RECORD
+        _warning.value = WarningMessage.NO_RECORD
     }
 
     /**
