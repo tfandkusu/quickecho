@@ -296,6 +296,7 @@ class MainFragment : Fragment() {
      */
     private fun showWarning(resId: Int) {
         warning_card.visibility = View.VISIBLE
+        warning_card.alpha = 1f
         warning_text.setText(resId)
         val animator = ObjectAnimator.ofFloat(warning_card, View.ALPHA, 1f, 0f)
         animator.startDelay = 3000
