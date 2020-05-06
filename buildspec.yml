@@ -1,0 +1,12 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      android: latest
+  build:
+    commands:
+      - ./gradlew testDebug
+      - ./gradlew lintDebug
+      - gem install bundler
+      - bundle install --path vendor/bundle
+      - bundle exec danger
