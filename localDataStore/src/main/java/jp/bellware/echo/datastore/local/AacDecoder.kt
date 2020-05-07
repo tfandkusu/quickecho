@@ -2,13 +2,15 @@ package jp.bellware.echo.datastore.local
 
 import android.content.Context
 import android.media.MediaCodec
+import android.media.MediaCodecInfo
 import android.media.MediaExtractor
 import android.media.MediaFormat
 import android.os.Environment
-import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.io.FileInputStream
+import java.io.IOException
 import java.nio.ByteBuffer
+import kotlin.experimental.or
 
 
 /**
@@ -21,71 +23,79 @@ object AacDecoder {
      */
     suspend fun load(context: Context): ShortArray {
         // こちらを参考に作成する
-        // https://github.com/fabio-delorenzo-wowza/Android_MediaCodec_AudioPlayer/blob/master/app/src/main/java/com/fabio/mediacodectestone/MainActivity.java
+        // https://github.com/taehwandev/MediaCodecExample/blob/master/src/net/thdev/mediacodecexample/decoder/AudioDecoderThread.java
         @Suppress("SpellCheckingInspection") val baos = ByteArrayOutputStream()
         // 読み込みファイルオープン
         context.getExternalFilesDir(Environment.DIRECTORY_MUSIC)?.let { file ->
-            val path = "%s/output.aac".format(file.absolutePath)
-            val fis = FileInputStream(path)
-            // メディアファイルから情報取得するオブジェクトを生成する
-            val extractor = MediaExtractor()
-            extractor.setDataSource(fis.fd)
-            // MediaCodecの作成
-            val mediaCodec = MediaCodec.createDecoderByType(MediaFormat.MIMETYPE_AUDIO_AAC)
-            val mediaFormat = MediaFormat.createAudioFormat(MediaFormat.MIMETYPE_AUDIO_AAC,
-                    AacEncodeSession.SAMPLE_RATE, AacEncodeSession.CHANNEL)
-            mediaCodec.configure(mediaFormat, null, null, 0)
-            mediaCodec.start()
-            // 終了フラグ
-            var inputEos = false
-            var outputEos = false
-            while (!inputEos && !outputEos) {
-                // MediaCodecに入力する
-                val inputBufferId = mediaCodec.dequeueInputBuffer(-1)
-                if (inputBufferId >= 0) {
-                    val inputBuffer = mediaCodec.getInputBuffer(inputBufferId)
-                    inputBuffer?.let {
-                        var presentationTimeUs = 0L
-                        var sampleSize = extractor.readSampleData(inputBuffer, 0)
-                        extractor.advance()
-                        if (sampleSize < 0) {
-                            inputEos = true;
-                            sampleSize = 0;
-                        } else {
-                            presentationTimeUs = extractor.sampleTime
-                        }
-                        mediaCodec.queueInputBuffer(inputBufferId,
-                                0,
-                                sampleSize,
-                                presentationTimeUs,
-                                if (inputEos) MediaCodec.BUFFER_FLAG_END_OF_STREAM else 0)
-                    }
-                } else {
-                    // TODO エラー処理
-                    Timber.d("dequeueInputBuffer returns minus index")
-                }
-                // MediaCodecから取り出す
-                val info = MediaCodec.BufferInfo()
-                val outputBufferId = mediaCodec.dequeueOutputBuffer(info, -1)
+            try {
+                val path = "%s/output.aac".format(file.absolutePath)
+                val fis = FileInputStream(path)
+                // メディアファイルから情報取得するオブジェクトを生成する
+                val extractor = MediaExtractor()
+                extractor.setDataSource(fis.fd)
+                val format = makeAACCodecSpecificData(MediaCodecInfo.CodecProfileLevel.AACObjectLC,
+                        AacEncodeSession.SAMPLE_RATE,
+                        AacEncodeSession.CHANNEL)
+                val decoder = MediaCodec.createDecoderByType("audio/mp4a-latm")
+                decoder.configure(format, null, null, 0)
 
-                if (outputBufferId >= 0) {
-                    val outputBuffer = mediaCodec.getOutputBuffer(outputBufferId)
-                    outputBuffer?.let {
-                        val byteArray = ByteArray(info.size)
-                        it.get(byteArray)
-                        baos.write(byteArray)
-                    }
-                    mediaCodec.releaseOutputBuffer(outputBufferId, false)
-                    if (info.flags and MediaCodec.BUFFER_FLAG_END_OF_STREAM != 0) {
-                        outputEos = true
-                    }
-                } else {
-                    // TODO エラー処理
-                    Timber.d("dequeueInputBuffer returns minus index")
-                }
+                return baos.toByteArray().asList().chunked(2).map { (l, h) ->
+                    l.toInt() + h shl 8
+                }.map { it.toShort() }.toShortArray()
+            } catch (e: IOException) {
+                // ファイルが無ければ呼ばない
+                return shortArrayOf()
             }
-            return ByteBuffer.wrap(baos.toByteArray()).asShortBuffer().array()
         }
         return shortArrayOf()
+    }
+
+    /**
+     *
+     * こちらより引用
+     *
+     * https://github.com/taehwandev/MediaCodecExample/blob/master/src/net/thdev/mediacodecexample/decoder/AudioDecoderThread.java
+     *
+     * TODO apacheライセンスなのでどこかに表記する。
+     *
+     * The code profile, Sample rate, channel Count is used to
+     * produce the AAC Codec SpecificData.
+     * Android 4.4.2/frameworks/av/media/libstagefright/avc_utils.cpp refer
+     * to the portion of the code written.
+     *
+     * MPEG-4 Audio refer : http://wiki.multimedia.cx/index.php?title=MPEG-4_Audio#Audio_Specific_Config
+     *
+     * @param audioProfile is MPEG-4 Audio Object Types
+     * @param sampleRate
+     * @param channelConfig
+     * @return MediaFormat
+     */
+    private fun makeAACCodecSpecificData(audioProfile: Int, sampleRate: Int, channelConfig: Int): MediaFormat? {
+        val format = MediaFormat()
+        format.setString(MediaFormat.KEY_MIME, "audio/mp4a-latm")
+        format.setInteger(MediaFormat.KEY_SAMPLE_RATE, sampleRate)
+        format.setInteger(MediaFormat.KEY_CHANNEL_COUNT, channelConfig)
+        val samplingFreq = intArrayOf(
+                96000, 88200, 64000, 48000, 44100, 32000, 24000, 22050,
+                16000, 12000, 11025, 8000
+        )
+
+        // Search the Sampling Frequencies
+        var sampleIndex = -1
+        for (i in samplingFreq.indices) {
+            if (samplingFreq[i] == sampleRate) {
+                sampleIndex = i
+            }
+        }
+        if (sampleIndex == -1) {
+            return null
+        }
+        val csd = ByteBuffer.allocate(2)
+        csd.put((audioProfile shl 3 or (sampleIndex shr 1)).toByte())
+        csd.position(1)
+        csd.put(((sampleIndex shl 7 and 0x80).toByte() or ((channelConfig shl 3).toByte())))
+        csd.flip()
+        format.setByteBuffer("csd-0", csd) // add csd-0
+        return format
     }
 }
