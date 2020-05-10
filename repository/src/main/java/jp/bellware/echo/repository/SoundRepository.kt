@@ -144,6 +144,7 @@ class SoundRepositoryImpl(private val soundMemoryLocalDataStore: SoundMemoryLoca
             // メモリーに格納する
             soundMemoryLocalDataStore.add(it)
         }
+        soundMemoryLocalDataStore.save()
     }
 
 }

@@ -1,9 +1,9 @@
 package jp.bellware.echo.datastore.local
 
+import android.content.Context
 import android.os.Environment
 import jp.bellware.echo.util.filter.GainDetector
 import java.io.FileOutputStream
-import java.io.IOException
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.util.*
@@ -54,7 +54,7 @@ interface SoundMemoryLocalDataStore {
 /**
  * 録音音声を保持する
  */
-class SoundMemoryLocalDataStoreImpl : SoundMemoryLocalDataStore {
+class SoundMemoryLocalDataStoreImpl(private val context: Context) : SoundMemoryLocalDataStore {
 
     /**
      * 最大のパケットの大きさ
@@ -132,9 +132,8 @@ class SoundMemoryLocalDataStoreImpl : SoundMemoryLocalDataStore {
      * デバッグ用にwavファイルを保存する
      */
     override fun save() {
-        var fos: FileOutputStream? = null
-        try {
-            fos = FileOutputStream(Environment.getExternalStorageDirectory().absolutePath + "/output.wav")
+        context.getExternalFilesDir(Environment.DIRECTORY_MUSIC)?.let {
+            val fos = FileOutputStream(it.absolutePath + "/output.wav")
             //ヘッダ書き込み
             val buffer = ByteBuffer.allocate(44)
             buffer.order(ByteOrder.LITTLE_ENDIAN)
@@ -162,16 +161,7 @@ class SoundMemoryLocalDataStoreImpl : SoundMemoryLocalDataStore {
                 }
                 fos.write(data.array())
             }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        } finally {
-            if (fos != null) {
-                try {
-                    fos.close()
-                } catch (e: IOException) {
-                }
-
-            }
+            fos.close()
         }
     }
 }
