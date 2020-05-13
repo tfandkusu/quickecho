@@ -2,16 +2,14 @@ package jp.bellware.echo.datastore.local
 
 import android.content.Context
 import android.media.MediaCodec
-import android.media.MediaCodec.BufferInfo
 import android.media.MediaCodecInfo
 import android.media.MediaExtractor
 import android.media.MediaFormat
-import android.os.Environment
-import timber.log.Timber
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
-import java.io.FileInputStream
-import java.io.FileOutputStream
-import java.io.IOException
 import java.nio.ByteBuffer
 import kotlin.experimental.or
 
@@ -25,102 +23,82 @@ object AacDecoder {
     /**
      * 一時保存した音声を読み込む
      */
-    suspend fun load(context: Context): ShortArray {
-        // こちらを参考に作成する
-        // https://github.com/taehwandev/MediaCodecExample/blob/master/src/net/thdev/mediacodecexample/decoder/AudioDecoderThread.java
-        val outputStream = ByteArrayOutputStream()
-        // 読み込みファイルオープン
-        context.getExternalFilesDir(Environment.DIRECTORY_MUSIC)?.let { file ->
-            try {
-                val path = "%s/output.aac".format(file.absolutePath)
-                val fis = FileInputStream(path)
-                // メディアファイルから情報取得するオブジェクトを生成する
-                val extractor = MediaExtractor()
-                extractor.setDataSource(fis.fd)
-                Timber.d("trackCount = " + extractor.trackCount)
-                extractor.selectTrack(0)
-                val format = makeAACCodecSpecificData(MediaCodecInfo.CodecProfileLevel.AACObjectLC,
-                        AacEncodeSession.SAMPLE_RATE,
-                        AacEncodeSession.CHANNEL)
-                val decoder = MediaCodec.createDecoderByType("audio/mp4a-latm")
-                decoder.configure(format, null, null, 0)
-                decoder.start()
+    fun load(context: Context): Flow<ShortArray> = flow {
+        val data = withContext(Dispatchers.Default) {
+            loadAacFile(context)
+        }
+        emit(data)
+    }
 
-                var eof = false
-                while (!eof) {
-                    Timber.d("dequeueInputBuffer")
-                    val inIndex = decoder.dequeueInputBuffer(TIMEOUT_US)
-                    Timber.d("inIndex = $inIndex")
-                    if (inIndex >= 0) {
-                        Timber.d("getInputBuffer")
-                        val buffer = decoder.getInputBuffer(inIndex)
-                        buffer?.let {
-                            Timber.d("readSampleData")
-                            val sampleSize = extractor.readSampleData(it, 0)
-                            Timber.d("sampleSize = $sampleSize")
-                            if (sampleSize < 0) {
-                                Timber.d("queueInputBuffer")
-                                decoder.queueInputBuffer(inIndex, 0, 0,
-                                        0, MediaCodec.BUFFER_FLAG_END_OF_STREAM)
-                                eof = true
-                            } else {
-                                Timber.d("queueInputBuffer")
-                                decoder.queueInputBuffer(inIndex, 0, sampleSize,
-                                        extractor.sampleTime, 0)
-                                Timber.d("extractor.advance")
-                                extractor.advance()
-                            }
-                        }
-                        if (eof)
-                            break
-                        val info = BufferInfo()
-                        Timber.d("dequeueOutputBuffer")
-                        val outIndex = decoder.dequeueOutputBuffer(info, TIMEOUT_US)
-                        Timber.d("outIndex = $outIndex size = " + info.size)
-                        if (outIndex >= 0) {
-                            Timber.d("getOutputBuffer")
-                            val outBuffer = decoder.getOutputBuffer(outIndex)
-                            outBuffer?.let {
-                                val chunk = ByteArray(info.size)
-                                it.get(chunk)
-                                it.clear()
-                                Timber.d("releaseOutputBuffer")
-                                decoder.releaseOutputBuffer(outIndex, false)
-                                @Suppress("BlockingMethodInNonBlockingContext")
-                                outputStream.write(chunk)
-                            }
-                        }
+    /**
+     * AACファイルから音声RAWデータに変換する。
+     * こちらを参考に作成する。
+     * https://github.com/taehwandev/MediaCodecExample/blob/master/src/net/thdev/mediacodecexample/decoder/AudioDecoderThread.java
+     */
+    private fun loadAacFile(context: Context): ShortArray {
+        val outputStream = ByteArrayOutputStream()
+        val fis = context.openFileInput(AacEncodeSession.SOUND_FILE_NAME)
+        // メディアファイルから情報取得するオブジェクトを生成する
+        val extractor = MediaExtractor()
+        extractor.setDataSource(fis.fd)
+        extractor.selectTrack(0)
+        val format = makeAACCodecSpecificData(MediaCodecInfo.CodecProfileLevel.AACObjectLC,
+                AacEncodeSession.SAMPLE_RATE,
+                AacEncodeSession.CHANNEL)
+        val decoder = MediaCodec.createDecoderByType("audio/mp4a-latm")
+        decoder.configure(format, null, null, 0)
+        decoder.start()
+
+        var eof = false
+        while (!eof) {
+            val inIndex = decoder.dequeueInputBuffer(TIMEOUT_US)
+            if (inIndex >= 0) {
+                val buffer = decoder.getInputBuffer(inIndex)
+                buffer?.let {
+                    val sampleSize = extractor.readSampleData(it, 0)
+                    if (sampleSize < 0) {
+                        decoder.queueInputBuffer(inIndex, 0, 0,
+                                0, MediaCodec.BUFFER_FLAG_END_OF_STREAM)
+                        eof = true
+                    } else {
+                        decoder.queueInputBuffer(inIndex, 0, sampleSize,
+                                extractor.sampleTime, 0)
+                        extractor.advance()
                     }
                 }
-                val byteArray = outputStream.toByteArray()
-                context.getExternalFilesDir(Environment.DIRECTORY_MUSIC).let {
-                    val path = "%s/debug.raw".format(file.absolutePath)
-                    Timber.d(path)
-                    val fos = FileOutputStream(path)
-                    fos.write(byteArray)
-                    fos.close()
+                if (eof)
+                    break
+                val info = MediaCodec.BufferInfo()
+                val outIndex = decoder.dequeueOutputBuffer(info, TIMEOUT_US)
+                if (outIndex >= 0) {
+                    val outBuffer = decoder.getOutputBuffer(outIndex)
+                    outBuffer?.let {
+                        val chunk = ByteArray(info.size)
+                        it.get(chunk)
+                        it.clear()
+                        decoder.releaseOutputBuffer(outIndex, false)
+                        @Suppress("BlockingMethodInNonBlockingContext")
+                        outputStream.write(chunk)
+                    }
                 }
-                return byteArray.asList()
-                        .chunked(2)
-                        .map { (l, h) ->
-                            val li = if (l >= 0)
-                                l.toInt()
-                            else
-                                256 + l
-                            val hi = if (h >= 0)
-                                h.toInt()
-                            else
-                                256 + h
-                            li + 256 * hi
-                        }
-                        .map { it.toShort() }
-                        .toShortArray()
-            } catch (e: IOException) {
-                // ファイルが無ければ呼ばない
-                return shortArrayOf()
             }
         }
-        return shortArrayOf()
+        val byteArray = outputStream.toByteArray()
+        return byteArray.asList()
+                .chunked(2)
+                .map { (l, h) ->
+                    val li = if (l >= 0)
+                        l.toInt()
+                    else
+                        256 + l
+                    val hi = if (h >= 0)
+                        h.toInt()
+                    else
+                        256 + h
+                    li + 256 * hi
+                }
+                .map { it.toShort() }
+                .toShortArray()
     }
 
 

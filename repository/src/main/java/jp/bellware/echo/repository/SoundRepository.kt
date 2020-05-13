@@ -7,6 +7,8 @@ import jp.bellware.echo.datastore.local.SoundFileLocalDataStore
 import jp.bellware.echo.datastore.local.SoundMemoryLocalDataStore
 import jp.bellware.echo.util.filter.PacketConverter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.take
 import kotlin.math.max
 import kotlin.math.min
 
@@ -124,27 +126,27 @@ class SoundRepositoryImpl(private val soundMemoryLocalDataStore: SoundMemoryLoca
     @ExperimentalCoroutinesApi
     override suspend fun restore() {
         // 波形をすべて読み込む
-        val data = soundFileLocalDataStore.load()
-        // パケットサイズを取得する
-        val packetSize = getSuitablePackageSize()
-        // パケットの数
-        val packetCount = data.size / packetSize + 1
-        // パケット毎に
-        (0 until packetCount).map {
-            // パケットを作成する
-            val packet = ShortArray(packetSize)
-            // パケットにコピーする
-            System.arraycopy(data, it * packetSize, packet, 0,
-                    min(packetSize, data.size - it * packetSize))
-            packet
-        }.map {
-            // Float版を作る
-            PacketConverter.convert(it)
-        }.map {
-            // メモリーに格納する
-            soundMemoryLocalDataStore.add(it)
+        soundFileLocalDataStore.load().take(1).collect { data ->
+            // パケットサイズを取得する
+            val packetSize = getSuitablePackageSize()
+            // パケットの数
+            val packetCount = data.size / packetSize + 1
+            // パケット毎に
+            (0 until packetCount).map {
+                // パケットを作成する
+                val packet = ShortArray(packetSize)
+                // パケットにコピーする
+                System.arraycopy(data, it * packetSize, packet, 0,
+                        min(packetSize, data.size - it * packetSize))
+                packet
+            }.map {
+                // Float版を作る
+                PacketConverter.convert(it)
+            }.map {
+                // メモリーに格納する
+                soundMemoryLocalDataStore.add(it)
+            }
         }
-        soundMemoryLocalDataStore.save()
     }
 
 }

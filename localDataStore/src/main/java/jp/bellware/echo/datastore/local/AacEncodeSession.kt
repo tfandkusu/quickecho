@@ -5,7 +5,6 @@ import android.media.MediaCodec
 import android.media.MediaCodecInfo
 import android.media.MediaCodecList
 import android.media.MediaFormat
-import android.os.Environment
 import timber.log.Timber
 import java.io.FileOutputStream
 import java.util.concurrent.Executors
@@ -22,6 +21,11 @@ class AacEncodeSession {
          * モノラル録音
          */
         const val CHANNEL = 1
+
+        /**
+         * 一時保存用ファイル
+         */
+        const val SOUND_FILE_NAME = "tmp.aac"
     }
 
 
@@ -138,16 +142,7 @@ class AacEncodeSession {
      */
     private fun openFileAsync(context: Context) {
         executor.submit {
-            // Open file to write
-            context.getExternalFilesDir(Environment.DIRECTORY_MUSIC)?.let {
-                val path = "%s/output.aac".format(it.absolutePath)
-                try {
-                    fos = FileOutputStream(path)
-                    this.path = path
-                } catch (e: Throwable) {
-                    Timber.d(e)
-                }
-            }
+            fos = context.openFileOutput(SOUND_FILE_NAME, Context.MODE_PRIVATE)
         }
     }
 

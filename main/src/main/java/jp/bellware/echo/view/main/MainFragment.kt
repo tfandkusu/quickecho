@@ -117,8 +117,7 @@ class MainFragment : Fragment() {
 
         }
         // 再生または停止状態でプロセスキルフラグの取得
-        // TODO 戻す
-        val playOrStop = true // savedInstanceState?.getBoolean(EXTRA_PLAY_OR_STOP, false) ?: false
+        val playOrStop = savedInstanceState?.getBoolean(EXTRA_PLAY_OR_STOP, false) ?: false
         // 効果音読み込み
         soundEffect.onCreate {
             actionCreator.onSoundLoaded(playOrStop)

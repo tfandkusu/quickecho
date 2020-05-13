@@ -1,6 +1,7 @@
 package jp.bellware.echo.datastore.local
 
 import android.content.Context
+import kotlinx.coroutines.flow.Flow
 
 
 /**
@@ -27,7 +28,7 @@ interface SoundFileLocalDataStore {
      * 録音音声を読み込み
      * @return 波形データ
      */
-    suspend fun load(): ShortArray
+    fun load(): Flow<ShortArray>
 
 }
 
@@ -50,7 +51,7 @@ class SoundFileLocalDataStoreImpl(private val context: Context) : SoundFileLocal
         session = null
     }
 
-    override suspend fun load(): ShortArray {
+    override fun load(): Flow<ShortArray> {
         return AacDecoder.load(context)
     }
 
