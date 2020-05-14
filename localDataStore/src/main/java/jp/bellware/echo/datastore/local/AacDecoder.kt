@@ -94,7 +94,7 @@ object AacDecoder {
                         h.toInt()
                     else
                         256 + h
-                    li + 256 * hi
+                    li or (hi shl 8)
                 }
                 .map { it.toShort() }
                 .toShortArray()
