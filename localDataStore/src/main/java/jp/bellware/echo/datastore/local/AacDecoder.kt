@@ -45,7 +45,7 @@ object AacDecoder {
         val format = makeAACCodecSpecificData(MediaCodecInfo.CodecProfileLevel.AACObjectLC,
                 AacEncodeSession.SAMPLE_RATE,
                 AacEncodeSession.CHANNEL)
-        val decoder = MediaCodec.createDecoderByType("audio/mp4a-latm")
+        val decoder = MediaCodec.createDecoderByType(MediaFormat.MIMETYPE_AUDIO_AAC)
         decoder.configure(format, null, null, 0)
         decoder.start()
 
@@ -77,7 +77,6 @@ object AacDecoder {
                         it.get(chunk)
                         it.clear()
                         decoder.releaseOutputBuffer(outIndex, false)
-                        @Suppress("BlockingMethodInNonBlockingContext")
                         outputStream.write(chunk)
                     }
                 }
@@ -125,7 +124,7 @@ object AacDecoder {
     @Suppress("SameParameterValue")
     private fun makeAACCodecSpecificData(audioProfile: Int, sampleRate: Int, channelConfig: Int): MediaFormat? {
         val format = MediaFormat()
-        format.setString(MediaFormat.KEY_MIME, "audio/mp4a-latm")
+        format.setString(MediaFormat.KEY_MIME, MediaFormat.MIMETYPE_AUDIO_AAC)
         format.setInteger(MediaFormat.KEY_AAC_PROFILE, audioProfile)
         format.setInteger(MediaFormat.KEY_SAMPLE_RATE, sampleRate)
         format.setInteger(MediaFormat.KEY_CHANNEL_COUNT, channelConfig)
