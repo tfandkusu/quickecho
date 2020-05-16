@@ -23,8 +23,7 @@ https://play.google.com/store/apps/details?id=jp.bellware.echo
 <img src="https://github.com/tfandkusu/quickecho/blob/master/images/flux.png?raw=true">
 
 ボタンが押される等のユーザ操作が行われるとActionCreatorのメソッドが呼ばれます。ActionCreatorは処理の途中経過や結果をActionとして発行します。StoreはActionを受け取り、内容に応じてLiveDataを変更します。FragmentはLiveDataを監視し、内容に応じて表示や音声デバイス制御を行います。
-
-このアプリはAPI呼び出しやファイル書き込みがまだ無いため、ActionCreatorがそれに使用するRepositoryとその具体的実装になるDataStoreがまだ無いです。(後述するView層に配置している録音や効果音機能から呼ばれるRepositoryはあります。)
+データの入出力はRepositoryが担当し、Repositoryが必要に応じてローカルファイル保存のLocalDataStore、API呼び出しのRemoteDataStore(まだ無い)を呼び出します。
 
 ## メイン画面View層の設計
 
