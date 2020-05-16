@@ -162,8 +162,6 @@ class AacEncodeSession {
         executor.submit {
             fos?.close()
             fos = null
-            Timber.d("stop %d".format(queue.size))
-            Timber.d(path)
         }
     }
 
