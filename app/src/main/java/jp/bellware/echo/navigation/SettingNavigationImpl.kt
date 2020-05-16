@@ -20,4 +20,9 @@ class SettingNavigationImpl : SettingNavigation {
         val action = SettingFragmentDirections.actionSettingFragmentToAboutFragment()
         fragment.findNavController().navigate(action)
     }
+
+    override fun navigateToOss2(fragment: Fragment) {
+        val action = SettingFragmentDirections.actionSettingFragmentToOss2Fragment()
+        fragment.findNavController().navigate(action)
+    }
 }

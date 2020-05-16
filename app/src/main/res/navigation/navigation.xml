@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/mainFragment"
+    tools:ignore="UnusedNavigation">
 
 
     <fragment
@@ -40,11 +41,18 @@
             app:destination="@id/aboutFragment"
             app:popEnterAnim="@anim/slide_in_from_left"
             app:popExitAnim="@anim/slide_out_to_right" />
-
+        <action
+            android:id="@+id/action_settingFragment_to_oss2Fragment"
+            app:destination="@id/oss2Fragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right" />
         <argument
             android:name="type"
             app:argType="string"
             app:nullable="true" />
+
     </fragment>
 
     <fragment
@@ -55,5 +63,11 @@
         <!-- このやり方は最初の画面を飛ばしてしまう -->
         <!-- <deepLink app:uri="quickecho.page.link/?type=about" /> -->
     </fragment>
+
+    <fragment
+        android:id="@+id/oss2Fragment"
+        android:name="jp.bellware.echo.view.setting.OpenSourceLicense2Fragment"
+        android:label="@string/pref_oss_2"
+        tools:layout="@layout/fragment_open_source_license_2" />
 
 </navigation>
