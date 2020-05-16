@@ -83,21 +83,22 @@ object AacDecoder {
             }
         }
         val byteArray = outputStream.toByteArray()
-        return byteArray.asList()
-                .chunked(2)
-                .map { (l, h) ->
-                    val li = if (l >= 0)
-                        l.toInt()
-                    else
-                        256 + l
-                    val hi = if (h >= 0)
-                        h.toInt()
-                    else
-                        256 + h
-                    li or (hi shl 8)
-                }
-                .map { it.toShort() }
-                .toShortArray()
+        val shortArray = ShortArray(byteArray.size / 2)
+        shortArray.indices.map {
+            val l = byteArray[2 * it]
+            val h = byteArray[2 * it + 1]
+            val li = if (l >= 0)
+                l.toInt()
+            else
+                256 + l
+            val hi = if (h >= 0)
+                h.toInt()
+            else
+                256 + h
+            val v = li or (hi shl 8)
+            shortArray[it] = v.toShort()
+        }
+        return shortArray
     }
 
 
