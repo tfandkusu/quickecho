@@ -216,4 +216,13 @@ class MainStoreTest {
         store.clickDelete.value shouldBe true
     }
 
+    @Test
+    fun progress() {
+        store.progress.value shouldBe false
+        store.onEvent(MainRestoreStartAction)
+        store.progress.value shouldBe true
+        store.onEvent(MainRestoreEndAction)
+        store.progress.value shouldBe false
+    }
+
 }

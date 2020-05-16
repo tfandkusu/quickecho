@@ -1,5 +1,6 @@
 package jp.bellware.echo.store
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import jp.bellware.echo.action.*
 import jp.bellware.echo.util.ActionReceiver
@@ -165,6 +166,13 @@ class MainStore(actionReceiver: ActionReceiver) : Store(actionReceiver) {
      * バックキーのデフォルト挙動を防ぐ
      */
     val overrideBackKey = MutableLiveData(false)
+
+    private val _progress = MutableLiveData(false)
+
+    /**
+     * プログレス表示
+     */
+    val progress: LiveData<Boolean> = _progress
 
     /**
      * 再生中または停止中フラグ。このフラグはsavedInstanceに保存する。
@@ -365,6 +373,14 @@ class MainStore(actionReceiver: ActionReceiver) : Store(actionReceiver) {
         overrideBackKey.value = false
         // 削除ボタンを押した扱いにする
         clickDelete.value = true
+    }
+
+    fun onEvent(action: MainRestoreStartAction) {
+        _progress.value = true
+    }
+
+    fun onEvent(action: MainRestoreEndAction) {
+        _progress.value = false
     }
 
 }
