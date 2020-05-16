@@ -108,8 +108,6 @@ object AacDecoder {
      *
      * https://github.com/taehwandev/MediaCodecExample/blob/master/src/net/thdev/mediacodecexample/decoder/AudioDecoderThread.java
      *
-     * TODO apacheライセンスなのでどこかに表記する。
-     *
      * The code profile, Sample rate, channel Count is used to
      * produce the AAC Codec SpecificData.
      * Android 4.4.2/frameworks/av/media/libstagefright/avc_utils.cpp refer
