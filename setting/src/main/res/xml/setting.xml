@@ -8,8 +8,11 @@
         android:key="about"
         android:title="@string/pref_information" />
     <Preference
-        android:key="oss"
-        android:title="@string/pref_oss" />
+        android:key="oss1"
+        android:title="@string/pref_oss_1" />
+    <Preference
+        android:key="oss2"
+        android:title="@string/pref_oss_2" />
     <Preference
         android:key="pp"
         android:title="@string/pref_privacy_policy" />

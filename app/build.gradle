@@ -50,11 +50,6 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$rootProject.nav_version"
 
-    // To show open source license by oss-licenses-plugin
-    // This app uses addADTStoPacket method to save sound as AAC file.
-    // https://github.com/HelloHuDi/AudioCapture/blob/master/audiocapture/src/main/java/com/hd/audiocapture/writer/AccFileWriter.java
-    implementation 'com.hd:audiocapture:2.1.1'
-
     // Firebase
     // Debugビルドでは実行できないためReleaseビルドでしか使わない。
     // google-services.jsonがソースコード公開のためにモックになっているため。

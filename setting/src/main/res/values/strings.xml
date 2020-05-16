@@ -3,7 +3,8 @@
     <!-- 設定画面 -->
     <string name="pref_sound">Sound effect</string>
     <string name="pref_information">Information</string>
-    <string name="pref_oss">Open source license</string>
+    <string name="pref_oss_1">Open source license 1</string>
+    <string name="pref_oss_2">Open source license 2</string>
     <string name="version" translatable="false">Version</string>
     <string name="version_sample" translatable="false">Version 1.0.0</string>
     <string name="copyright" translatable="false">&#169; 2015 Bellware</string>
