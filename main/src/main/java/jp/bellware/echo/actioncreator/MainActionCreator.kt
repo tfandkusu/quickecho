@@ -108,9 +108,13 @@ class MainActionCreator(private val dispatcher: Dispatcher,
      * プロセスキルからの復帰を行う
      */
     private suspend fun restore() {
+        // プログレス表示
+        dispatcher.dispatch(MainRestoreStartAction)
         // AACファイルで保存している音声を読みこんでメモリーに格納する
         soundRepository.restore()
         // 停止状態にする
         dispatcher.dispatch(MainStopAction)
+        // プログレス閉じる
+        dispatcher.dispatch(MainRestoreEndAction)
     }
 }

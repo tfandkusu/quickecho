@@ -55,7 +55,9 @@ class MainActionCreatorTest {
         actionCreator.onSoundLoaded(true).join()
         verifySequence {
             dispatcher.dispatch(MainReadyAction)
+            dispatcher.dispatch(MainRestoreStartAction)
             dispatcher.dispatch(MainStopAction)
+            dispatcher.dispatch(MainRestoreEndAction)
         }
     }
 
