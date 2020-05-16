@@ -84,6 +84,7 @@ Activityを呼び出し[Jetpack Navigation](https://developer.android.com/guide/
 - [Material Components](https://material.io/components/) [Floating Action Button](https://material.io/develop/android/components/floating-action-button/)と[CardView](https://material.io/develop/android/components/material-card-view/)の実装に使用しています。
 - [ConstraintLayout](https://developer.android.com/reference/androidx/constraintlayout/widget/ConstraintLayout.html)
 - [Jetpack Navigation](https://developer.android.com/guide/navigation)
+- [Groupie](https://github.com/lisawray/groupie)
 - [EventBus](https://github.com/greenrobot/EventBus) FluxのDispatcherの実装に使っています。
 - [Flow Preferences](https://github.com/tfcporciuncula/flow-preferences/) 設定画面での効果音設定をメイン画面に反映させることに使っています。
 - [Timber](https://github.com/JakeWharton/timber)
