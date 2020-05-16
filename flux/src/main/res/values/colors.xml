@@ -19,6 +19,8 @@
     <color name="play_light">#CCFF90</color>
     <!-- FABのripple color-->
     <color name="ripple">#11000000</color>
+    <!-- プログレスの背景 -->
+    <color name="progress_background">#88000000</color>
 
     <!-- 白 -->
     <color name="white">#ffffff</color>

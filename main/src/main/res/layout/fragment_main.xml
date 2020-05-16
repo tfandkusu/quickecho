@@ -64,5 +64,8 @@
             android:text="@string/warning_time_limit" />
     </androidx.cardview.widget.CardView>
 
+    <include
+        layout="@layout/main_progress"
+        tools:visibility="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

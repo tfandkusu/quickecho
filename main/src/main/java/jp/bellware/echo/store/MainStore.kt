@@ -331,6 +331,7 @@ class MainStore(actionReceiver: ActionReceiver) : Store(actionReceiver) {
         // ステータス表示再現
         status.value = AnimationStatus.VISIBLE
         icon.value = StatusIcon.PLAY
+        playOrStop = true
         // ボタン表示状態再現
         record.value = AnimationStatus.VISIBLE
         delete.value = AnimationStatus.VISIBLE

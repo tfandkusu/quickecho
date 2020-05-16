@@ -7,14 +7,17 @@ import android.media.AudioManager
 import android.os.Bundle
 import android.view.*
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import jp.bellware.echo.actioncreator.MainActionCreator
 import jp.bellware.echo.main.R
 import jp.bellware.echo.navigation.MainNavigation
 import jp.bellware.echo.store.*
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.main_control.*
+import kotlinx.android.synthetic.main.main_progress.*
 import kotlinx.android.synthetic.main.main_status.*
 import kotlinx.coroutines.InternalCoroutinesApi
 import org.koin.android.ext.android.inject
@@ -241,6 +244,9 @@ class MainFragment : Fragment() {
             if (it == true)
                 delete.performClick()
         })
+        store.progress.observe(viewLifecycleOwner) {
+            progress.isVisible = it
+        }
         // クリックイベント
         // 録音ボタンが押された
         record.setOnClickListener {
@@ -267,6 +273,9 @@ class MainFragment : Fragment() {
         stop.setOnClickListener {
             if (store.clickable)
                 actionCreator.onStopClick()
+        }
+        progress.setOnClickListener {
+
         }
     }
 

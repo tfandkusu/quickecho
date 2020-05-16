@@ -161,6 +161,7 @@ class MainStoreTest {
         // ステータス表示再現
         store.status.value shouldBe AnimationStatus.VISIBLE
         store.icon.value shouldBe StatusIcon.PLAY
+        store.playOrStop shouldBe true
         // ボタン表示状態再現
         store.record.value shouldBe AnimationStatus.VISIBLE
         store.delete.value shouldBe AnimationStatus.VISIBLE
