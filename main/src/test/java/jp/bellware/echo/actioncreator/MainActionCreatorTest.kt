@@ -53,9 +53,10 @@ class MainActionCreatorTest {
     @Test
     fun onSoundLoadedRestore() = runBlocking {
         actionCreator.onSoundLoaded(true).join()
-        verifySequence {
+        coVerifySequence {
             dispatcher.dispatch(MainReadyAction)
             dispatcher.dispatch(MainRestoreStartAction)
+            soundRepository.restore()
             dispatcher.dispatch(MainStopAction)
             dispatcher.dispatch(MainRestoreEndAction)
         }
