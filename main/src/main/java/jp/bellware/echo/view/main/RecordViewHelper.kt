@@ -3,7 +3,6 @@ package jp.bellware.echo.view.main
 
 import android.media.AudioFormat
 import android.media.AudioRecord
-import android.media.AudioTrack
 import android.media.MediaRecorder
 import android.os.Process
 import androidx.lifecycle.ViewModel
@@ -12,7 +11,6 @@ import jp.bellware.echo.util.BWU
 import jp.bellware.echo.util.filter.FirstCut
 import jp.bellware.echo.util.filter.PacketConverter
 import jp.bellware.echo.util.filter.ZeroCrossRecordVisualVolumeProcessor
-import kotlin.math.max
 
 /**
  * 録音担当ViewHelper
@@ -22,15 +20,11 @@ class RecordViewHelper(
         private val repository: SoundRepository) : ViewModel() {
 
     companion object {
-        /**
-         * サンプル数
-         */
-        private const val SAMPLE_RATE = 44100
 
         /**
          * 視覚的ボリュームの適用範囲外サンプル数
          */
-        private const val FC = 2 * SAMPLE_RATE / 10
+        private const val FC = 2 * SoundRepository.SAMPLE_RATE / 10
     }
 
     /**
@@ -42,6 +36,7 @@ class RecordViewHelper(
      * バッファサイズ
      */
     private var packetSize = 0
+
     /**
      * 録音スレッド
      */
@@ -83,12 +78,8 @@ class RecordViewHelper(
      * 録音を開始する
      */
     private fun startRecord() {
-        val recordMinBufferSize = AudioRecord.getMinBufferSize(SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO,
-                AudioFormat.ENCODING_PCM_16BIT)
-        val playMinBufferSize = AudioTrack.getMinBufferSize(SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO,
-                AudioFormat.ENCODING_PCM_16BIT)
-        packetSize = max(recordMinBufferSize, playMinBufferSize)
-        record = AudioRecord(MediaRecorder.AudioSource.DEFAULT, SAMPLE_RATE,
+        packetSize = repository.getSuitablePackageSize()
+        record = AudioRecord(MediaRecorder.AudioSource.DEFAULT, SoundRepository.SAMPLE_RATE,
                 AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, packetSize * 2)
         record?.startRecording()
         thread = Thread(Runnable {
@@ -132,6 +123,7 @@ class RecordViewHelper(
         vvp.reset()
         fc.reset()
         clear()
+        repository.start()
     }
 
     /**
@@ -140,6 +132,7 @@ class RecordViewHelper(
     @Synchronized
     fun stop() {
         recording = false
+        repository.stop()
     }
 
     override fun onCleared() {
@@ -153,7 +146,7 @@ class RecordViewHelper(
     private fun addPacket(packet: ShortArray) {
         if (recording) {
             val fd = PacketConverter.convert(packet)
-            repository.add(fd)
+            repository.add(packet, fd)
             for (s in fd) {
                 vvp.add(fc.filter(s))
             }

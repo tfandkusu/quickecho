@@ -15,4 +15,9 @@ interface SettingNavigation {
      * アプリについて画面に遷移する
      */
     fun navigateToAbout(fragment: Fragment)
+
+    /**
+     * OSSライセンス2画面に遷移する
+     */
+    fun navigateToOss2(fragment: Fragment)
 }

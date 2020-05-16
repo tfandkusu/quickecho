@@ -1,6 +1,8 @@
 package jp.bellware.echo.data.local
 
+import android.content.Context
 import io.kotlintest.shouldBe
+import io.mockk.mockk
 import jp.bellware.echo.datastore.local.SoundMemoryLocalDataStore
 import jp.bellware.echo.datastore.local.SoundMemoryLocalDataStoreImpl
 import org.junit.Before
@@ -11,7 +13,7 @@ class SoundMemoryLocalDataStoreTest {
 
     @Before
     fun setUp() {
-        dataStore = SoundMemoryLocalDataStoreImpl()
+        dataStore = SoundMemoryLocalDataStoreImpl(mockk<Context>())
     }
 
     @Test

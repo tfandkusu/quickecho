@@ -5,6 +5,7 @@ import io.mockk.coVerifySequence
 import io.mockk.impl.annotations.MockK
 import io.mockk.verifySequence
 import jp.bellware.echo.action.*
+import jp.bellware.echo.repository.SoundRepository
 import jp.bellware.echo.util.Dispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -21,6 +22,9 @@ class MainActionCreatorTest {
     @MockK(relaxed = true)
     lateinit var delayActionCreatorHelper: DelayActionCreatorHelper
 
+    @MockK(relaxed = true)
+    lateinit var soundRepository: SoundRepository
+
     /**
      * テスト対象
      */
@@ -32,14 +36,29 @@ class MainActionCreatorTest {
         // スレッドを切り替えない
         Dispatchers.setMain(Dispatchers.Unconfined)
         MockKAnnotations.init(this)
-        actionCreator = MainActionCreator(dispatcher, delayActionCreatorHelper)
+        actionCreator = MainActionCreator(dispatcher, delayActionCreatorHelper, soundRepository)
     }
 
     @Test
-    fun onSoundLoaded() {
-        actionCreator.onSoundLoaded()
+    fun onSoundLoadedFirstTime() = runBlocking {
+        actionCreator.onSoundLoaded(false).join()
         verifySequence {
             dispatcher.dispatch(MainReadyAction)
+        }
+    }
+
+    /**
+     * 再生または停止状態でプロセスキルして、そこからの復帰ケース
+     */
+    @Test
+    fun onSoundLoadedRestore() = runBlocking {
+        actionCreator.onSoundLoaded(true).join()
+        coVerifySequence {
+            dispatcher.dispatch(MainReadyAction)
+            dispatcher.dispatch(MainRestoreStartAction)
+            soundRepository.restore()
+            dispatcher.dispatch(MainStopAction)
+            dispatcher.dispatch(MainRestoreEndAction)
         }
     }
 

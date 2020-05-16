@@ -7,14 +7,17 @@ import android.media.AudioManager
 import android.os.Bundle
 import android.view.*
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import jp.bellware.echo.actioncreator.MainActionCreator
 import jp.bellware.echo.main.R
 import jp.bellware.echo.navigation.MainNavigation
 import jp.bellware.echo.store.*
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.main_control.*
+import kotlinx.android.synthetic.main.main_progress.*
 import kotlinx.android.synthetic.main.main_status.*
 import kotlinx.coroutines.InternalCoroutinesApi
 import org.koin.android.ext.android.inject
@@ -36,7 +39,7 @@ class MainFragment : Fragment() {
     /**
      * ユーザ操作、音声系ViewHelperからのコールバックを受けて、アクションを発行する担当
      */
-    private val actionCreator: MainActionCreator by inject()
+    private val actionCreator: MainActionCreator by viewModel()
 
     /**
      * 効果音担当ViewHelper
@@ -67,6 +70,13 @@ class MainFragment : Fragment() {
      * 録音時間計測担当
      */
     private val timerViewHelper: TimerViewHelper by viewModel()
+
+    companion object {
+        /**
+         * 再生中または停止中
+         */
+        private const val EXTRA_PLAY_OR_STOP = "playOrStop"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -109,9 +119,11 @@ class MainFragment : Fragment() {
             }
 
         }
+        // 再生または停止状態でプロセスキルフラグの取得
+        val playOrStop = savedInstanceState?.getBoolean(EXTRA_PLAY_OR_STOP, false) ?: false
         // 効果音読み込み
         soundEffect.onCreate {
-            actionCreator.onSoundLoaded()
+            actionCreator.onSoundLoaded(playOrStop)
         }
         // StoreとViewを繋げる
         store.status.observe(viewLifecycleOwner, Observer {
@@ -232,6 +244,9 @@ class MainFragment : Fragment() {
             if (it == true)
                 delete.performClick()
         })
+        store.progress.observe(viewLifecycleOwner) {
+            progress.isVisible = it
+        }
         // クリックイベント
         // 録音ボタンが押された
         record.setOnClickListener {
@@ -258,6 +273,9 @@ class MainFragment : Fragment() {
         stop.setOnClickListener {
             if (store.clickable)
                 actionCreator.onStopClick()
+        }
+        progress.setOnClickListener {
+
         }
     }
 
@@ -289,6 +307,10 @@ class MainFragment : Fragment() {
         return false
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean(EXTRA_PLAY_OR_STOP, store.playOrStop)
+    }
 
     /**
      * 警告を表示する

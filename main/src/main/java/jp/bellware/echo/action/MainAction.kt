@@ -62,3 +62,13 @@ object MainBackPressedAction : Action()
  * 最大録音時間オーバーアクション
  */
 data class MainMaxRecordTimeOverAction(val includeSound: Boolean) : Action()
+
+/**
+ * 一時保存音声読込開始アクション
+ */
+object MainRestoreStartAction : Action()
+
+/**
+ * 一時保存音声読込終了アクション
+ */
+object MainRestoreEndAction : Action()

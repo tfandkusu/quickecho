@@ -1,5 +1,6 @@
 package jp.bellware.echo.store
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import jp.bellware.echo.action.*
 import jp.bellware.echo.util.ActionReceiver
@@ -12,6 +13,7 @@ enum class StatusIcon {
      * 録音
      */
     RECORD,
+
     /**
      * 再生
      */
@@ -26,6 +28,7 @@ enum class RPRequest {
      * 開始する
      */
     START,
+
     /**
      * 終了する
      */
@@ -61,10 +64,12 @@ enum class WarningMessage {
      * ボリュームが0
      */
     MUTE,
+
     /**
      * 録音時間オーバー
      */
     RECORD_TIME,
+
     /**
      * 録音されていない
      */
@@ -160,7 +165,19 @@ class MainStore(actionReceiver: ActionReceiver) : Store(actionReceiver) {
     /**
      * バックキーのデフォルト挙動を防ぐ
      */
-    val overrideBackKey = MutableLiveData<Boolean>(false)
+    val overrideBackKey = MutableLiveData(false)
+
+    private val _progress = MutableLiveData(false)
+
+    /**
+     * プログレス表示
+     */
+    val progress: LiveData<Boolean> = _progress
+
+    /**
+     * 再生中または停止中フラグ。このフラグはsavedInstanceに保存する。
+     */
+    var playOrStop = false
 
     init {
         // 初期状態設定
@@ -216,6 +233,8 @@ class MainStore(actionReceiver: ActionReceiver) : Store(actionReceiver) {
         stop.value = AnimationStatus.INVISIBLE
         // 削除ボタンを表示
         delete.value = AnimationStatus.FI1
+        // 再生中または停止中ではない
+        playOrStop = false
     }
 
     /**
@@ -252,6 +271,8 @@ class MainStore(actionReceiver: ActionReceiver) : Store(actionReceiver) {
         visualVolume.value = VisualVolumeRequest.STOP
         // タイマーキャンセル
         requestForTimer.value = TimerRequest.CANCEL
+        // 再生中または停止中ではない
+        playOrStop = false
     }
 
     /**
@@ -287,6 +308,7 @@ class MainStore(actionReceiver: ActionReceiver) : Store(actionReceiver) {
         // 再生する
         requestForPlay.value = RPRequest.START
         visualVolume.value = VisualVolumeRequest.PLAY
+        playOrStop = true
     }
 
     /**
@@ -305,6 +327,17 @@ class MainStore(actionReceiver: ActionReceiver) : Store(actionReceiver) {
         // 停止する
         requestForPlay.value = RPRequest.STOP
         visualVolume.value = VisualVolumeRequest.RESET
+        // 以下、プロセス復帰用
+        // ステータス表示再現
+        status.value = AnimationStatus.VISIBLE
+        icon.value = StatusIcon.PLAY
+        playOrStop = true
+        // ボタン表示状態再現
+        record.value = AnimationStatus.VISIBLE
+        delete.value = AnimationStatus.VISIBLE
+        play.value = AnimationStatus.INVISIBLE
+        replay.value = AnimationStatus.VISIBLE
+        stop.value = AnimationStatus.VISIBLE
     }
 
 
@@ -341,6 +374,14 @@ class MainStore(actionReceiver: ActionReceiver) : Store(actionReceiver) {
         overrideBackKey.value = false
         // 削除ボタンを押した扱いにする
         clickDelete.value = true
+    }
+
+    fun onEvent(action: MainRestoreStartAction) {
+        _progress.value = true
+    }
+
+    fun onEvent(action: MainRestoreEndAction) {
+        _progress.value = false
     }
 
 }

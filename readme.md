@@ -23,8 +23,7 @@ https://play.google.com/store/apps/details?id=jp.bellware.echo
 <img src="https://github.com/tfandkusu/quickecho/blob/master/images/flux.png?raw=true">
 
 ボタンが押される等のユーザ操作が行われるとActionCreatorのメソッドが呼ばれます。ActionCreatorは処理の途中経過や結果をActionとして発行します。StoreはActionを受け取り、内容に応じてLiveDataを変更します。FragmentはLiveDataを監視し、内容に応じて表示や音声デバイス制御を行います。
-
-このアプリはAPI呼び出しやファイル書き込みがまだ無いため、ActionCreatorがそれに使用するRepositoryとその具体的実装になるDataStoreがまだ無いです。(後述するView層に配置している録音や効果音機能から呼ばれるRepositoryはあります。)
+データの入出力はRepositoryが担当し、Repositoryが必要に応じてローカルファイル保存のLocalDataStore、API呼び出しのRemoteDataStore(まだ無い)を呼び出します。
 
 ## メイン画面View層の設計
 
@@ -84,6 +83,7 @@ Activityを呼び出し[Jetpack Navigation](https://developer.android.com/guide/
 - [Material Components](https://material.io/components/) [Floating Action Button](https://material.io/develop/android/components/floating-action-button/)と[CardView](https://material.io/develop/android/components/material-card-view/)の実装に使用しています。
 - [ConstraintLayout](https://developer.android.com/reference/androidx/constraintlayout/widget/ConstraintLayout.html)
 - [Jetpack Navigation](https://developer.android.com/guide/navigation)
+- [Groupie](https://github.com/lisawray/groupie)
 - [EventBus](https://github.com/greenrobot/EventBus) FluxのDispatcherの実装に使っています。
 - [Flow Preferences](https://github.com/tfcporciuncula/flow-preferences/) 設定画面での効果音設定をメイン画面に反映させることに使っています。
 - [Timber](https://github.com/JakeWharton/timber)

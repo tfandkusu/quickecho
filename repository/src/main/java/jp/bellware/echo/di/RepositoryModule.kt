@@ -10,5 +10,5 @@ val localDataStoreModuleInRepositoryModule = localDataStoreModule
 val repositoryModule = module {
     // Repository
     factory { SettingRepositoryImpl(get()) as SettingRepository }
-    factory { SoundRepositoryImpl(get()) as SoundRepository }
+    factory { SoundRepositoryImpl(get(), get()) as SoundRepository }
 }

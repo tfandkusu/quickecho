@@ -31,9 +31,17 @@ class SettingFragment : PreferenceFragmentCompat() {
         }
         run {
             //OSS
-            val pref = findPreference<Preference>(PREF_OSS)
+            val pref = findPreference<Preference>(PREF_OSS_1)
             pref?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 callOSS()
+                true
+            }
+        }
+        run {
+            //OSS
+            val pref = findPreference<Preference>(PREF_OSS_2)
+            pref?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                navigation.navigateToOss2(this)
                 true
             }
         }
@@ -49,7 +57,7 @@ class SettingFragment : PreferenceFragmentCompat() {
     }
 
     private fun callOSS() {
-        OssLicensesMenuActivity.setActivityTitle(getString(R.string.pref_oss));
+        OssLicensesMenuActivity.setActivityTitle(getString(R.string.pref_oss_1))
         val intent = Intent(requireContext(), OssLicensesMenuActivity::class.java)
         intent.putExtra("title", getString(R.string.oss_license_title))
         startActivity(intent)
@@ -65,7 +73,9 @@ class SettingFragment : PreferenceFragmentCompat() {
 
         private const val PREF_ABOUT = "about"
 
-        private const val PREF_OSS = "oss"
+        private const val PREF_OSS_1 = "oss1"
+
+        private const val PREF_OSS_2 = "oss2"
 
         private const val PREF_PP = "pp"
 
