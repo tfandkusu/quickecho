@@ -4,7 +4,6 @@ apply from: rootProject.file('gradle/view-common.gradle')
 dependencies {
     implementation project(':flux')
     implementation project(':repository')
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation project(':test')
     // Preference
     implementation "androidx.preference:preference:$preference_version"
