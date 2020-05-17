@@ -86,13 +86,13 @@ def get_version_and_tag_name():
     major = 1
     minor = 0
     patch = 0
-    with open("app/build.gradle") as f:
+    with open("build.gradle") as f:
         for line in f.readlines():
-            if(line.startswith("def major = ")):
+            if(line.startswith("    ext.major = ")):
                 major = int(line.split()[-1])
-            if(line.startswith("def minor = ")):
+            if(line.startswith("    ext.minor = ")):
                 minor = int(line.split()[-1])
-            if(line.startswith("def patch = ")):
+            if(line.startswith("    ext.patch = ")):
                 patch = int(line.split()[-1])
     version_name = "%d.%d.%d" % (major,minor,patch)
     tag_name = "release_%d_%d_%d" % (major,minor,patch)
