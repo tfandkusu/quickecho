@@ -5,7 +5,7 @@ android {
     compileSdkVersion 29
 
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 29
         versionCode major * 10000 + minor * 100 + patch
         versionName "${major}.${minor}.${patch}"
