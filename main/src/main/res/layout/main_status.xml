@@ -11,7 +11,7 @@
         android:layout_height="128dp"
         android:layout_gravity="top|center_horizontal" />
 
-    <!-- 状態アイコン -->
+    <!-- 状態アイコン(わざとlintに指摘させる) -->
     <ImageView
         android:id="@+id/statusImage"
         android:layout_width="128dp"
