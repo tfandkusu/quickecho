@@ -34,5 +34,5 @@
     <!-- スクリーンショットの矢印色 -->
     <color name="ss_arrow">#303F9F</color>
     <!-- わざとlintに指摘させる -->
-    <color name="unused">#ff00ff</color>
+    <color name="unused">#ff00fe</color>
 </resources>
