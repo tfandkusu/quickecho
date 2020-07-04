@@ -93,6 +93,7 @@ Activityを呼び出し[Jetpack Navigation](https://developer.android.com/guide/
 
 - [AWS CodeBuild](https://aws.amazon.com/jp/codebuild/) PUSH毎の単体テストとlint結果投稿([Danger](https://github.com/danger/danger))を行います。
 - [AWS Chatbot](https://aws.amazon.com/jp/chatbot/) CIの結果をSlackに投稿します。
+- [Docker Hub](https://hub.docker.com/) CI用にはじめからDangerが入っているDockerイメージを作成して保存しています。[作成イメージ](https://hub.docker.com/repository/docker/tfandkusu/android_danger)
 
 ## CD
 
