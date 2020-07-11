@@ -102,5 +102,5 @@ Activityを呼び出し[Jetpack Navigation](https://developer.android.com/guide/
 
 # 今後の予定
 
-- 録音音声を保存して再生する機能の追加
+- 録音音声を保存して再生する機能の追加 [デザイン(Adobe XD)](https://xd.adobe.com/view/1ba4de3f-a856-4c29-89c3-29341ed1f598-4ef7/)
 
