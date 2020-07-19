@@ -11,7 +11,6 @@ class Repository:
     def make_marged_prs(self):
         "masterブランチにマージ済みのプルリク一覧テキストを作成する"
         tag = self.get_latest_release_tag()
-        tag = None
         if(tag is None):
             raise RuntimeError("最新のreleaseタグがありません。")
         commits = self.get_commits(tag.commit.commit.sha)
