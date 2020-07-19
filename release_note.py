@@ -1,6 +1,7 @@
 import os
 from github import Github
 
+
 class Repository:
     "リポジトリからの情報出し入れ担当"
 
@@ -10,8 +11,9 @@ class Repository:
     def make_marged_prs(self):
         "masterブランチにマージ済みのプルリク一覧テキストを作成する"
         tag = self.get_latest_release_tag()
+        tag = None
         if(tag is None):
-            raise "最新のreleaseタグがありません。"
+            raise RuntimeError("最新のreleaseタグがありません。")
         commits = self.get_commits(tag.commit.commit.sha)
         numbers = self.get_marged_pr_numbers(commits)
         prs = self.get_prs_in_numbers(numbers)
@@ -39,7 +41,7 @@ class Repository:
                 break
         return latest_tag
 
-    def get_commits(self,sha):
+    def get_commits(self, sha):
         "指定したハッシュまでのコミット一覧を取得する"
         # masterブランチのコミット一覧を取得
         results = []
@@ -81,6 +83,7 @@ class Repository:
             prs.append(pr)
         return prs
 
+
 def get_version_and_tag_name():
     "バージョン名とタグ名を作る"
     major = 1
@@ -94,9 +97,10 @@ def get_version_and_tag_name():
                 minor = int(line.split()[-1])
             if(line.startswith("    ext.patch = ")):
                 patch = int(line.split()[-1])
-    version_name = "%d.%d.%d" % (major,minor,patch)
-    tag_name = "release_%d_%d_%d" % (major,minor,patch)
+    version_name = "%d.%d.%d" % (major, minor, patch)
+    tag_name = "release_%d_%d_%d" % (major, minor, patch)
     return version_name, tag_name
+
 
 # バージョン名とタグ名を作る
 version_name, tag_name = get_version_and_tag_name()
