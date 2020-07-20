@@ -5,7 +5,9 @@ import android.animation.ObjectAnimator
 import android.content.Context
 import android.media.AudioManager
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -13,7 +15,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
 import jp.bellware.echo.actioncreator.MainActionCreator
 import jp.bellware.echo.main.R
-import jp.bellware.echo.navigation.MainNavigation
 import jp.bellware.echo.store.*
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.main_control.*
@@ -25,11 +26,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class MainFragment : Fragment() {
-
-    /**
-     * 画面遷移担当
-     */
-    private val navigation: MainNavigation by inject()
 
     /**
      * 表示制御担当
@@ -95,7 +91,6 @@ class MainFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
@@ -292,19 +287,6 @@ class MainFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         visualVolumeViewHelper.onPause()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_main, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-        if (id == R.id.setting) {
-            navigation.callSettingFragment(this)
-            return true
-        }
-        return false
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

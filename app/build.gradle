@@ -4,7 +4,6 @@ apply plugin: 'io.fabric'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
-
 android {
     compileSdkVersion 29
 
@@ -29,6 +28,9 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        profile {
+            initWith debug
+        }
     }
     lintOptions {
         checkReleaseBuilds false
@@ -36,7 +38,15 @@ android {
         // but continue the build even when errors are found:
         abortOnError false
     }
+}
 
+repositories {
+    maven {
+        url '../../sound_memo/build/host/outputs/repo/'
+    }
+    maven {
+        url 'https://storage.googleapis.com/download.flutter.io'
+    }
 }
 
 dependencies {
@@ -45,6 +55,9 @@ dependencies {
     implementation project(':flux')
     testImplementation project(':test')
 
+    debugImplementation 'jp.bellware.echo.sound_memo:flutter_debug:1.0'
+    profileImplementation 'jp.bellware.echo.sound_memo:flutter_profile:1.0'
+    releaseImplementation 'jp.bellware.echo.sound_memo:flutter_release:1.0'
 
     // Jetpack Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.nav_version"

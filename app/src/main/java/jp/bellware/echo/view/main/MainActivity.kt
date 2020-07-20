@@ -9,6 +9,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import jp.bellware.echo.R
+import jp.bellware.echo.view.pager.ViewPagerHostFragmentDirections
 import jp.bellware.echo.view.setting.AboutFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -41,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         // ディープリンクを処理する
         val type = intent.getStringExtra(EXTRA_TYPE)
         if (type == AboutFragment.LINK_TYPE) {
-            val action = MainFragmentDirections.actionMainFragmentToSettingNavigationWithNoAnimation(AboutFragment.LINK_TYPE)
+            val action = ViewPagerHostFragmentDirections.actionViewPagerHostFragmentToSettingFragmentWithNoAnimation(AboutFragment.LINK_TYPE)
             navController.navigate(action)
         }
     }
