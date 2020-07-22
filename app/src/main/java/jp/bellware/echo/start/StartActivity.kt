@@ -16,7 +16,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import jp.bellware.echo.R
 import jp.bellware.echo.util.EchoFirebaseDynamicLinksUtil
-import jp.bellware.echo.view.main.MainActivity
+import jp.bellware.echo.view.pager.PagerActivity
 import kotlinx.android.synthetic.main.activity_start.*
 
 /**
@@ -104,10 +104,10 @@ class StartActivity : AppCompatActivity() {
      */
     private fun callMainActivityWithLinks() {
         EchoFirebaseDynamicLinksUtil.process(this, intent) { type ->
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, PagerActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
             type?.let {
-                intent.putExtra(MainActivity.EXTRA_TYPE, it)
+                intent.putExtra(PagerActivity.EXTRA_TYPE, it)
             }
             startActivityForResult(intent, CODE_MAIN)
         }
