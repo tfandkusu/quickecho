@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 apply from: rootProject.file('gradle/view-common.gradle')
 apply plugin: 'io.fabric'
-apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
 
@@ -44,11 +43,6 @@ dependencies {
     implementation project(':setting')
     implementation project(':flux')
     testImplementation project(':test')
-
-
-    // Jetpack Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.nav_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$rootProject.nav_version"
 
     // Firebase
     // Debugビルドでは実行できないためReleaseビルドでしか使わない。

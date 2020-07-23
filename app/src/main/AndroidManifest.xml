@@ -8,7 +8,6 @@
 
     <application
         android:name=".di.QuickEchoApplication"
-        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -34,14 +33,6 @@
                     android:host="quickecho.page.link"
                     android:scheme="https" />
             </intent-filter>
-        </activity>
-
-        <!-- メイン画面 -->
-        <activity
-            android:name=".view.main.MainActivity"
-            android:label="@string/app_name">
-            <!-- このやり方は最初の画面を飛ばしてしまう -->
-            <!-- <nav-graph android:value="@navigation/navigation" /> -->
         </activity>
 
         <!-- Firebase Messaging Service -->
