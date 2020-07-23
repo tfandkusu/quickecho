@@ -5,27 +5,25 @@ package jp.bellware.echo.view.setting
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
-import jp.bellware.echo.navigation.SettingNavigation
 import jp.bellware.echo.setting.R
-import org.koin.android.ext.android.inject
 
 /**
  * 設定画面のフラグメント
  */
 class SettingFragment : PreferenceFragmentCompat() {
-
-    private val navigation: SettingNavigation by inject()
-
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+
         addPreferencesFromResource(R.xml.setting)
         run {
             //商品情報
             val pref = findPreference<Preference>(PREF_ABOUT)
             pref?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                navigation.navigateToAbout(this)
+                val action = SettingFragmentDirections.actionSettingFragmentToAboutFragment()
+                findNavController().navigate(action)
                 true
             }
         }
@@ -41,7 +39,8 @@ class SettingFragment : PreferenceFragmentCompat() {
             //OSS
             val pref = findPreference<Preference>(PREF_OSS_2)
             pref?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                navigation.navigateToOss2(this)
+                val action = SettingFragmentDirections.actionSettingFragmentToOss2Fragment()
+                findNavController().navigate(action)
                 true
             }
         }
@@ -53,7 +52,7 @@ class SettingFragment : PreferenceFragmentCompat() {
                 true
             }
         }
-        navigation.navigateToLink(this)
+        // TODO ディープリンクを復活させる
     }
 
     private fun callOSS() {

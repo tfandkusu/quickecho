@@ -1,7 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="jp.bellware.echo.setting">
 
     <application>
+        <activity
+            android:name="jp.bellware.echo.view.setting.SettingActivity"
+            android:label="@string/title_setting" />
+        <activity-alias
+            android:name="jp.bellware.echo.view.setting.SettingActivityAlias"
+            android:targetActivity="jp.bellware.echo.view.setting.SettingActivity" />
         <!-- Open Source License -->
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
@@ -10,4 +17,5 @@
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
             android:theme="@style/OSSLicenseTheme" />
     </application>
+
 </manifest>
