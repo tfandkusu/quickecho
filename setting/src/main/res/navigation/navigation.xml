@@ -3,28 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/mainFragment"
+    app:startDestination="@id/settingFragment"
     tools:ignore="UnusedNavigation">
 
-
-    <fragment
-        android:id="@+id/mainFragment"
-        android:name="jp.bellware.echo.view.main.MainFragment"
-        android:label="@string/app_name"
-        tools:layout="@layout/fragment_main">
-        <action
-            android:id="@+id/action_mainFragment_to_settingFragment"
-            app:destination="@id/settingFragment"
-            app:enterAnim="@anim/slide_in_from_right"
-            app:exitAnim="@anim/slide_out_to_left"
-            app:popEnterAnim="@anim/slide_in_from_left"
-            app:popExitAnim="@anim/slide_out_to_right" />
-        <action
-            android:id="@+id/action_mainFragment_to_settingNavigation_withNoAnimation"
-            app:destination="@id/settingFragment"
-            app:popEnterAnim="@anim/slide_in_from_left"
-            app:popExitAnim="@anim/slide_out_to_right" />
-    </fragment>
     <fragment
         android:id="@+id/settingFragment"
         android:name="jp.bellware.echo.view.setting.SettingFragment"
@@ -59,10 +40,7 @@
         android:id="@+id/aboutFragment"
         android:name="jp.bellware.echo.view.setting.AboutFragment"
         android:label="@string/pref_information"
-        tools:layout="@layout/fragment_about">
-        <!-- このやり方は最初の画面を飛ばしてしまう -->
-        <!-- <deepLink app:uri="quickecho.page.link/?type=about" /> -->
-    </fragment>
+        tools:layout="@layout/fragment_about" />
 
     <fragment
         android:id="@+id/oss2Fragment"

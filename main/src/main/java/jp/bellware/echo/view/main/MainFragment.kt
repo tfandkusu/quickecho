@@ -3,6 +3,7 @@ package jp.bellware.echo.view.main
 
 import android.animation.ObjectAnimator
 import android.content.Context
+import android.content.Intent
 import android.media.AudioManager
 import android.os.Bundle
 import android.view.*
@@ -13,8 +14,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
 import jp.bellware.echo.actioncreator.MainActionCreator
 import jp.bellware.echo.main.R
-import jp.bellware.echo.navigation.MainNavigation
 import jp.bellware.echo.store.*
+import jp.bellware.echo.view.setting.SettingActivityAlias
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.main_control.*
 import kotlinx.android.synthetic.main.main_progress.*
@@ -25,11 +26,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class MainFragment : Fragment() {
-
-    /**
-     * 画面遷移担当
-     */
-    private val navigation: MainNavigation by inject()
 
     /**
      * 表示制御担当
@@ -301,7 +297,7 @@ class MainFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         if (id == R.id.setting) {
-            navigation.callSettingFragment(this)
+            callSettingActivity()
             return true
         }
         return false
@@ -324,5 +320,13 @@ class MainFragment : Fragment() {
         animator.startDelay = 3000
         animator.duration = 300
         animator.start()
+    }
+
+    /**
+     * 設定画面を呼び出す
+     */
+    private fun callSettingActivity() {
+        val intent = Intent(requireContext(), SettingActivityAlias::class.java)
+        startActivity(intent)
     }
 }
