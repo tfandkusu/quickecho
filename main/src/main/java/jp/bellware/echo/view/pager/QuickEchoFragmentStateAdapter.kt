@@ -16,6 +16,8 @@ class QuickEchoFragmentStateAdapter(activity: FragmentActivity) : FragmentStateA
         return if (position == 0)
             MainFragment()
         else
-            FlutterFragment.createDefault()
+            FlutterFragment.withNewEngine()
+                    .shouldAttachEngineToActivity(false)
+                    .build()
     }
 }
