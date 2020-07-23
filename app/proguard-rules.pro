@@ -21,3 +21,4 @@
 -keepclassmembers class ** {
     public void onEvent*(***);
 }
+-keepnames class jp.bellware.echo.view.setting.SettingActivityAlias

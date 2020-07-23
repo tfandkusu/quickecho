@@ -23,6 +23,14 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8
     }
+    buildTypes {
+        release {
+            minifyEnabled true
+        }
+        profile {
+
+        }
+    }
 }
 
 
