@@ -38,5 +38,12 @@ allprojects {
     repositories {
         google()
         jcenter()
+
+        maven {
+            url '../../sound_memo/build/host/outputs/repo/'
+        }
+        maven {
+            url 'https://storage.googleapis.com/download.flutter.io'
+        }
     }
 }

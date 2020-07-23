@@ -2,9 +2,7 @@ package jp.bellware.echo.view.pager
 
 import android.media.AudioManager
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
 import jp.bellware.echo.main.R
 import kotlinx.android.synthetic.main.activity_pager.*
 
@@ -27,10 +25,6 @@ class PagerActivity : AppCompatActivity() {
 
         viewPager.adapter = QuickEchoFragmentStateAdapter(this)
         viewPager.offscreenPageLimit = 1
-        val childView = viewPager.getChildAt(0)
-        if (childView is RecyclerView) {
-            childView.setOverScrollMode(View.OVER_SCROLL_NEVER)
-        }
 
         //ボリューム調整を音楽にする
         volumeControlStream = AudioManager.STREAM_MUSIC

@@ -6,6 +6,10 @@ dependencies {
     implementation project(':flux')
     implementation project(':repository')
 
+    debugImplementation 'jp.bellware.echo.sound_memo:flutter_debug:1.0'
+    profileImplementation 'jp.bellware.echo.sound_memo:flutter_profile:1.0'
+    releaseImplementation 'jp.bellware.echo.sound_memo:flutter_release:1.0'
+
     implementation 'androidx.cardview:cardview:1.0.0'
 
     // ConstraintLayout
