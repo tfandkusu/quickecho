@@ -24,7 +24,10 @@ class SettingActivity : AppCompatActivity() {
         val host = supportFragmentManager
                 .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = host.navController
-        appBarConfiguration = AppBarConfiguration.Builder(navController.graph).build()
+        appBarConfiguration = AppBarConfiguration.Builder().setFallbackOnNavigateUpListener {
+            finish()
+            true
+        }.build()
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
