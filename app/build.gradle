@@ -43,7 +43,6 @@ dependencies {
     implementation project(':main')
     implementation project(':setting')
     implementation project(':flux')
-    testImplementation project(':test')
 
 
     // Jetpack Navigation
