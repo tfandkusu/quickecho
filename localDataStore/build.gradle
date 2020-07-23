@@ -2,7 +2,6 @@ apply plugin: 'com.android.library'
 apply from: rootProject.file('gradle/common.gradle')
 
 dependencies {
-    testImplementation project(':test')
     // Preference
     implementation "androidx.preference:preference:$preference_version"
     // Flow Preferences

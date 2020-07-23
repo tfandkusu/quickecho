@@ -12,7 +12,6 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$rootProject.nav_version"
 
-    testImplementation project(':test')
     // Preference
     implementation "androidx.preference:preference:$preference_version"
     // oss-license

@@ -42,7 +42,6 @@ dependencies {
     implementation project(':main')
     implementation project(':setting')
     implementation project(':flux')
-    testImplementation project(':test')
 
     // Firebase
     // Debugビルドでは実行できないためReleaseビルドでしか使わない。
