@@ -144,4 +144,12 @@ class MainActionCreatorTest {
             dispatcher.dispatch(MainMaxRecordTimeOverAction(false))
         }
     }
+
+    @Test
+    fun soundMemo() {
+        actionCreator.onSoundMemoClick()
+        verifySequence {
+            dispatcher.dispatch(MainSoundMemoAction)
+        }
+    }
 }

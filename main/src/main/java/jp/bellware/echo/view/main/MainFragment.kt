@@ -279,7 +279,7 @@ class MainFragment : Fragment() {
         }
         // 音声メモボタンが押された
         soundMemoButton.setOnClickListener {
-
+            actionCreator.onSoundMemoClick()
         }
         progress.setOnClickListener {
 

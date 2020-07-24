@@ -175,6 +175,11 @@ class MainStore(actionReceiver: ActionReceiver) : Store(actionReceiver) {
     val progress: LiveData<Boolean> = _progress
 
     /**
+     * 音声メモ画面呼び出し
+     */
+    val soundMemo = SingleLiveEvent<Boolean>()
+
+    /**
      * 再生中または停止中フラグ。このフラグはsavedInstanceに保存する。
      */
     var playOrStop = false
@@ -382,6 +387,10 @@ class MainStore(actionReceiver: ActionReceiver) : Store(actionReceiver) {
 
     fun onEvent(action: MainRestoreEndAction) {
         _progress.value = false
+    }
+
+    fun onEvent(action: MainSoundMemoAction) {
+        soundMemo.value = true
     }
 
 }

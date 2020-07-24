@@ -117,4 +117,11 @@ class MainActionCreator(private val dispatcher: Dispatcher,
         // プログレス閉じる
         dispatcher.dispatch(MainRestoreEndAction)
     }
+
+    /**
+     * 音声メモボタンが押されたときの処理
+     */
+    fun onSoundMemoClick() {
+        dispatcher.dispatch(MainSoundMemoAction)
+    }
 }

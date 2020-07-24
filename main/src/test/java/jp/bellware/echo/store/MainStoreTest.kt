@@ -226,4 +226,10 @@ class MainStoreTest {
         store.progress.value shouldBe false
     }
 
+    @Test
+    fun soundMemo() {
+        store.soundMemo.value shouldBe null
+        store.onEvent(MainSoundMemoAction)
+        store.soundMemo.value shouldBe true
+    }
 }
