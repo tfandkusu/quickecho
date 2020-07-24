@@ -7,7 +7,6 @@
     tools:context="jp.bellware.echo.view.pager.PagerActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:fitsSystemWindows="true"
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -17,11 +16,13 @@
         android:elevation="5dp"
         android:minHeight="?attr/actionBarSize" />
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <fragment
+        android:id="@+id/mainFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout="@layout/fragment_main"
+        android:name="jp.bellware.echo.view.main.MainFragment" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+
