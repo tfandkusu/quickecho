@@ -6,8 +6,7 @@ def arch_version = "2.1.0"
 
 dependencies {
     // Material Component
-    // TODO アップデートする
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.material:material:1.1.0'
 
     // Architecture Components
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"

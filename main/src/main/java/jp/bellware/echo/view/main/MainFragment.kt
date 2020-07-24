@@ -4,14 +4,18 @@ package jp.bellware.echo.view.main
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.media.AudioManager
 import android.os.Bundle
 import android.view.*
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
+import com.google.android.material.shape.MaterialShapeDrawable
+import com.google.android.material.shape.ShapeAppearanceModel
 import jp.bellware.echo.actioncreator.MainActionCreator
 import jp.bellware.echo.main.R
 import jp.bellware.echo.store.*
@@ -19,6 +23,7 @@ import jp.bellware.echo.view.setting.SettingActivityAlias
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.main_control.*
 import kotlinx.android.synthetic.main.main_progress.*
+import kotlinx.android.synthetic.main.main_sound_memo_button.*
 import kotlinx.android.synthetic.main.main_status.*
 import kotlinx.coroutines.InternalCoroutinesApi
 import org.koin.android.ext.android.inject
@@ -99,6 +104,8 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // 音声メモボタンDrawableの作成
+        setUpSoundMemoButtonBackground()
 
         // ボリューム情報の接続
         visualVolumeViewHelper.callBack = object : VisualVolumeViewHelper.Callback {
@@ -270,6 +277,10 @@ class MainFragment : Fragment() {
             if (store.clickable)
                 actionCreator.onStopClick()
         }
+        // 音声メモボタンが押された
+        soundMemoButton.setOnClickListener {
+
+        }
         progress.setOnClickListener {
 
         }
@@ -306,6 +317,21 @@ class MainFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putBoolean(EXTRA_PLAY_OR_STOP, store.playOrStop)
+    }
+
+    /**
+     *  音声メモボタンの背景を設定する
+     */
+    private fun setUpSoundMemoButtonBackground() {
+        val dp = resources.displayMetrics.density
+        val model = ShapeAppearanceModel.Builder()
+                .setAllCornerSizes(28 * dp)
+                .build()
+        val drawable = MaterialShapeDrawable(model).apply {
+            fillColor =
+                    ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.memo))
+        }
+        soundMemoButton.background = drawable
     }
 
     /**
