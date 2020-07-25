@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
+import io.flutter.embedding.android.FlutterActivity
 import jp.bellware.echo.actioncreator.MainActionCreator
 import jp.bellware.echo.main.R
 import jp.bellware.echo.store.*
@@ -250,6 +251,14 @@ class MainFragment : Fragment() {
         store.progress.observe(viewLifecycleOwner) {
             progress.isVisible = it
         }
+        // 音声メモ画面を呼び出す
+        store.soundMemo.observe(viewLifecycleOwner, Observer {
+            if (it == true) {
+                startActivity(
+                        FlutterActivity.createDefaultIntent(requireContext())
+                )
+            }
+        })
         // クリックイベント
         // 録音ボタンが押された
         record.setOnClickListener {
