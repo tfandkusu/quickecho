@@ -254,9 +254,11 @@ class MainFragment : Fragment() {
         // 音声メモ画面を呼び出す
         store.soundMemo.observe(viewLifecycleOwner, Observer {
             if (it == true) {
-                startActivity(
-                        FlutterActivity.createDefaultIntent(requireContext())
-                )
+                val intent = FlutterActivity
+                        .withCachedEngine("my_engine_id")
+                        .build(requireContext())
+                intent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
+                startActivity(intent)
             }
         })
         // クリックイベント
