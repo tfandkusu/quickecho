@@ -41,8 +41,13 @@ allprojects {
         google()
         jcenter()
 
+//        ローカルPCでAndroid、Flutter同時に開発したい時
+//        maven {
+//            url '../../sound_memo/build/host/outputs/repo/'
+//        }
+        // Androidアプリ単体でビルドできるようにする。
         maven {
-            url '../../sound_memo/build/host/outputs/repo/'
+            url 'https://tfandkusu-maven.s3-ap-northeast-1.amazonaws.com/'
         }
         maven {
             url 'https://storage.googleapis.com/download.flutter.io'
