@@ -1,0 +1,15 @@
+apply plugin: 'com.android.library'
+apply from: rootProject.file('gradle/view-common.gradle')
+apply plugin: 'kotlin-android'
+
+dependencies {
+    implementation project(':flux')
+    implementation project(':repository')
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    debugImplementation 'jp.bellware.echo.sound_memo:flutter_debug:1.0'
+    profileImplementation 'jp.bellware.echo.sound_memo:flutter_profile:1.0'
+    releaseImplementation 'jp.bellware.echo.sound_memo:flutter_release:1.0'
+
+
+}

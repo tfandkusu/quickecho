@@ -41,6 +41,7 @@ android {
 dependencies {
     implementation project(':main')
     implementation project(':setting')
+    implementation project(':memo')
     implementation project(':flux')
 
     // Firebase

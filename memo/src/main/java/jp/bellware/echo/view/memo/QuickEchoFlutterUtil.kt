@@ -11,7 +11,6 @@ import io.flutter.embedding.engine.dart.DartExecutor
 object QuickEchoFlutterUtil {
     fun onCreate(context: Context) {
         val flutterEngine = FlutterEngine(context)
-        flutterEngine.navigationChannel.setInitialRoute("/")
         flutterEngine.dartExecutor.executeDartEntrypoint(
                 DartExecutor.DartEntrypoint.createDefault()
         );
