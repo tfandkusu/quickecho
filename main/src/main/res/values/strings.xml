@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="android_native" translatable="false">ここはAndroidネイティブ</string>
     <!-- 警告表示 -->
     <string name="warning_time_limit">The max recording length is 2 min.</string>
     <string name="warning_volume">The music volume is mute.</string>

@@ -5,7 +5,6 @@ import android.media.AudioManager
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewpager2.widget.ViewPager2
 import io.flutter.embedding.android.FlutterFragment
 import jp.bellware.echo.main.R
 import kotlinx.android.synthetic.main.activity_pager.*
@@ -28,8 +27,8 @@ class PagerActivity : AppCompatActivity() {
         setContentView(R.layout.activity_pager)
         setSupportActionBar(toolbar)
 
-        viewPager.adapter = QuickEchoFragmentStateAdapter(this)
-        viewPager.offscreenPageLimit = 1
+        viewPager.adapter = QuickEchoFragmentStateAdapter(supportFragmentManager)
+        viewPager.offscreenPageLimit = 2
 
         //ボリューム調整を音楽にする
         volumeControlStream = AudioManager.STREAM_MUSIC
@@ -41,11 +40,11 @@ class PagerActivity : AppCompatActivity() {
             }
         }
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
-        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                onBackPressedCallback.isEnabled = position == 1
-            }
-        })
+//        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+//            override fun onPageSelected(position: Int) {
+//                onBackPressedCallback.isEnabled = position == 1
+//            }
+//        })
     }
 
     override fun onPostResume() {
