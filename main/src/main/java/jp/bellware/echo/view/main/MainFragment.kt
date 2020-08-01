@@ -289,6 +289,8 @@ class MainFragment : Fragment() {
         soundMemoButton.setOnClickListener {
             actionCreator.onSoundMemoClick()
         }
+        // 音声メモボタンは消す
+        soundMemoButton.isVisible = false
         progress.setOnClickListener {
 
         }
