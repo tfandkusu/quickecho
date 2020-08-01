@@ -25,6 +25,9 @@ android {
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        profile {
+            initWith debug
+        }
     }
     lintOptions {
         checkReleaseBuilds false
@@ -38,6 +41,7 @@ android {
 dependencies {
     implementation project(':main')
     implementation project(':setting')
+    implementation project(':memo')
     implementation project(':flux')
 
     // Firebase

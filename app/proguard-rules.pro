@@ -22,3 +22,8 @@
     public void onEvent*(***);
 }
 -keepnames class jp.bellware.echo.view.setting.SettingActivityAlias
+-keepnames class jp.bellware.echo.view.memo.SoundMemoActivityAlias
+
+-keep public class androidx.navigation.fragment.** {
+  public *;
+}

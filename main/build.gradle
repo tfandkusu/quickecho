@@ -5,7 +5,7 @@ apply plugin: 'kotlin-android'
 dependencies {
     implementation project(':flux')
     implementation project(':repository')
-
+    
     implementation 'androidx.cardview:cardview:1.0.0'
 
     // ConstraintLayout

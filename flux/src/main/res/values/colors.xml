@@ -17,6 +17,9 @@
     <color name="play">#76FF03</color>
     <color name="play_pressed">#65f10c</color>
     <color name="play_light">#CCFF90</color>
+    <!-- 音声メモカラー -->
+    <color name="memo">#29b6f6</color>
+    <color name="memo_dark">#0086c3</color>
     <!-- FABのripple color-->
     <color name="ripple">#11000000</color>
     <!-- プログレスの背景 -->
@@ -26,6 +29,8 @@
 
     <!-- 白 -->
     <color name="white">#ffffff</color>
+    <!-- 黒 -->
+    <color name="black">#000000</color>
     <!-- テキスト色 -->
     <color name="text">#666</color>
     <color name="text_dark">#222</color>

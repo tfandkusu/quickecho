@@ -5,4 +5,8 @@
     <string name="warning_volume">The music volume is mute.</string>
     <string name="warning_no_sound">No sound is recorded.</string>
     <string name="warning_tongue_twister" translatable="false">It has only in Japanese</string>
+
+    <!-- 音声メモ -->
+    <string name="sound_memo">S. memo</string>
+
 </resources>

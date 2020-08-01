@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="jp.bellware.echo.view.pager.PagerActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="jp.bellware.echo.view.main.MainActivity">
 
     <androidx.appcompat.widget.Toolbar
+        app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,9 +16,13 @@
         android:elevation="5dp"
         android:minHeight="?attr/actionBarSize" />
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager"
+    <fragment
+        android:id="@+id/mainFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
-</LinearLayout>
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout="@layout/fragment_main"
+        android:name="jp.bellware.echo.view.main.MainFragment" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+

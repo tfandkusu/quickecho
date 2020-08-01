@@ -1,3 +1,4 @@
+include ':memo'
 include ':app'
 include ':localDataStore'
 include ':repository'

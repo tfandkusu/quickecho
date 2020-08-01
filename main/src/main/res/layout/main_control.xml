@@ -9,34 +9,33 @@
         android:id="@+id/record"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="48dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        app:fabSize="normal"
+        android:layout_marginBottom="48dp"
         android:src="@drawable/ic_mic_white_24dp"
-        app:rippleColor="@color/ripple"
+        app:backgroundTint="@color/record_button"
+        app:tint="@color/white"
+        app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:rippleColor="@color/ripple" />
     <!-- 再生ボタン -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="48dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        app:fabSize="normal"
+        android:layout_marginBottom="48dp"
         android:src="@drawable/ic_play_arrow_white_24dp"
-        app:backgroundTint="@color/play_button2"
-        app:rippleColor="@color/ripple"
+        app:backgroundTint="@color/play_button"
+        app:tint="@color/white"
+        app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:rippleColor="@color/ripple" />
 
     <!-- 削除ボタン -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -44,12 +43,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginBottom="56dp"
         android:src="@drawable/ic_delete_white_24dp"
-        app:rippleColor="@color/ripple"
+        app:backgroundTint="@color/record_button"
         app:fabSize="mini"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/play" />
+        app:layout_constraintBottom_toBottomOf="@+id/record"
+        app:layout_constraintStart_toEndOf="@+id/record"
+        app:layout_constraintTop_toTopOf="@+id/record"
+        app:rippleColor="@color/ripple"
+        app:tint="@color/white" />
 
     <!-- 再再生ボタン -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -57,13 +58,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="56dp"
         android:src="@drawable/ic_play_arrow_white_24dp"
         app:backgroundTint="@color/play_button"
-        app:rippleColor="@color/ripple"
         app:fabSize="mini"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/play" />
+        app:layout_constraintBottom_toBottomOf="@+id/record"
+        app:layout_constraintEnd_toStartOf="@+id/record"
+        app:layout_constraintTop_toTopOf="@+id/record"
+        app:rippleColor="@color/ripple"
+        app:tint="@color/white" />
 
     <!-- 停止ボタン -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -71,16 +73,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginStart="16dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="56dp"
         android:src="@drawable/ic_stop_white_24dp"
         app:backgroundTint="@color/play_button"
-        app:rippleColor="@color/ripple"
         app:fabSize="mini"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/replay"
         app:layout_constraintEnd_toStartOf="@+id/replay"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/replay"
+        app:rippleColor="@color/ripple"
+        app:tint="@color/white" />
+
+    <!-- 音声メモボタン -->
+
+    <include
+        layout="@layout/main_sound_memo_button"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/stop"
+        app:layout_constraintStart_toStartOf="@+id/stop"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

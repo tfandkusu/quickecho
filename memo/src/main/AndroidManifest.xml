@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="jp.bellware.echo.memo">
+
+    <application>
+        <activity
+            android:name="jp.bellware.echo.view.memo.SoundMemoActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/FullscreenTheme" />
+
+        <activity-alias
+            android:name="jp.bellware.echo.view.memo.SoundMemoActivityAlias"
+            android:targetActivity="jp.bellware.echo.view.memo.SoundMemoActivity" />
+    </application>
+
+</manifest>

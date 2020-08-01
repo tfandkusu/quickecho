@@ -72,3 +72,8 @@ object MainRestoreStartAction : Action()
  * 一時保存音声読込終了アクション
  */
 object MainRestoreEndAction : Action()
+
+/**
+ * 音声メモ呼び出しアクション
+ */
+object MainSoundMemoAction : Action()
