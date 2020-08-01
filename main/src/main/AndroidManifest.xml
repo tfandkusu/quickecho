@@ -4,7 +4,7 @@
 
     <application>
         <activity
-            android:name="jp.bellware.echo.view.pager.PagerActivity"
+            android:name="jp.bellware.echo.view.main.MainActivity"
             android:label="@string/app_name" />
 
         <activity

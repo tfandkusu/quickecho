@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="jp.bellware.echo.view.pager.PagerActivity">
+    tools:context="jp.bellware.echo.view.main.MainActivity">
 
     <androidx.appcompat.widget.Toolbar
         app:layout_constraintTop_toTopOf="parent"

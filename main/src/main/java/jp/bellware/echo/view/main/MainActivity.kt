@@ -1,19 +1,20 @@
-package jp.bellware.echo.view.pager
+package jp.bellware.echo.view.main
 
 import android.media.AudioManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import jp.bellware.echo.main.R
-import kotlinx.android.synthetic.main.activity_pager.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 /**
- * 横スワイプで録音画面と音声メモ画面を切り替える画面
+ * メイン画面
  */
-class PagerActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
     companion object {
         /**
          * Firebase Dynamic Linksから送られてきた画面タイプ
+         * （Firebase Dynamic Linksの調査が終わったので不使用）
          */
         const val EXTRA_TYPE = "type"
     }
@@ -21,7 +22,7 @@ class PagerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_pager)
+        setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
         //ボリューム調整を音楽にする
