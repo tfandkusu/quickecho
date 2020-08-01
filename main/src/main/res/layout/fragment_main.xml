@@ -27,7 +27,7 @@
         app:layout_constraintTop_toTopOf="parent" />
     <!-- コントール表示 -->
     <include
-        android:id="@+id/include"
+        android:id="@+id/control"
         layout="@layout/main_control"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
         android:elevation="4dp"
         android:visibility="invisible"
         app:cardBackgroundColor="@color/warning"
-        app:layout_constraintBottom_toTopOf="@+id/include"
+        app:layout_constraintBottom_toTopOf="@+id/control"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:visibility="visible">
