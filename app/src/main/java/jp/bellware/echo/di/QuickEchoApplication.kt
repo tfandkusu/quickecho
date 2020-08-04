@@ -1,12 +1,14 @@
 package jp.bellware.echo.di
 
 import android.app.Application
+import dagger.hilt.android.AndroidEntryPoint
 import jp.bellware.echo.BuildConfig
 import jp.bellware.echo.util.FlipperSetting
 import jp.bellware.echo.view.memo.QuickEchoFlutterUtil
 import timber.log.Timber
 
 
+@AndroidEntryPoint
 class QuickEchoApplication : Application() {
     override fun onCreate() {
         super.onCreate()
