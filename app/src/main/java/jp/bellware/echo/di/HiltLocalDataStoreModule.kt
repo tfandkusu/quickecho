@@ -38,6 +38,7 @@ abstract class HiltLocalDataStoreModule {
 object HiltLocalDataStoreModuleProvider {
 
     @Provides
+    @Singleton
     fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
         return PreferenceManager.getDefaultSharedPreferences(context)
     }

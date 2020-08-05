@@ -49,7 +49,7 @@ class MainFragment : Fragment() {
     /**
      * 効果音担当ViewHelper
      */
-    private val soundEffect: SoundEffectViewHelper by viewModel()
+    private val soundEffect: SoundEffectViewHelper by viewModels()
 
     /**
      * 録音担当ViewHelper
@@ -75,6 +75,7 @@ class MainFragment : Fragment() {
      * 録音時間計測担当
      */
     private val timerViewHelper: TimerViewHelper by viewModel()
+
 
     companion object {
         /**
