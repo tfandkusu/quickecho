@@ -16,10 +16,10 @@ dependencies {
     implementation "androidx.fragment:fragment:$fragment_version"
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
     testImplementation "androidx.arch.core:core-testing:$arch_version"
-//
-//    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha02'
-//    // When using Kotlin.
-//    kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha02'
+
+    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha02'
+    // When using Kotlin.
+    kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha02'
 
 
 }
