@@ -1,5 +1,6 @@
 package jp.bellware.echo.actioncreator
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import jp.bellware.echo.action.*
@@ -14,9 +15,9 @@ import kotlinx.coroutines.launch
  * @param delayActionCreatorHelper 一定ミリ秒時間待機担当
  * @param soundRepository 音声Repository
  */
-class MainActionCreator(private val dispatcher: Dispatcher,
-                        private val delayActionCreatorHelper: DelayActionCreatorHelper,
-                        private val soundRepository: SoundRepository) : ViewModel() {
+class MainActionCreator @ViewModelInject constructor(private val dispatcher: Dispatcher,
+                                                     private val delayActionCreatorHelper: DelayActionCreatorHelper,
+                                                     private val soundRepository: SoundRepository) : ViewModel() {
     /**
      * 音声の読み込みが完了
      * @param playOrStop 再生または停止状態でプロセスキル発生フラグ

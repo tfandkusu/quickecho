@@ -20,7 +20,6 @@ import com.google.android.material.shape.ShapeAppearanceModel
 import dagger.hilt.android.AndroidEntryPoint
 import jp.bellware.echo.actioncreator.MainActionCreator
 import jp.bellware.echo.main.R
-import jp.bellware.echo.repository.SoundRepository
 import jp.bellware.echo.store.*
 import jp.bellware.echo.view.memo.SoundMemoActivityAlias
 import jp.bellware.echo.view.setting.SettingActivityAlias
@@ -32,8 +31,6 @@ import kotlinx.android.synthetic.main.main_status.*
 import kotlinx.coroutines.InternalCoroutinesApi
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
-import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -42,12 +39,12 @@ class MainFragment : Fragment() {
     /**
      * 表示制御担当
      */
-    private val store: MainStore by viewModel()
+    private val store: MainStore by viewModels()
 
     /**
      * ユーザ操作、音声系ViewHelperからのコールバックを受けて、アクションを発行する担当
      */
-    private val actionCreator: MainActionCreator by viewModel()
+    private val actionCreator: MainActionCreator by viewModels()
 
     /**
      * 効果音担当ViewHelper
@@ -79,13 +76,7 @@ class MainFragment : Fragment() {
      */
     private val timerViewHelper: TimerViewHelper by viewModel()
 
-    @Inject
-    lateinit var injected: SoundRepository
-
-
-    companion
-
-    object {
+    companion object {
         /**
          * 再生中または停止中
          */
@@ -116,7 +107,6 @@ class MainFragment : Fragment() {
     @InternalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Timber.d("Injected instance 1 " + injected)
         // 音声メモボタンDrawableの作成
         setUpSoundMemoButtonBackground()
 
@@ -138,7 +128,7 @@ class MainFragment : Fragment() {
         // 再生または停止状態でプロセスキルフラグの取得
         val playOrStop = savedInstanceState?.getBoolean(EXTRA_PLAY_OR_STOP, false) ?: false
         // 効果音読み込み
-        soundEffect.onCreate {
+        soundEffect.onCreate(requireContext()) {
             actionCreator.onSoundLoaded(playOrStop)
         }
         // StoreとViewを繋げる

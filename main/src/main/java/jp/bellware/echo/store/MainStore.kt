@@ -1,5 +1,6 @@
 package jp.bellware.echo.store
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import jp.bellware.echo.action.*
@@ -76,7 +77,7 @@ enum class WarningMessage {
     NO_RECORD
 }
 
-class MainStore(actionReceiver: ActionReceiver) : Store(actionReceiver) {
+class MainStore @ViewModelInject constructor(actionReceiver: ActionReceiver) : Store(actionReceiver) {
     /**
      * ステータス表示
      */

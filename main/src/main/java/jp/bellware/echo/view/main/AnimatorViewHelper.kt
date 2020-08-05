@@ -4,11 +4,12 @@ import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.view.View
 import jp.bellware.echo.store.AnimationStatus
+import javax.inject.Inject
 
 /**
  * メイン画面のアニメーションViewHelper
  */
-class AnimatorViewHelper {
+class AnimatorViewHelper @Inject constructor() {
     fun apply(view: View, status: AnimationStatus?) {
         when (status) {
             AnimationStatus.FI1, AnimationStatus.FI2 -> {
