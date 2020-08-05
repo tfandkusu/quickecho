@@ -7,16 +7,26 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import dagger.hilt.android.AndroidEntryPoint
+import jp.bellware.echo.repository.SoundRepository
 import jp.bellware.echo.setting.R
 import kotlinx.android.synthetic.main.activity_setting.*
+import timber.log.Timber
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SettingActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
+    @Inject
+    lateinit var injected: SoundRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
+
+        Timber.d("Injected instance 2 " + injected)
 
         setSupportActionBar(toolbar)
 

@@ -16,8 +16,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
+import dagger.hilt.android.AndroidEntryPoint
 import jp.bellware.echo.actioncreator.MainActionCreator
 import jp.bellware.echo.main.R
+import jp.bellware.echo.repository.SoundRepository
 import jp.bellware.echo.store.*
 import jp.bellware.echo.view.memo.SoundMemoActivityAlias
 import jp.bellware.echo.view.setting.SettingActivityAlias
@@ -29,8 +31,11 @@ import kotlinx.android.synthetic.main.main_status.*
 import kotlinx.coroutines.InternalCoroutinesApi
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
+import javax.inject.Inject
 
 
+@AndroidEntryPoint
 class MainFragment : Fragment() {
 
     /**
@@ -73,7 +78,13 @@ class MainFragment : Fragment() {
      */
     private val timerViewHelper: TimerViewHelper by viewModel()
 
-    companion object {
+    @Inject
+    lateinit var injected: SoundRepository
+
+
+    companion
+
+    object {
         /**
          * 再生中または停止中
          */
@@ -104,7 +115,7 @@ class MainFragment : Fragment() {
     @InternalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        Timber.d("Injected instance 1 " + injected)
         // 音声メモボタンDrawableの作成
         setUpSoundMemoButtonBackground()
 

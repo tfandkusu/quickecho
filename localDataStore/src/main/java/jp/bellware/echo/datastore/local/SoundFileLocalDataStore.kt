@@ -1,7 +1,9 @@
 package jp.bellware.echo.datastore.local
 
 import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
 
 /**
@@ -32,7 +34,7 @@ interface SoundFileLocalDataStore {
 
 }
 
-class SoundFileLocalDataStoreImpl(private val context: Context) : SoundFileLocalDataStore {
+class SoundFileLocalDataStoreImpl @Inject constructor(@ApplicationContext private val context: Context) : SoundFileLocalDataStore {
 
     private var session: AacEncodeSession? = null
 
