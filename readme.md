@@ -48,17 +48,15 @@ RecordViewHelperとPlayViewHelperはメモリに音声を保存して再生時�
 
 ### app
 
-DIコンテナの[Koin](https://insert-koin.io/)の設定を行います。
-Activityを呼び出し[Jetpack Navigation](https://developer.android.com/guide/navigation)を構築します。
-画面遷移のためのオブジェクトはDIを使い各機能に注入します。
+アプリケーションモジュールです。DI(Dagger Hilt)の設定を行っています。
 
 ### main
 
-音声の録音と再生を行うメインとなるFragmentを担当します。
+音声の録音と再生を行うメインとなる画面を担当します。
 
 ### setting
 
-設定画面のFragmentを担当します。
+設定画面を担当します。
 
 ### flux
 
