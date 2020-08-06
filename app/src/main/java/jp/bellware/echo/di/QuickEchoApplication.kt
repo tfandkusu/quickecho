@@ -15,7 +15,8 @@ class QuickEchoApplication : Application() {
         if (BuildConfig.DEBUG)
             Timber.plant(Timber.DebugTree())
         QuickEchoFlutterUtil.onCreate(this)
-        KoinSetting.start(this)
+        // Hiltはまだアルファ版で検証中のため、Koinも残しておく
+        // KoinSetting.start(this)
         FlipperSetting.start(this)
     }
 }
