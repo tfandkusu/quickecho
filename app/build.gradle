@@ -46,8 +46,6 @@ dependencies {
     // 直接参照しているモジュールしかHiltのモジュールを作れない
     implementation project(':repository')
     implementation project(':localDataStore')
-    
-    implementation "androidx.preference:preference:$preference_version"
 
     // Firebase
     // Debugビルドでは実行できないためReleaseビルドでしか使わない。
