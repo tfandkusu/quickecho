@@ -23,6 +23,5 @@ val mainModule = module {
     viewModel { PlayViewHelper(get()) }
     viewModel { VisualVolumeViewHelper() }
     viewModel { TimerViewHelper() }
-    single { AnimatorViewHelper() }
 }
 

@@ -1,12 +1,13 @@
 package jp.bellware.echo.view.main
 
 import android.os.Handler
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 
 /**
  * タイマー担当
  */
-class TimerViewHelper : ViewModel() {
+class TimerViewHelper @ViewModelInject constructor() : ViewModel() {
     private val handler = Handler()
 
 

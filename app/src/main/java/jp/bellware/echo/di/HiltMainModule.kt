@@ -6,6 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import jp.bellware.echo.actioncreator.DelayActionCreatorHelper
 import jp.bellware.echo.actioncreator.DelayActionCreatorHelperImpl
+import jp.bellware.echo.view.main.AnimatorViewHelper
 import javax.inject.Singleton
 
 @Module
@@ -15,4 +16,6 @@ abstract class HiltMainModule {
     @Singleton
     abstract fun bindDelayActionCreatorHelper(delayActionCreatorHelper: DelayActionCreatorHelperImpl): DelayActionCreatorHelper
 
+    @Binds
+    abstract fun bindAnimatorViewHelper(animatorViewHelper: AnimatorViewHelper): AnimatorViewHelper
 }

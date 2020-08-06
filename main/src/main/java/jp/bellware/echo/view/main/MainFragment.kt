@@ -29,8 +29,6 @@ import kotlinx.android.synthetic.main.main_progress.*
 import kotlinx.android.synthetic.main.main_sound_memo_button.*
 import kotlinx.android.synthetic.main.main_status.*
 import kotlinx.coroutines.InternalCoroutinesApi
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 @AndroidEntryPoint
@@ -64,17 +62,12 @@ class MainFragment : Fragment() {
     /**
      * 視覚的ボリューム担当ViewHelper
      */
-    private val visualVolumeViewHelper: VisualVolumeViewHelper by viewModel()
-
-    /**
-     * Viewのアニメーション担当
-     */
-    private val animatorViewHelper: AnimatorViewHelper by inject()
+    private val visualVolumeViewHelper: VisualVolumeViewHelper by viewModels()
 
     /**
      * 録音時間計測担当
      */
-    private val timerViewHelper: TimerViewHelper by viewModel()
+    private val timerViewHelper: TimerViewHelper by viewModels()
 
 
     companion object {
@@ -134,7 +127,7 @@ class MainFragment : Fragment() {
         }
         // StoreとViewを繋げる
         store.status.observe(viewLifecycleOwner, Observer {
-            animatorViewHelper.apply(statusFrame, it)
+            AnimatorViewHelper.apply(statusFrame, it)
         })
         store.icon.observe(viewLifecycleOwner, Observer {
             when (it) {
@@ -153,19 +146,19 @@ class MainFragment : Fragment() {
                 explosionView.startRecordAnimation()
         })
         store.record.observe(viewLifecycleOwner, Observer {
-            animatorViewHelper.apply(record, it)
+            AnimatorViewHelper.apply(record, it)
         })
         store.play.observe(viewLifecycleOwner, Observer {
-            animatorViewHelper.apply(play, it)
+            AnimatorViewHelper.apply(play, it)
         })
         store.stop.observe(viewLifecycleOwner, Observer {
-            animatorViewHelper.apply(stop, it)
+            AnimatorViewHelper.apply(stop, it)
         })
         store.replay.observe(viewLifecycleOwner, Observer {
-            animatorViewHelper.apply(replay, it)
+            AnimatorViewHelper.apply(replay, it)
         })
         store.delete.observe(viewLifecycleOwner, Observer {
-            animatorViewHelper.apply(delete, it)
+            AnimatorViewHelper.apply(delete, it)
         })
         // StoreをViewHelperをつなげる
         store.soundEffect.observe(viewLifecycleOwner, Observer {
