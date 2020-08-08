@@ -1,13 +1,14 @@
 package jp.bellware.echo.view.main
 
 import android.os.Handler
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 
 
 /**
  * 視覚的ボリューム隔離クラス
  */
-class VisualVolumeViewHelper : ViewModel() {
+class VisualVolumeViewHelper @ViewModelInject constructor() : ViewModel() {
 
     private val handler = Handler()
 

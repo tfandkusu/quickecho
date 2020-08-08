@@ -3,6 +3,7 @@ package jp.bellware.echo.view.main
 import android.content.Context
 import android.media.AudioManager
 import android.media.SoundPool
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import jp.bellware.echo.main.R
@@ -15,8 +16,8 @@ import kotlinx.coroutines.launch
 /**
  * 効果音担当ViewModel
  */
-class SoundEffectViewHelper(private val context: Context,
-                            val repository: SettingRepository) : ViewModel() {
+class SoundEffectViewHelper @ViewModelInject constructor(
+        val repository: SettingRepository) : ViewModel() {
     /**
      * 効果音読み込みと再生の担当
      */
@@ -51,11 +52,9 @@ class SoundEffectViewHelper(private val context: Context,
      * ActivityのonCreateから呼ばれる
      */
     @InternalCoroutinesApi
-    fun onCreate(onLoadFinished: () -> Unit) = viewModelScope.launch(Dispatchers.Main) {
-        // プロセスで1度だけ事項
-        if (startId != 0 || playId != 0 || deleteId != 0) {
-
-        } else {
+    fun onCreate(context: Context, onLoadFinished: () -> Unit) = viewModelScope.launch(Dispatchers.Main) {
+        // プロセスで1度だけ実行
+        if (startId == 0 && playId == 0 && deleteId == 0) {
             //サウンドプール
             soundPool = SoundPool(1, AudioManager.STREAM_MUSIC, 0)
             soundPool.setOnLoadCompleteListener { _, _, _ ->

@@ -2,11 +2,13 @@ package jp.bellware.echo.datastore.local
 
 import android.content.Context
 import android.os.Environment
+import dagger.hilt.android.qualifiers.ApplicationContext
 import jp.bellware.echo.util.filter.GainDetector
 import java.io.FileOutputStream
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.util.*
+import javax.inject.Inject
 
 
 /**
@@ -54,7 +56,7 @@ interface SoundMemoryLocalDataStore {
 /**
  * 録音音声を保持する
  */
-class SoundMemoryLocalDataStoreImpl(private val context: Context) : SoundMemoryLocalDataStore {
+class SoundMemoryLocalDataStoreImpl @Inject constructor(@ApplicationContext private val context: Context) : SoundMemoryLocalDataStore {
 
     /**
      * 最大のパケットの大きさ
@@ -74,7 +76,8 @@ class SoundMemoryLocalDataStoreImpl(private val context: Context) : SoundMemoryL
     /**
      * 音声パケットリスト
      */
-    private val packets = ArrayList<FloatArray>()
+    private
+    val packets = ArrayList<FloatArray>()
 
     /**
      * 録音出来たボリューム
@@ -86,7 +89,8 @@ class SoundMemoryLocalDataStoreImpl(private val context: Context) : SoundMemoryL
     /**
      * ボリューム取得担当
      */
-    private val gd = GainDetector()
+    private
+    val gd = GainDetector()
 
 
     /**

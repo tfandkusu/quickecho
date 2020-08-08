@@ -9,6 +9,7 @@ import jp.bellware.echo.util.filter.PacketConverter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.take
+import javax.inject.Inject
 import kotlin.math.max
 import kotlin.math.min
 
@@ -81,8 +82,8 @@ interface SoundRepository {
     suspend fun restore()
 }
 
-class SoundRepositoryImpl(private val soundMemoryLocalDataStore: SoundMemoryLocalDataStore,
-                          private val soundFileLocalDataStore: SoundFileLocalDataStore) : SoundRepository {
+class SoundRepositoryImpl @Inject constructor(private val soundMemoryLocalDataStore: SoundMemoryLocalDataStore,
+                                              private val soundFileLocalDataStore: SoundFileLocalDataStore) : SoundRepository {
     override val packetSize: Int
         get() = soundMemoryLocalDataStore.packetSize
     override val length: Int

@@ -8,7 +8,7 @@ import jp.bellware.echo.store.AnimationStatus
 /**
  * メイン画面のアニメーションViewHelper
  */
-class AnimatorViewHelper {
+object AnimatorViewHelper {
     fun apply(view: View, status: AnimationStatus?) {
         when (status) {
             AnimationStatus.FI1, AnimationStatus.FI2 -> {
