@@ -14,8 +14,9 @@ interface SoundFileLocalDataStore {
 
     /**
      * 録音開始
+     * @param onSaved 保存完了時の処理
      */
-    fun start()
+    fun start(onSaved: (fileName: String) -> Unit)
 
     /**
      * 音声パケットを追加
@@ -47,11 +48,11 @@ class SoundFileLocalDataStoreImpl @Inject constructor(@ApplicationContext privat
         private const val PREF_RECENT_FILE_NAME = "recentFileName";
     }
 
-    override fun start() {
+    override fun start(onSaved: (fileName: String) -> Unit) {
         session = AacEncodeSession { fileName ->
             // 一時保存ファイル名書き込み
             pref.edit().putString(PREF_RECENT_FILE_NAME, fileName).apply()
-            // TODO 音声メモにも書き込む
+            onSaved(fileName)
         }
         session?.start(context)
     }

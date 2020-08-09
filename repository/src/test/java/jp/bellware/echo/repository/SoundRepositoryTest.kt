@@ -7,6 +7,7 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.verifySequence
 import jp.bellware.echo.datastore.local.SoundFileLocalDataStore
 import jp.bellware.echo.datastore.local.SoundMemoryLocalDataStore
+import jp.bellware.echo.workmanager.SoundMemoWorkManager
 import org.junit.Before
 import org.junit.Test
 
@@ -17,12 +18,39 @@ class SoundRepositoryTest {
     @MockK(relaxed = true)
     lateinit var fileLocalDataStore: SoundFileLocalDataStore
 
+    @MockK(relaxed = true)
+    lateinit var soundMemoWorkManager: SoundMemoWorkManager
+
     private lateinit var repository: SoundRepository
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        repository = SoundRepositoryImpl(memoryLocalDataStore, fileLocalDataStore)
+        repository = SoundRepositoryImpl(memoryLocalDataStore, fileLocalDataStore, soundMemoWorkManager)
+    }
+
+    @Test
+    fun start() {
+        repository.start()
+        verifySequence {
+            fileLocalDataStore.start(any())
+        }
+    }
+
+    @Test
+    fun stop() {
+        repository.stop()
+        verifySequence {
+            fileLocalDataStore.stop()
+        }
+    }
+
+    @Test
+    fun clear() {
+        repository.clear()
+        verifySequence {
+            memoryLocalDataStore.clear()
+        }
     }
 
     @Test
@@ -47,14 +75,6 @@ class SoundRepositoryTest {
             memoryLocalDataStore.gain
         } returns 0.9f
         repository.gain shouldBe 0.9f
-    }
-
-    @Test
-    fun clear() {
-        repository.clear()
-        verifySequence {
-            memoryLocalDataStore.clear()
-        }
     }
 
     @Test

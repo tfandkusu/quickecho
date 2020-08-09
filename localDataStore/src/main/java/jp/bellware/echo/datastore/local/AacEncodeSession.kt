@@ -5,6 +5,7 @@ import android.media.MediaCodec
 import android.media.MediaCodecInfo
 import android.media.MediaCodecList
 import android.media.MediaFormat
+import android.os.Handler
 import timber.log.Timber
 import java.io.FileOutputStream
 import java.util.*
@@ -44,6 +45,11 @@ class AacEncodeSession(private val onSaved: (fileName: String) -> Unit) {
      * 保存用タスクの非同期実行担当
      */
     private var executor = Executors.newSingleThreadExecutor()
+
+    /**
+     * コールバックをUIスレッドで実行するために作成
+     */
+    private val handler = Handler()
 
     /**
      * ファイル名
@@ -167,7 +173,9 @@ class AacEncodeSession(private val onSaved: (fileName: String) -> Unit) {
         executor.submit {
             fos?.close()
             fos = null
-            onSaved(fileName)
+            handler.post {
+                onSaved(fileName)
+            }
         }
     }
 

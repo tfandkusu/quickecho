@@ -43,6 +43,7 @@ dependencies {
     implementation project(':setting')
     implementation project(':memo')
     implementation project(':flux')
+    implementation project(':common')
     // 直接参照しているモジュールしかHiltのモジュールを作れない
     implementation project(':repository')
     implementation project(':localDataStore')
