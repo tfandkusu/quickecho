@@ -30,7 +30,11 @@ abstract class HiltLocalDataStoreModule {
     @Binds
     abstract fun bindSettingLocalDataStore(settingLocalDataStore: SettingLocalDataStoreImpl): SettingLocalDataStore
 
-
+    @Binds
+    @Singleton
+    abstract fun bindSoundMemoLocalDataStore(
+            soundMemoLocalDataStore: SoundMemoLocalDataStoreImpl
+    ): SoundMemoLocalDataStore
 }
 
 @Module

@@ -48,6 +48,11 @@ dependencies {
     implementation project(':repository')
     implementation project(':localDataStore')
 
+    // Hiltのために、直接参照が必要。
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
     // Firebase
     // Debugビルドでは実行できないためReleaseビルドでしか使わない。
     // google-services.jsonがソースコード公開のためにモックになっているため。
