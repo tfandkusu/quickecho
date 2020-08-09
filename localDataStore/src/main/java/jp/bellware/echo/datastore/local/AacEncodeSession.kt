@@ -7,12 +7,14 @@ import android.media.MediaCodecList
 import android.media.MediaFormat
 import timber.log.Timber
 import java.io.FileOutputStream
+import java.util.*
 import java.util.concurrent.Executors
 
 /**
  * 1ファイル分のAACファイル作成担当
+ * @param onSaved aacファイルが保存されたときに呼ばれる
  */
-class AacEncodeSession {
+class AacEncodeSession(private val onSaved: (fileName: String) -> Unit) {
 
     companion object {
         const val SAMPLE_RATE = 44100
@@ -23,9 +25,9 @@ class AacEncodeSession {
         const val CHANNEL = 1
 
         /**
-         * 一時保存用ファイル
+         *　AACファイルの拡張子
          */
-        const val SOUND_FILE_NAME = "tmp.aac"
+        private const val AAC_EXT = ".aac"
     }
 
 
@@ -38,12 +40,15 @@ class AacEncodeSession {
 
     private var fos: FileOutputStream? = null
 
-    private var path: String = ""
-
     /**
      * 保存用タスクの非同期実行担当
      */
     private var executor = Executors.newSingleThreadExecutor()
+
+    /**
+     * ファイル名
+     */
+    private val fileName = UUID.randomUUID().toString() + AAC_EXT
 
     /**
      * 録音を開始する
@@ -142,7 +147,7 @@ class AacEncodeSession {
      */
     private fun openFileAsync(context: Context) {
         executor.submit {
-            fos = context.openFileOutput(SOUND_FILE_NAME, Context.MODE_PRIVATE)
+            fos = context.openFileOutput(fileName, Context.MODE_PRIVATE)
         }
     }
 
@@ -162,6 +167,7 @@ class AacEncodeSession {
         executor.submit {
             fos?.close()
             fos = null
+            onSaved(fileName)
         }
     }
 

@@ -9,7 +9,7 @@ import org.koin.dsl.module
 val localDataStoreModule = module {
     // LocalDataStore
     single { SoundMemoryLocalDataStoreImpl(androidContext()) as SoundMemoryLocalDataStore }
-    single { SoundFileLocalDataStoreImpl(androidContext()) as SoundFileLocalDataStore }
+    single { SoundFileLocalDataStoreImpl(androidContext(), PreferenceManager.getDefaultSharedPreferences(androidContext())) as SoundFileLocalDataStore }
     factory { SettingLocalDataStoreImpl(PreferenceManager.getDefaultSharedPreferences(androidContext())) as SettingLocalDataStore }
 }
 
