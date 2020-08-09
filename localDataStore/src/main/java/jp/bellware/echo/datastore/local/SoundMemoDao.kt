@@ -16,11 +16,14 @@ interface SoundMemoDao {
     suspend fun indexTemporal(): List<LocalSoundMemo>
 
     @Insert
-    suspend fun insert(localSoundMemo: LocalSoundMemo)
+    suspend fun insert(localSoundMemo: LocalSoundMemo): Long
 
     @Update
     suspend fun update(localSoundMemo: LocalSoundMemo)
 
     @Delete
     suspend fun delete(localSoundMemo: LocalSoundMemo)
+
+    @Query("DELETE FROM LocalSoundMemo")
+    suspend fun clear()
 }

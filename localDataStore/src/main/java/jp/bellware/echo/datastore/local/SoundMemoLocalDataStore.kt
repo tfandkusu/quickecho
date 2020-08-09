@@ -1,8 +1,12 @@
 package jp.bellware.echo.datastore.local
 
+import android.content.Context
 import androidx.room.withTransaction
+import dagger.hilt.android.qualifiers.ApplicationContext
 import jp.bellware.echo.datastore.local.schema.LocalSoundMemo
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 /**
@@ -15,14 +19,19 @@ interface SoundMemoLocalDataStore {
      * 音声メモを追加する。
      * 一時保存の音声は最大5件保存する。
      */
-    suspend fun insert(localSoundMemo: LocalSoundMemo)
+    suspend fun insert(localSoundMemo: LocalSoundMemo): Long
 
     suspend fun update(localSoundMemo: LocalSoundMemo)
 
     suspend fun delete(localSoundMemo: LocalSoundMemo)
+
+    /**
+     * すべて削除する(テスト用)
+     */
+    suspend fun clear()
 }
 
-class SoundMemoLocalDataStoreImpl @Inject constructor(private val db: QuickEchoDatabase) : SoundMemoLocalDataStore {
+class SoundMemoLocalDataStoreImpl @Inject constructor(@ApplicationContext val context: Context, private val db: QuickEchoDatabase) : SoundMemoLocalDataStore {
 
     private val dao = db.soundMemoDao()
 
@@ -30,15 +39,26 @@ class SoundMemoLocalDataStoreImpl @Inject constructor(private val db: QuickEchoD
         return dao.index()
     }
 
-    override suspend fun insert(localSoundMemo: LocalSoundMemo) {
-        db.withTransaction {
-            dao.insert(localSoundMemo)
+    override suspend fun insert(localSoundMemo: LocalSoundMemo): Long {
+        // 削除AACファイル一覧
+        val deleteFiles = mutableListOf<String>()
+        val id = db.withTransaction {
+            val id = dao.insert(localSoundMemo)
             dao.indexTemporal().mapIndexed { index, localSoundMemo ->
                 if (index >= 5) {
+                    deleteFiles.add(localSoundMemo.fileName)
                     dao.delete(localSoundMemo)
                 }
             }
+            id
         }
+        // AACファイルを削除する
+        withContext(Dispatchers.IO) {
+            deleteFiles.map {
+                context.deleteFile(it)
+            }
+        }
+        return id
     }
 
     override suspend fun update(localSoundMemo: LocalSoundMemo) {
@@ -47,6 +67,14 @@ class SoundMemoLocalDataStoreImpl @Inject constructor(private val db: QuickEchoD
 
     override suspend fun delete(localSoundMemo: LocalSoundMemo) {
         dao.delete(localSoundMemo)
+        // AACファイルを削除する
+        withContext(Dispatchers.IO) {
+            context.deleteFile(localSoundMemo.fileName)
+        }
+    }
+
+    override suspend fun clear() {
+        dao.clear()
     }
 
 }
