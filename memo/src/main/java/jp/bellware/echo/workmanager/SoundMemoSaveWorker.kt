@@ -21,6 +21,10 @@ class SoundMemoSaveWorker(appContext: Context, workerParams: WorkerParameters) :
         const val PARAM_FILE_NAME = "fileName"
     }
 
+    /**
+     * Hiltでサポートされていないクラスに依存関係を注入する
+     * https://developer.android.com/training/dependency-injection/hilt-android#not-supported
+     */
     @EntryPoint
     @InstallIn(ApplicationComponent::class)
     interface SoundMemoSaveWorkerEntryPoint {
@@ -28,9 +32,11 @@ class SoundMemoSaveWorker(appContext: Context, workerParams: WorkerParameters) :
     }
 
     override suspend fun doWork(): Result {
+        // 音声メモ保存担当リポジトリを取得する
         val hiltEntryPoint =
                 EntryPointAccessors.fromApplication(applicationContext, SoundMemoSaveWorkerEntryPoint::class.java)
         val repository = hiltEntryPoint.soundMemoRepository()
+        // 音声メモを保存する
         val soundMemo = SoundMemo(0,
                 true,
                 System.currentTimeMillis(),
