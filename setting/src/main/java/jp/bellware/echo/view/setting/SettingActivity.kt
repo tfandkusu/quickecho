@@ -7,17 +7,18 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import dagger.hilt.android.AndroidEntryPoint
 import jp.bellware.echo.setting.R
 import kotlinx.android.synthetic.main.activity_setting.*
 
+@AndroidEntryPoint
 class SettingActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
-
         setSupportActionBar(toolbar)
 
         // Toolbarの内容をNavigation、Fragmentに連動させる

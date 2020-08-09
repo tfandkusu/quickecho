@@ -1,5 +1,7 @@
 package jp.bellware.echo.actioncreator
 
+import javax.inject.Inject
+
 /**
  * 待機担当。単体テストのためにインターフェースを定義
  */
@@ -11,7 +13,7 @@ interface DelayActionCreatorHelper {
     suspend fun delay(ms: Int)
 }
 
-class DelayActionCreatorHelperImpl : DelayActionCreatorHelper {
+class DelayActionCreatorHelperImpl @Inject constructor() : DelayActionCreatorHelper {
     override suspend fun delay(ms: Int) {
         kotlinx.coroutines.delay(ms.toLong())
     }

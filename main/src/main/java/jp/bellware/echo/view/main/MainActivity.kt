@@ -3,6 +3,7 @@ package jp.bellware.echo.view.main
 import android.media.AudioManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 import jp.bellware.echo.main.R
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -10,6 +11,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 /**
  * メイン画面
  */
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     companion object {
         /**
@@ -18,7 +20,6 @@ class MainActivity : AppCompatActivity() {
          */
         const val EXTRA_TYPE = "type"
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

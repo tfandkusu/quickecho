@@ -5,6 +5,7 @@ import android.media.AudioFormat
 import android.media.AudioRecord
 import android.media.MediaRecorder
 import android.os.Process
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import jp.bellware.echo.repository.SoundRepository
 import jp.bellware.echo.util.BWU
@@ -16,7 +17,7 @@ import jp.bellware.echo.util.filter.ZeroCrossRecordVisualVolumeProcessor
  * 録音担当ViewHelper
  * @param repository 記録担当
  */
-class RecordViewHelper(
+class RecordViewHelper @ViewModelInject constructor(
         private val repository: SoundRepository) : ViewModel() {
 
     companion object {

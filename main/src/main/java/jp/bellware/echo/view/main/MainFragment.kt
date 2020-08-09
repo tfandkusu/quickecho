@@ -12,10 +12,12 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
+import dagger.hilt.android.AndroidEntryPoint
 import jp.bellware.echo.actioncreator.MainActionCreator
 import jp.bellware.echo.main.R
 import jp.bellware.echo.store.*
@@ -27,51 +29,46 @@ import kotlinx.android.synthetic.main.main_progress.*
 import kotlinx.android.synthetic.main.main_sound_memo_button.*
 import kotlinx.android.synthetic.main.main_status.*
 import kotlinx.coroutines.InternalCoroutinesApi
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
+@AndroidEntryPoint
 class MainFragment : Fragment() {
 
     /**
      * 表示制御担当
      */
-    private val store: MainStore by viewModel()
+    private val store: MainStore by viewModels()
 
     /**
      * ユーザ操作、音声系ViewHelperからのコールバックを受けて、アクションを発行する担当
      */
-    private val actionCreator: MainActionCreator by viewModel()
+    private val actionCreator: MainActionCreator by viewModels()
 
     /**
      * 効果音担当ViewHelper
      */
-    private val soundEffect: SoundEffectViewHelper by viewModel()
+    private val soundEffect: SoundEffectViewHelper by viewModels()
 
     /**
      * 録音担当ViewHelper
      */
-    private val recordViewHelper: RecordViewHelper by viewModel()
+    private val recordViewHelper: RecordViewHelper by viewModels()
 
     /**
      * 再生担当ViewHelper
      */
-    private val playViewHelper: PlayViewHelper by viewModel()
+    private val playViewHelper: PlayViewHelper by viewModels()
 
     /**
      * 視覚的ボリューム担当ViewHelper
      */
-    private val visualVolumeViewHelper: VisualVolumeViewHelper by viewModel()
-
-    /**
-     * Viewのアニメーション担当
-     */
-    private val animatorViewHelper: AnimatorViewHelper by inject()
+    private val visualVolumeViewHelper: VisualVolumeViewHelper by viewModels()
 
     /**
      * 録音時間計測担当
      */
-    private val timerViewHelper: TimerViewHelper by viewModel()
+    private val timerViewHelper: TimerViewHelper by viewModels()
+
 
     companion object {
         /**
@@ -104,7 +101,6 @@ class MainFragment : Fragment() {
     @InternalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         // 音声メモボタンDrawableの作成
         setUpSoundMemoButtonBackground()
 
@@ -126,12 +122,12 @@ class MainFragment : Fragment() {
         // 再生または停止状態でプロセスキルフラグの取得
         val playOrStop = savedInstanceState?.getBoolean(EXTRA_PLAY_OR_STOP, false) ?: false
         // 効果音読み込み
-        soundEffect.onCreate {
+        soundEffect.onCreate(requireContext()) {
             actionCreator.onSoundLoaded(playOrStop)
         }
         // StoreとViewを繋げる
         store.status.observe(viewLifecycleOwner, Observer {
-            animatorViewHelper.apply(statusFrame, it)
+            AnimatorViewHelper.apply(statusFrame, it)
         })
         store.icon.observe(viewLifecycleOwner, Observer {
             when (it) {
@@ -150,19 +146,19 @@ class MainFragment : Fragment() {
                 explosionView.startRecordAnimation()
         })
         store.record.observe(viewLifecycleOwner, Observer {
-            animatorViewHelper.apply(record, it)
+            AnimatorViewHelper.apply(record, it)
         })
         store.play.observe(viewLifecycleOwner, Observer {
-            animatorViewHelper.apply(play, it)
+            AnimatorViewHelper.apply(play, it)
         })
         store.stop.observe(viewLifecycleOwner, Observer {
-            animatorViewHelper.apply(stop, it)
+            AnimatorViewHelper.apply(stop, it)
         })
         store.replay.observe(viewLifecycleOwner, Observer {
-            animatorViewHelper.apply(replay, it)
+            AnimatorViewHelper.apply(replay, it)
         })
         store.delete.observe(viewLifecycleOwner, Observer {
-            animatorViewHelper.apply(delete, it)
+            AnimatorViewHelper.apply(delete, it)
         })
         // StoreをViewHelperをつなげる
         store.soundEffect.observe(viewLifecycleOwner, Observer {

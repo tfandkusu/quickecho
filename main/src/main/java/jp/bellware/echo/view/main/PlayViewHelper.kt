@@ -6,6 +6,7 @@ import android.media.AudioManager
 import android.media.AudioTrack
 import android.os.Handler
 import android.os.Process
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import jp.bellware.echo.repository.SoundRepository
 import jp.bellware.echo.util.filter.FadeOut
@@ -18,7 +19,7 @@ import java.util.*
  * 音声再生担当ViewHelper
  * @param repository 録音データ格納
  */
-class PlayViewHelper(private val repository: SoundRepository) : ViewModel() {
+class PlayViewHelper @ViewModelInject constructor(private val repository: SoundRepository) : ViewModel() {
 
     companion object {
         /**

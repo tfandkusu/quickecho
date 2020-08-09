@@ -48,17 +48,15 @@ RecordViewHelperとPlayViewHelperはメモリに音声を保存して再生時�
 
 ### app
 
-DIコンテナの[Koin](https://insert-koin.io/)の設定を行います。
-Activityを呼び出し[Jetpack Navigation](https://developer.android.com/guide/navigation)を構築します。
-画面遷移のためのオブジェクトはDIを使い各機能に注入します。
+アプリケーションモジュールです。DI(Dagger Hilt)の設定を行っています。
 
 ### main
 
-音声の録音と再生を行うメインとなるFragmentを担当します。
+音声の録音と再生を行うメインとなる画面を担当します。
 
 ### setting
 
-設定画面のFragmentを担当します。
+設定画面を担当します。
 
 ### flux
 
@@ -77,7 +75,8 @@ Activityを呼び出し[Jetpack Navigation](https://developer.android.com/guide/
 ## アプリ
 
 - [Kotlin Coroutine](https://github.com/Kotlin/kotlinx.coroutines) 音声の録音と再生を除く非同期処理全般で使用しています。
-- [Koin](https://insert-koin.io/) DIコンテナです。
+- [Dagger Hilt](https://developer.android.com/training/dependency-injection/hilt-android?hl=ja) DIコンテナです。
+- [Koin](https://insert-koin.io/) Hiltの前に使っていたDIコンテナです。Hiltは検証中のためコード上は残しています。
 - [MockK](https://mockk.io/) 単体テストの時に依存するクラスをモック化しています。
 - [KotlinTest](https://github.com/kotlintest/kotlintest) 単体テストの時に `actual shouldBe expected` のように中間値表記で検証ができます。
 - [Material Components](https://material.io/components/) [Floating Action Button](https://material.io/develop/android/components/floating-action-button/)と[CardView](https://material.io/develop/android/components/material-card-view/)の実装に使用しています。

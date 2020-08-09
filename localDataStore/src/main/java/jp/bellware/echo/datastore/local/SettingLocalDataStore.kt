@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import com.tfcporciuncula.flow.FlowSharedPreferences
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
 interface SettingLocalDataStore {
     fun isSoundEffect(): Flow<Boolean>
@@ -12,7 +13,7 @@ interface SettingLocalDataStore {
 /**
  * ローカルファイルからの設定の出し入れを行う
  */
-class SettingLocalDataStoreImpl(private val pref: SharedPreferences) : SettingLocalDataStore {
+class SettingLocalDataStoreImpl @Inject constructor(private val pref: SharedPreferences) : SettingLocalDataStore {
 
     companion object {
         private const val PREF_SOUND_EFFECT = "soundEffect"
