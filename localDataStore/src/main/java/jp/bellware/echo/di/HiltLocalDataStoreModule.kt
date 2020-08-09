@@ -42,4 +42,10 @@ object HiltLocalDataStoreModuleProvider {
     fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
         return PreferenceManager.getDefaultSharedPreferences(context)
     }
+
+    @Provides
+    @Singleton
+    fun provideQuickEchoDataBase(@ApplicationContext context: Context): QuickEchoDatabase {
+        return QuickEchoDatabaseFactory.create(context)
+    }
 }
