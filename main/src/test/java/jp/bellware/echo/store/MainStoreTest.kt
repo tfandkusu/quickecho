@@ -218,10 +218,12 @@ class MainStoreTest {
     }
 
     @Test
-    fun progress() {
+    fun restore() {
         store.progress.value shouldBe false
+        store.overrideBackKey.value shouldBe false
         store.onEvent(MainRestoreStartAction)
         store.progress.value shouldBe true
+        store.overrideBackKey.value shouldBe true
         store.onEvent(MainRestoreEndAction)
         store.progress.value shouldBe false
     }
