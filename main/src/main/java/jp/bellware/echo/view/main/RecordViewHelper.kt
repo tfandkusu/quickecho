@@ -131,9 +131,9 @@ class RecordViewHelper @ViewModelInject constructor(
      * 音声パケットの記録を終了する
      */
     @Synchronized
-    fun stop() {
+    fun stop(save: Boolean) {
         recording = false
-        repository.stop()
+        repository.stop(save)
     }
 
     override fun onCleared() {

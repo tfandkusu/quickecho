@@ -48,8 +48,9 @@ interface SoundRepository {
 
     /**
      * 録音を終了
+     * @param save 保存フラグ
      */
-    fun stop()
+    fun stop(save: Boolean)
 
     /**
      * 録音をクリア
@@ -99,8 +100,8 @@ class SoundRepositoryImpl @Inject constructor(private val soundMemoryLocalDataSt
         }
     }
 
-    override fun stop() {
-        soundFileLocalDataStore.stop()
+    override fun stop(save: Boolean) {
+        soundFileLocalDataStore.stop(save)
     }
 
     override fun clear() {

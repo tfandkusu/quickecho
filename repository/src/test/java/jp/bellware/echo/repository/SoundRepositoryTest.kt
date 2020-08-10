@@ -39,9 +39,9 @@ class SoundRepositoryTest {
 
     @Test
     fun stop() {
-        repository.stop()
+        repository.stop(true)
         verifySequence {
-            fileLocalDataStore.stop()
+            fileLocalDataStore.stop(true)
         }
     }
 

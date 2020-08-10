@@ -31,9 +31,14 @@ enum class RPRequest {
     START,
 
     /**
-     * 終了する
+     * 終了する。保存はしない。
      */
-    STOP
+    STOP,
+
+    /**
+     * 終了して保存する
+     */
+    STOP_AND_SAVE
 }
 
 /**
@@ -298,7 +303,7 @@ class MainStore @ViewModelInject constructor(actionReceiver: ActionReceiver) : S
         replay.value = AnimationStatus.FI1
         stop.value = AnimationStatus.FI1
         // 録音を停止
-        requestForRecord.value = RPRequest.STOP
+        requestForRecord.value = RPRequest.STOP_AND_SAVE
         // 視覚的ボリュームをリセット
         visualVolume.value = VisualVolumeRequest.RESET
         // タイマーキャンセル

@@ -25,8 +25,9 @@ interface SoundFileLocalDataStore {
 
     /**
      * 録音終了
+     * @param save 保存フラグ
      */
-    fun stop()
+    fun stop(save: Boolean)
 
     /**
      * 録音音声を読み込み
@@ -49,12 +50,12 @@ class SoundFileLocalDataStoreImpl @Inject constructor(@ApplicationContext privat
     }
 
     override fun start(onSaved: (fileName: String) -> Unit) {
-        session = AacEncodeSession { fileName ->
+        session = AacEncodeSession(context) { fileName ->
             // 一時保存ファイル名書き込み
             pref.edit().putString(PREF_RECENT_FILE_NAME, fileName).apply()
             onSaved(fileName)
         }
-        session?.start(context)
+        session?.start()
     }
 
     override fun add(data: ShortArray) {
@@ -62,8 +63,8 @@ class SoundFileLocalDataStoreImpl @Inject constructor(@ApplicationContext privat
     }
 
 
-    override fun stop() {
-        session?.stop()
+    override fun stop(save: Boolean) {
+        session?.stop(save)
         session = null
     }
 

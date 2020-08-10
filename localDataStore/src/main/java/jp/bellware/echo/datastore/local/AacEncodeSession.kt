@@ -15,7 +15,7 @@ import java.util.concurrent.Executors
  * 1ファイル分のAACファイル作成担当
  * @param onSaved aacファイルが保存されたときに呼ばれる
  */
-class AacEncodeSession(private val onSaved: (fileName: String) -> Unit) {
+class AacEncodeSession(private val context: Context, private val onSaved: (fileName: String) -> Unit) {
 
     companion object {
         const val SAMPLE_RATE = 44100
@@ -58,9 +58,8 @@ class AacEncodeSession(private val onSaved: (fileName: String) -> Unit) {
 
     /**
      * 録音を開始する
-     * @param context Application Context
      */
-    fun start(context: Context) {
+    fun start() {
         // MediaCodecの作成
         val mediaCodecList = MediaCodecList(MediaCodecList.REGULAR_CODECS)
         val audioFormatName = mediaCodecList.findEncoderForFormat(MediaFormat.createAudioFormat(MediaFormat.MIMETYPE_AUDIO_AAC,
@@ -168,24 +167,32 @@ class AacEncodeSession(private val onSaved: (fileName: String) -> Unit) {
 
     /**
      * 非同期でファイルを閉じる
+     * @param save 保存フラグ
      */
-    private fun closeFileAsync() {
+    private fun closeFileAsync(save: Boolean) {
         executor.submit {
             fos?.close()
             fos = null
-            handler.post {
-                onSaved(fileName)
+            if (save) {
+                // 保存を伝える
+                handler.post {
+                    onSaved(fileName)
+                }
+            } else {
+                // ファイルを削除する
+                context.deleteFile(fileName)
             }
         }
     }
 
     /**
      * 録音を終了する
+     * @param save 保存フラグ
      */
-    fun stop() {
+    fun stop(save: Boolean) {
         mediaCodec?.stop()
         mediaCodec?.release()
-        closeFileAsync()
+        closeFileAsync(save)
     }
 
 
