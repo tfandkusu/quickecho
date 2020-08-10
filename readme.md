@@ -83,6 +83,7 @@ RecordViewHelperとPlayViewHelperはメモリに音声を保存して再生時�
 - [ConstraintLayout](https://developer.android.com/reference/androidx/constraintlayout/widget/ConstraintLayout.html)
 - [Jetpack Navigation](https://developer.android.com/guide/navigation)
 - [Groupie](https://github.com/lisawray/groupie)
+- [Room](https://developer.android.com/topic/libraries/architecture/room?hl=ja) 開発中の録音音声を保存する機能で使用しています。
 - [EventBus](https://github.com/greenrobot/EventBus) FluxのDispatcherの実装に使っています。
 - [Flow Preferences](https://github.com/tfcporciuncula/flow-preferences/) 設定画面での効果音設定をメイン画面に反映させることに使っています。
 - [Timber](https://github.com/JakeWharton/timber)
