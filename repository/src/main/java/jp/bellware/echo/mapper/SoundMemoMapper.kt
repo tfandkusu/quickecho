@@ -24,4 +24,22 @@ object SoundMemoMapper {
                 soundMemo.textStatus,
                 soundMemo.text)
     }
+
+    /**
+     * LocalDataStore層 → Repository層の変換
+     */
+    fun map(soundMemo: LocalSoundMemo): SoundMemo {
+        return SoundMemo(soundMemo.id,
+                soundMemo.temporal,
+                soundMemo.createdAt,
+                soundMemo.fileName,
+                soundMemo.locationStatus,
+                soundMemo.longitude,
+                soundMemo.latitude,
+                soundMemo.prefecture,
+                soundMemo.city,
+                soundMemo.street,
+                soundMemo.textStatus,
+                soundMemo.text)
+    }
 }
