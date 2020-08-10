@@ -81,7 +81,9 @@ class MainFragment : Fragment() {
         super.onCreate(savedInstanceState)
         val callback = object : OnBackPressedCallback(false) {
             override fun handleOnBackPressed() { // Handle the back button event
-                actionCreator.onBackPressed()
+                if (store.progress.value != true) {
+                    actionCreator.onBackPressed()
+                }
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)

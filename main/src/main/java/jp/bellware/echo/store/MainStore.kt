@@ -389,6 +389,7 @@ class MainStore @ViewModelInject constructor(actionReceiver: ActionReceiver) : S
 
     fun onEvent(action: MainRestoreStartAction) {
         _progress.value = true
+        overrideBackKey.value = true
     }
 
     fun onEvent(action: MainRestoreEndAction) {
