@@ -190,7 +190,9 @@ class MainFragment : Fragment() {
                 RPRequest.START ->
                     recordViewHelper.start()
                 RPRequest.STOP ->
-                    recordViewHelper.stop()
+                    recordViewHelper.stop(false)
+                RPRequest.STOP_AND_SAVE ->
+                    recordViewHelper.stop(true)
                 null -> {
 
                 }

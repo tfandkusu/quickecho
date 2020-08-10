@@ -6,6 +6,7 @@ import android.media.AudioTrack
 import jp.bellware.echo.datastore.local.SoundFileLocalDataStore
 import jp.bellware.echo.datastore.local.SoundMemoryLocalDataStore
 import jp.bellware.echo.util.filter.PacketConverter
+import jp.bellware.echo.workmanager.SoundMemoWorkManager
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.take
@@ -47,8 +48,9 @@ interface SoundRepository {
 
     /**
      * 録音を終了
+     * @param save 保存フラグ
      */
-    fun stop()
+    fun stop(save: Boolean)
 
     /**
      * 録音をクリア
@@ -83,7 +85,8 @@ interface SoundRepository {
 }
 
 class SoundRepositoryImpl @Inject constructor(private val soundMemoryLocalDataStore: SoundMemoryLocalDataStore,
-                                              private val soundFileLocalDataStore: SoundFileLocalDataStore) : SoundRepository {
+                                              private val soundFileLocalDataStore: SoundFileLocalDataStore,
+                                              private val soundMemoWorkManager: SoundMemoWorkManager) : SoundRepository {
     override val packetSize: Int
         get() = soundMemoryLocalDataStore.packetSize
     override val length: Int
@@ -92,11 +95,13 @@ class SoundRepositoryImpl @Inject constructor(private val soundMemoryLocalDataSt
         get() = soundMemoryLocalDataStore.gain
 
     override fun start() {
-        soundFileLocalDataStore.start()
+        soundFileLocalDataStore.start { fileName ->
+            soundMemoWorkManager.save(fileName)
+        }
     }
 
-    override fun stop() {
-        soundFileLocalDataStore.stop()
+    override fun stop(save: Boolean) {
+        soundFileLocalDataStore.stop(save)
     }
 
     override fun clear() {

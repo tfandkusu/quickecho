@@ -91,8 +91,8 @@ class MainStoreTest {
         store.play.value shouldBe AnimationStatus.INVISIBLE
         store.replay.value shouldBe AnimationStatus.FI1
         store.stop.value shouldBe AnimationStatus.FI1
-        // 録音を停止
-        store.requestForRecord.value shouldBe RPRequest.STOP
+        // 録音を停止して保存する
+        store.requestForRecord.value shouldBe RPRequest.STOP_AND_SAVE
         // 視覚的ボリュームをリセット
         store.visualVolume.value shouldBe VisualVolumeRequest.RESET
         // タイマーキャンセル

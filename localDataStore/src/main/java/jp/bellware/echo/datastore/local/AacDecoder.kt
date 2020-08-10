@@ -23,9 +23,9 @@ object AacDecoder {
     /**
      * 一時保存した音声を読み込む
      */
-    fun load(context: Context): Flow<ShortArray> = flow {
+    fun load(context: Context, fileName: String): Flow<ShortArray> = flow {
         val data = withContext(Dispatchers.Default) {
-            loadAacFile(context)
+            loadAacFile(context, fileName)
         }
         emit(data)
     }
@@ -35,9 +35,9 @@ object AacDecoder {
      * こちらを参考に作成する。
      * https://github.com/taehwandev/MediaCodecExample/blob/master/src/net/thdev/mediacodecexample/decoder/AudioDecoderThread.java
      */
-    private fun loadAacFile(context: Context): ShortArray {
+    private fun loadAacFile(context: Context, fileName: String): ShortArray {
         val outputStream = ByteArrayOutputStream()
-        val fis = context.openFileInput(AacEncodeSession.SOUND_FILE_NAME)
+        val fis = context.openFileInput(fileName)
         // メディアファイルから情報取得するオブジェクトを生成する
         val extractor = MediaExtractor()
         extractor.setDataSource(fis.fd)

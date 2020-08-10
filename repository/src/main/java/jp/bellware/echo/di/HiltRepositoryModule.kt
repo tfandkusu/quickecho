@@ -4,10 +4,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
-import jp.bellware.echo.repository.SettingRepository
-import jp.bellware.echo.repository.SettingRepositoryImpl
-import jp.bellware.echo.repository.SoundRepository
-import jp.bellware.echo.repository.SoundRepositoryImpl
+import jp.bellware.echo.repository.*
 import javax.inject.Singleton
 
 @Module
@@ -24,4 +21,10 @@ abstract class HiltRepositoryModule {
     abstract fun bindSettingRepository(
             settingRepository: SettingRepositoryImpl
     ): SettingRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindSoundMemoRepository(
+            soundMemoRepository: SoundMemoRepositoryImpl
+    ): SoundMemoRepository
 }

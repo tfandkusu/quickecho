@@ -5,14 +5,17 @@ import android.media.MediaCodec
 import android.media.MediaCodecInfo
 import android.media.MediaCodecList
 import android.media.MediaFormat
+import android.os.Handler
 import timber.log.Timber
 import java.io.FileOutputStream
+import java.util.*
 import java.util.concurrent.Executors
 
 /**
  * 1ファイル分のAACファイル作成担当
+ * @param onSaved aacファイルが保存されたときに呼ばれる
  */
-class AacEncodeSession {
+class AacEncodeSession(private val context: Context, private val onSaved: (fileName: String) -> Unit) {
 
     companion object {
         const val SAMPLE_RATE = 44100
@@ -23,9 +26,9 @@ class AacEncodeSession {
         const val CHANNEL = 1
 
         /**
-         * 一時保存用ファイル
+         *　AACファイルの拡張子
          */
-        const val SOUND_FILE_NAME = "tmp.aac"
+        private const val AAC_EXT = ".aac"
     }
 
 
@@ -38,18 +41,25 @@ class AacEncodeSession {
 
     private var fos: FileOutputStream? = null
 
-    private var path: String = ""
-
     /**
      * 保存用タスクの非同期実行担当
      */
     private var executor = Executors.newSingleThreadExecutor()
 
     /**
-     * 録音を開始する
-     * @param context Application Context
+     * コールバックをUIスレッドで実行するために作成
      */
-    fun start(context: Context) {
+    private val handler = Handler()
+
+    /**
+     * ファイル名
+     */
+    private val fileName = UUID.randomUUID().toString() + AAC_EXT
+
+    /**
+     * 録音を開始する
+     */
+    fun start() {
         // MediaCodecの作成
         val mediaCodecList = MediaCodecList(MediaCodecList.REGULAR_CODECS)
         val audioFormatName = mediaCodecList.findEncoderForFormat(MediaFormat.createAudioFormat(MediaFormat.MIMETYPE_AUDIO_AAC,
@@ -142,7 +152,7 @@ class AacEncodeSession {
      */
     private fun openFileAsync(context: Context) {
         executor.submit {
-            fos = context.openFileOutput(SOUND_FILE_NAME, Context.MODE_PRIVATE)
+            fos = context.openFileOutput(fileName, Context.MODE_PRIVATE)
         }
     }
 
@@ -157,21 +167,32 @@ class AacEncodeSession {
 
     /**
      * 非同期でファイルを閉じる
+     * @param save 保存フラグ
      */
-    private fun closeFileAsync() {
+    private fun closeFileAsync(save: Boolean) {
         executor.submit {
             fos?.close()
             fos = null
+            if (save) {
+                // 保存を伝える
+                handler.post {
+                    onSaved(fileName)
+                }
+            } else {
+                // ファイルを削除する
+                context.deleteFile(fileName)
+            }
         }
     }
 
     /**
      * 録音を終了する
+     * @param save 保存フラグ
      */
-    fun stop() {
+    fun stop(save: Boolean) {
         mediaCodec?.stop()
         mediaCodec?.release()
-        closeFileAsync()
+        closeFileAsync(save)
     }
 
 
