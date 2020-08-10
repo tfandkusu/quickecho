@@ -40,7 +40,7 @@ class SoundMemoLocalDataStoreTest {
         val m1 = LocalSoundMemo(0,
                 true,
                 System.currentTimeMillis(),
-                "output1.aac",
+                "test1.aac",
                 1,
                 139.0,
                 35.0,
@@ -64,7 +64,7 @@ class SoundMemoLocalDataStoreTest {
             val m = it[0]
             m.id shouldNotBe 0
             m.temporal shouldBe true
-            m.fileName shouldBe "output1.aac"
+            m.fileName shouldBe "test1.aac"
             m.locationStatus shouldBe 1
             m.longitude shouldBe 139.0
             m.latitude shouldBe 35.0
@@ -101,7 +101,47 @@ class SoundMemoLocalDataStoreTest {
     /**
      * 一時保存音声は5件まで
      */
-    fun temporalMax5() {
-
+    @ExperimentalCoroutinesApi
+    @Test
+    fun temporalMax5() = runBlocking {
+        localDataStore.clear()
+        // 6件保存する
+        (0 until 6).map {
+            val m = LocalSoundMemo(0,
+                    true,
+                    System.currentTimeMillis(),
+                    "output$it.aac",
+                    1,
+                    139.0,
+                    35.0,
+                    "東京都",
+                    "港区",
+                    "赤坂3-1-6",
+                    2,
+                    "録音したこと")
+            val fos = context.openFileOutput(m.fileName, Context.MODE_PRIVATE)
+            fos.write(0)
+            fos.close()
+            localDataStore.insert(m)
+        }
+        localDataStore.index().take(1).collect {
+            it.size shouldBe 5
+            it[0].fileName shouldBe "output5.aac"
+            it[4].fileName shouldBe "output1.aac"
+        }
+        // 開けることを確認
+        withContext(Dispatchers.IO) {
+            val fis = context.openFileInput("output1.aac")
+            fis.close()
+        }
+        // 開けないことを確認
+        withContext(Dispatchers.IO) {
+            try {
+                context.openFileInput("output0.aac")
+                Assert.fail()
+            } catch (e: FileNotFoundException) {
+                // OK
+            }
+        }
     }
 }
