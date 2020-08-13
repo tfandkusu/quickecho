@@ -290,7 +290,6 @@ class MainFragment : Fragment() {
             actionCreator.onSoundMemoClick()
         }
         // 音声メモボタンは消す
-        soundMemoButton.isVisible = false
         progress.setOnClickListener {
 
         }
