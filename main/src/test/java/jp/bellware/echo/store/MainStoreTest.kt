@@ -25,6 +25,13 @@ class MainStoreTest {
         store = MainStore(EmptyActionReceiver)
     }
 
+    @Test
+    fun showSoundMemoButton() {
+        store.showSoundMemoButton.value shouldBe true
+        store.onEvent(MainSoundMemoButtonVisibilityAction(false))
+        store.showSoundMemoButton.value shouldBe false
+    }
+
     /**
      * 録音、再生、削除
      */
@@ -230,8 +237,8 @@ class MainStoreTest {
 
     @Test
     fun soundMemo() {
-        store.soundMemo.value shouldBe null
+        store.callSoundMemo.value shouldBe null
         store.onEvent(MainSoundMemoAction)
-        store.soundMemo.value shouldBe true
+        store.callSoundMemo.value shouldBe true
     }
 }

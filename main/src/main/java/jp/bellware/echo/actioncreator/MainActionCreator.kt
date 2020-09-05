@@ -4,9 +4,11 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import jp.bellware.echo.action.*
+import jp.bellware.echo.repository.SettingRepository
 import jp.bellware.echo.repository.SoundRepository
 import jp.bellware.echo.util.Dispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 /**
@@ -17,7 +19,19 @@ import kotlinx.coroutines.launch
  */
 class MainActionCreator @ViewModelInject constructor(private val dispatcher: Dispatcher,
                                                      private val delayActionCreatorHelper: DelayActionCreatorHelper,
+                                                     private val settingRepository: SettingRepository,
                                                      private val soundRepository: SoundRepository) : ViewModel() {
+
+
+    /**
+     * FragmentのonCreateで呼ぶ
+     */
+    fun onCreate() = viewModelScope.launch {
+        settingRepository.isShowSoundMemoButton().collect {
+            dispatcher.dispatch(MainSoundMemoButtonVisibilityAction(it))
+        }
+    }
+
     /**
      * 音声の読み込みが完了
      * @param playOrStop 再生または停止状態でプロセスキル発生フラグ

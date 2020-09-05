@@ -127,6 +127,9 @@ class MainFragment : Fragment() {
         soundEffect.onCreate(requireContext()) {
             actionCreator.onSoundLoaded(playOrStop)
         }
+        store.showSoundMemoButton.observe(viewLifecycleOwner) {
+            soundMemoButton.isVisible = it
+        }
         // StoreとViewを繋げる
         store.status.observe(viewLifecycleOwner, Observer {
             AnimatorViewHelper.apply(statusFrame, it)
@@ -252,7 +255,7 @@ class MainFragment : Fragment() {
             progress.isVisible = it
         }
         // 音声メモ画面を呼び出す
-        store.soundMemo.observe(viewLifecycleOwner, Observer {
+        store.callSoundMemo.observe(viewLifecycleOwner, Observer {
             if (it == true) {
                 val intent = Intent(requireContext(), SoundMemoActivityAlias::class.java)
                 startActivity(intent)
@@ -289,11 +292,10 @@ class MainFragment : Fragment() {
         soundMemoButton.setOnClickListener {
             actionCreator.onSoundMemoClick()
         }
-        // 音声メモボタンは消す
-        soundMemoButton.isVisible = false
         progress.setOnClickListener {
 
         }
+        actionCreator.onCreate()
     }
 
 
