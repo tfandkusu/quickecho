@@ -21,6 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.bellware.echo.actioncreator.MainActionCreator
 import jp.bellware.echo.main.R
 import jp.bellware.echo.store.*
+import jp.bellware.echo.util.QuickEchoFlags
 import jp.bellware.echo.view.memo.SoundMemoActivityAlias
 import jp.bellware.echo.view.setting.SettingActivityAlias
 import kotlinx.android.synthetic.main.fragment_main.*
@@ -128,7 +129,8 @@ class MainFragment : Fragment() {
             actionCreator.onSoundLoaded(playOrStop)
         }
         store.showSoundMemoButton.observe(viewLifecycleOwner) {
-            soundMemoButton.isVisible = it
+            soundMemoButton.isVisible = it && QuickEchoFlags.SOUND_MEMO
+            // 開発中の音声メモ機能は無効化する
         }
         // StoreとViewを繋げる
         store.status.observe(viewLifecycleOwner, Observer {

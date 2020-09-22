@@ -4,7 +4,8 @@
         android:defaultValue="true"
         android:key="soundEffect"
         android:title="@string/pref_sound" />
-    <PreferenceCategory android:title="@string/pref_category_sound_memo">
+    <PreferenceCategory android:title="@string/pref_category_sound_memo"
+        android:key="categorySoundMemo">
         <SwitchPreference
             android:defaultValue="true"
             android:key="showSoundMemo"

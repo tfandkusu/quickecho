@@ -7,9 +7,11 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
+import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import jp.bellware.echo.setting.R
+import jp.bellware.echo.util.QuickEchoFlags
 
 /**
  * 設定画面のフラグメント
@@ -18,6 +20,11 @@ class SettingFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
 
         addPreferencesFromResource(R.xml.setting)
+        // 開発中の音声メモ機能を無効化
+        val soundMemo = findPreference<PreferenceCategory>(CATEGORY_SOUND_MEMO)
+        if (!QuickEchoFlags.SOUND_MEMO) {
+            soundMemo?.isVisible = false
+        }
         run {
             //商品情報
             val pref = findPreference<Preference>(PREF_ABOUT)
@@ -69,6 +76,8 @@ class SettingFragment : PreferenceFragmentCompat() {
     }
 
     companion object {
+
+        private const val CATEGORY_SOUND_MEMO = "categorySoundMemo"
 
         private const val PREF_ABOUT = "about"
 

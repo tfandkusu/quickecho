@@ -3,6 +3,7 @@ apply from: rootProject.file('gradle/view-common.gradle')
 apply plugin: "androidx.navigation.safeargs.kotlin"
 
 dependencies {
+    implementation project(':common')
     implementation project(':flux')
     implementation project(':repository')
     implementation 'androidx.appcompat:appcompat:1.1.0'
