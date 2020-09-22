@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="title_sound_memo">音声メモ</string>
+    <string name="sound_memo_temporal">一時保存中</string>
+    <string name="sound_memo_tap_to_save">タップで永続的に保存</string>
 </resources>

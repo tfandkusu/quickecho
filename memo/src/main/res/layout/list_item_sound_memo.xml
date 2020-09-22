@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/margin"
+    android:paddingTop="@dimen/margin_half"
+    android:paddingEnd="@dimen/margin"
+    android:paddingBottom="@dimen/margin_half">
+
+    <!-- 再生ステータス(未実装) -->
+    <Space
+        android:id="@+id/play"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/text_dark"
+        android:textSize="@dimen/body"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/play"
+        app:layout_constraintTop_toTopOf="@+id/play"
+        tools:text="@string/sample_number" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/text"
+        android:textSize="@dimen/caption"
+        app:layout_constraintBottom_toBottomOf="@+id/number"
+        app:layout_constraintStart_toEndOf="@+id/number"
+        tools:text="@string/sample_time" />
+
+    <!-- 認識結果(未実装) -->
+    <Space
+        android:id="@+id/recognized"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="@dimen/margin_half"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/number"
+        app:layout_constraintTop_toBottomOf="@+id/number" />
+
+    <!-- 一時保存中 -->
+    <TextView
+        android:id="@+id/temporal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/sound_memo_temporal"
+        android:textColor="@color/primary"
+        android:textSize="@dimen/caption"
+        app:layout_constraintStart_toStartOf="@+id/number"
+        app:layout_constraintTop_toBottomOf="@+id/number" />
+    <!-- タップで永続的に保存 -->
+    <TextView
+        android:id="@+id/tapToSave"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_4dp"
+        android:text="@string/sound_memo_tap_to_save"
+        android:textColor="@color/text"
+        android:textSize="@dimen/body"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/temporal"
+        app:layout_constraintTop_toBottomOf="@+id/temporal" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
