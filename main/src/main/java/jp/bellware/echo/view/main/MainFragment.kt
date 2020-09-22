@@ -21,6 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.bellware.echo.actioncreator.MainActionCreator
 import jp.bellware.echo.main.R
 import jp.bellware.echo.store.*
+import jp.bellware.echo.util.QuickEchoFlags
 import jp.bellware.echo.view.memo.SoundMemoActivityAlias
 import jp.bellware.echo.view.setting.SettingActivityAlias
 import kotlinx.android.synthetic.main.fragment_main.*
@@ -126,6 +127,10 @@ class MainFragment : Fragment() {
         // 効果音読み込み
         soundEffect.onCreate(requireContext()) {
             actionCreator.onSoundLoaded(playOrStop)
+        }
+        store.showSoundMemoButton.observe(viewLifecycleOwner) {
+            soundMemoButton.isVisible = it && QuickEchoFlags.SOUND_MEMO
+            // 開発中の音声メモ機能は無効化する
         }
         // StoreとViewを繋げる
         store.status.observe(viewLifecycleOwner, Observer {
@@ -252,7 +257,7 @@ class MainFragment : Fragment() {
             progress.isVisible = it
         }
         // 音声メモ画面を呼び出す
-        store.soundMemo.observe(viewLifecycleOwner, Observer {
+        store.callSoundMemo.observe(viewLifecycleOwner, Observer {
             if (it == true) {
                 val intent = Intent(requireContext(), SoundMemoActivityAlias::class.java)
                 startActivity(intent)
@@ -289,11 +294,10 @@ class MainFragment : Fragment() {
         soundMemoButton.setOnClickListener {
             actionCreator.onSoundMemoClick()
         }
-        // 音声メモボタンは消す
-        soundMemoButton.isVisible = false
         progress.setOnClickListener {
 
         }
+        actionCreator.onCreate()
     }
 
 

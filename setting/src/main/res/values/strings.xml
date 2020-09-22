@@ -2,9 +2,14 @@
 <resources>
     <!-- 設定画面 -->
     <string name="pref_sound">Sound effect</string>
+    <string name="pref_category_sound_memo">Sound memo</string>
+    <string name="pref_show_sound_memo">Show S. memo button</string>
+    <string name="pref_save_every_time">Persistent save every time</string>
+    <string name="summary_save_every_time">Not via temporary save</string>
     <string name="pref_information">Information</string>
     <string name="pref_oss_1">Open source license 1</string>
     <string name="pref_oss_2">Open source license 2</string>
+    <string name="pref_category_information">About</string>
     <string name="version" translatable="false">Version</string>
     <string name="version_sample" translatable="false">Version 1.0.0</string>
     <string name="copyright" translatable="false">&#169; 2015 Haruhiko Takada</string>

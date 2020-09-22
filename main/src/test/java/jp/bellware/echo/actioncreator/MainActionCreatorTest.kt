@@ -2,13 +2,16 @@ package jp.bellware.echo.actioncreator
 
 import io.mockk.MockKAnnotations
 import io.mockk.coVerifySequence
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.verifySequence
 import jp.bellware.echo.action.*
+import jp.bellware.echo.repository.SettingRepository
 import jp.bellware.echo.repository.SoundRepository
 import jp.bellware.echo.util.Dispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.setMain
 import org.junit.Before
@@ -21,6 +24,9 @@ class MainActionCreatorTest {
 
     @MockK(relaxed = true)
     lateinit var delayActionCreatorHelper: DelayActionCreatorHelper
+
+    @MockK(relaxed = true)
+    lateinit var settingRepository: SettingRepository
 
     @MockK(relaxed = true)
     lateinit var soundRepository: SoundRepository
@@ -36,7 +42,20 @@ class MainActionCreatorTest {
         // スレッドを切り替えない
         Dispatchers.setMain(Dispatchers.Unconfined)
         MockKAnnotations.init(this)
-        actionCreator = MainActionCreator(dispatcher, delayActionCreatorHelper, soundRepository)
+        actionCreator = MainActionCreator(dispatcher, delayActionCreatorHelper, settingRepository, soundRepository)
+    }
+
+    @Test
+    fun onCreate() = runBlocking {
+        every {
+            settingRepository.isShowSoundMemoButton()
+        } returns flow {
+            emit(true)
+        }
+        actionCreator.onCreate().join()
+        coVerifySequence {
+            dispatcher.dispatch(MainSoundMemoButtonVisibilityAction(true))
+        }
     }
 
     @Test

@@ -129,6 +129,11 @@ class MainStore @ViewModelInject constructor(actionReceiver: ActionReceiver) : S
     val delete = AnimationLiveData()
 
     /**
+     * 音声メモボタンの表示
+     */
+    val showSoundMemoButton = MutableLiveData(true)
+
+    /**
      * 効果音
      */
     val soundEffect = SingleLiveEvent<QrecSoundEffect>()
@@ -183,7 +188,7 @@ class MainStore @ViewModelInject constructor(actionReceiver: ActionReceiver) : S
     /**
      * 音声メモ画面呼び出し
      */
-    val soundMemo = SingleLiveEvent<Boolean>()
+    val callSoundMemo = SingleLiveEvent<Boolean>()
 
     /**
      * 再生中または停止中フラグ。このフラグはsavedInstanceに保存する。
@@ -206,6 +211,13 @@ class MainStore @ViewModelInject constructor(actionReceiver: ActionReceiver) : S
         stop.value = AnimationStatus.INVISIBLE
         replay.value = AnimationStatus.INVISIBLE
         delete.value = AnimationStatus.INVISIBLE
+    }
+
+    /**
+     * 音声メモボタン表示非表示切り替え
+     */
+    fun onEvent(action: MainSoundMemoButtonVisibilityAction) {
+        showSoundMemoButton.value = action.show
     }
 
     /**
@@ -397,7 +409,7 @@ class MainStore @ViewModelInject constructor(actionReceiver: ActionReceiver) : S
     }
 
     fun onEvent(action: MainSoundMemoAction) {
-        soundMemo.value = true
+        callSoundMemo.value = true
     }
 
 }

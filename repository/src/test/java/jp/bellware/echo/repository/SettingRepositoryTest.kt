@@ -40,4 +40,37 @@ class SettingRepositoryTest {
             localDataStore.isSoundEffect()
         }
     }
+
+    @InternalCoroutinesApi
+    @Test
+    fun isShowSoundMemoButton() = runBlocking {
+        every {
+            localDataStore.isShowSoundMemoButton()
+        } returns flow {
+            emit(true)
+        }
+        repository.isShowSoundMemoButton().collect {
+            it shouldBe true
+        }
+        verifySequence {
+            localDataStore.isShowSoundMemoButton()
+        }
+    }
+
+    @InternalCoroutinesApi
+    @Test
+    fun isSaveEveryTime() = runBlocking {
+        every {
+            localDataStore.isSaveEveryTime()
+        } returns flow {
+            emit(true)
+        }
+        repository.isSaveEveryTime().collect {
+            it shouldBe true
+        }
+        verifySequence {
+            localDataStore.isSaveEveryTime()
+        }
+    }
 }
+

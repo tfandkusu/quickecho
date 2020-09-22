@@ -14,7 +14,7 @@ val repositoryModuleInMainModule = repositoryModule
 val mainModule = module {
     // ActionCreator
     single { DelayActionCreatorHelperImpl() as DelayActionCreatorHelper }
-    viewModel { MainActionCreator(get(), get(), get()) }
+    viewModel { MainActionCreator(get(), get(), get(), get()) }
     // Store
     viewModel { MainStore(get()) }
     // ViewHelper

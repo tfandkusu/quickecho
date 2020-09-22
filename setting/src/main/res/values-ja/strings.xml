@@ -3,6 +3,11 @@
     <string name="pref_oss_1">オープンソースライセンス1</string>
     <string name="pref_oss_2">オープンソースライセンス2</string>
     <string name="pref_sound">効果音</string>
+    <string name="pref_category_sound_memo">音声メモ</string>
+    <string name="pref_category_information">概要</string>
     <string name="pref_information">アプリについて</string>
     <string name="pref_privacy_policy">プライバシーポリシー</string>
+    <string name="pref_show_sound_memo">ボタンを表示する</string>
+    <string name="pref_save_every_time">毎回、永続保存する</string>
+    <string name="summary_save_every_time">一時保存を経由しない</string>
 </resources>

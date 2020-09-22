@@ -77,3 +77,10 @@ object MainRestoreEndAction : Action()
  * 音声メモ呼び出しアクション
  */
 object MainSoundMemoAction : Action()
+
+/**
+ * 音声メモボタン表示非表示切り替えアクション
+ * @param show 表示フラグ
+ */
+data class MainSoundMemoButtonVisibilityAction(val show: Boolean) : Action()
+

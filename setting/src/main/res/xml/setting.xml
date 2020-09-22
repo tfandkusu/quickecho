@@ -4,16 +4,32 @@
         android:defaultValue="true"
         android:key="soundEffect"
         android:title="@string/pref_sound" />
-    <Preference
-        android:key="about"
-        android:title="@string/pref_information" />
-    <Preference
-        android:key="oss1"
-        android:title="@string/pref_oss_1" />
-    <Preference
-        android:key="oss2"
-        android:title="@string/pref_oss_2" />
-    <Preference
-        android:key="pp"
-        android:title="@string/pref_privacy_policy" />
+    <PreferenceCategory android:title="@string/pref_category_sound_memo"
+        android:key="categorySoundMemo">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="showSoundMemo"
+            android:title="@string/pref_show_sound_memo" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="saveEveryTime"
+            android:summary="@string/summary_save_every_time"
+            android:title="@string/pref_save_every_time" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_category_information">
+        <Preference
+            android:key="about"
+            android:title="@string/pref_information" />
+        <Preference
+            android:key="oss1"
+            android:title="@string/pref_oss_1" />
+        <Preference
+            android:key="oss2"
+            android:title="@string/pref_oss_2" />
+        <Preference
+            android:key="pp"
+            android:title="@string/pref_privacy_policy" />
+    </PreferenceCategory>
 </PreferenceScreen>
+
