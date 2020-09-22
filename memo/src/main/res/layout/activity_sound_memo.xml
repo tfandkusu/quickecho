@@ -7,12 +7,10 @@
     tools:context="jp.bellware.echo.view.memo.SoundMemoActivity">
 
     <androidx.appcompat.widget.Toolbar
+        app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:background="@color/primary"
         android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
         android:elevation="5dp"
