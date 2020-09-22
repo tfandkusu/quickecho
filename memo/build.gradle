@@ -8,9 +8,7 @@ dependencies {
     implementation project(':common')
     // WorkManager
     implementation "androidx.work:work-runtime-ktx:$work_version"
-//    def flutter_module_version = '0.0.2'
-//
-//    debugImplementation "jp.bellware.echo.sound_memo:flutter_debug:$flutter_module_version"
-//    profileImplementation "jp.bellware.echo.sound_memo:flutter_profile:$flutter_module_version"
-//    releaseImplementation "jp.bellware.echo.sound_memo:flutter_release:$flutter_module_version"
+    // Groupie
+    implementation "com.xwray:groupie:$groupie_version"
+    implementation "com.xwray:groupie-kotlin-android-extensions:$groupie_version"
 }

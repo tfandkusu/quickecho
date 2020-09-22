@@ -1,8 +1,11 @@
 package jp.bellware.echo.view.memo
 
+import android.media.AudioManager
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import jp.bellware.echo.memo.R
+import kotlinx.android.synthetic.main.activity_sound_memo.*
 
 
 /**
@@ -10,49 +13,21 @@ import jp.bellware.echo.memo.R
  */
 class SoundMemoActivity : AppCompatActivity() {
 
-    companion object {
-        private const val TAG_FLUTTER_FRAGMENT = "flutterFragment"
-    }
-
-    // private var fragment: FlutterFragment? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_sound_memo)
-
-//        fragment = supportFragmentManager.findFragmentByTag(TAG_FLUTTER_FRAGMENT) as FlutterFragment?
-//        if (fragment == null) {
-//            fragment = FlutterFragment.withCachedEngine("my_engine_id").build()
-//            fragment?.let {
-//                supportFragmentManager
-//                        .beginTransaction()
-//                        .add(R.id.root, it, TAG_FLUTTER_FRAGMENT)
-//                        .commit()
-//            }
-//        }
+        setSupportActionBar(toolbar)
+        volumeControlStream = AudioManager.STREAM_MUSIC
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
-//    override fun onPostResume() {
-//        super.onPostResume()
-//        fragment?.onPostResume()
-//    }
-//
-//    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray) {
-//        fragment?.onRequestPermissionsResult(
-//                requestCode,
-//                permissions,
-//                grantResults
-//        )
-//    }
-//
-//    override fun onUserLeaveHint() {
-//        fragment?.onUserLeaveHint()
-//    }
-//
-//    override fun onTrimMemory(level: Int) {
-//        super.onTrimMemory(level)
-//        fragment?.onTrimMemory(level)
-//    }
-
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (item.itemId == android.R.id.home) {
+            finish()
+            true
+        } else {
+            false
+        }
+    }
 }
