@@ -3,6 +3,7 @@ phases:
   pre_build:
     commands:
       # Firebase Test Labの認証情報とプロジェクトを設定
+      # 再コミット
       - echo $FIREBASE_TEST_LAB_JSON | base64 -d > firebase-test-lab.json
       - gcloud auth activate-service-account --key-file firebase-test-lab.json
       - gcloud config set project quick-echo
