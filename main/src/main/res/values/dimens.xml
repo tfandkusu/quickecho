@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="buttons_bottom_margin">16dp</dimen>
+    <!-- 視覚的ボリューム -->
+    <dimen name="main_visual_volume_min_radius_dp">32dp</dimen>
+    <dimen name="main_visual_volume_max_radius_dp">64dp</dimen>
 </resources>
