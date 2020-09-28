@@ -75,4 +75,17 @@ class SoundMemoRepositoryTest {
             it shouldBe listOf(m)
         }
     }
+
+    @ExperimentalCoroutinesApi
+    @Test
+    fun getLastId() = runBlocking {
+        every {
+            localDataStore.getLastId()
+        } returns flow {
+            emit(1L)
+        }
+        repository.getLastId().take(1).collect {
+            it shouldBe 1L
+        }
+    }
 }
