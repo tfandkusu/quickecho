@@ -10,7 +10,7 @@ interface SoundMemoDao {
     fun index(): Flow<List<LocalSoundMemo>>
 
 
-    @Query("SELECT id FROM LocalSoundMemo WHERE id=last_insert_rowid() LIMIT 1")
+    @Query("SELECT id FROM LocalSoundMemo ORDER BY createdAt DESC LIMIT 1")
     fun getLastId(): Flow<Long?>
 
     /**
