@@ -37,7 +37,10 @@ class SoundMemoActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         setUpRecyclerView()
+        // リストを更新する
         actionCreator.updateList()
+        // 最後に追加された音声メモを確認する
+        actionCreator.checkLastSaveId()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
