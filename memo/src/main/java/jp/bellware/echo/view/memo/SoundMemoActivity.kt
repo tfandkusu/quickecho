@@ -37,7 +37,7 @@ class SoundMemoActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         setUpRecyclerView()
-        actionCreator.onCreate()
+        actionCreator.updateList()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -74,8 +74,12 @@ class SoundMemoActivity : AppCompatActivity() {
         val adapter = GroupAdapter<GroupieViewHolder>()
         recyclerView.adapter = adapter
         store.items.observe(this) { items ->
-            adapter.update(items.map {
-                SoundMemoGroupieItem(it)
+            adapter.update(items.items.map {
+                if (it.id == items.playingId) {
+                    SoundMemoGroupieItem(it, playing = true, visualVolume = items.volume)
+                } else {
+                    SoundMemoGroupieItem(it)
+                }
             })
         }
     }

@@ -87,14 +87,14 @@ class MainActionCreator @ViewModelInject constructor(private val dispatcher: Dis
      * 再再生ボタンが押された
      */
     fun onReplayClick() {
-        dispatcher.dispatch(MainReplayAction)
+        dispatcher.dispatch(MainRequestReplayAction)
     }
 
     /**
      * 停止ボタンが押された
      */
     fun onStopClick() {
-        dispatcher.dispatch(MainStopAction)
+        dispatcher.dispatch(MainRequestStopAction)
     }
 
     /**
@@ -127,7 +127,14 @@ class MainActionCreator @ViewModelInject constructor(private val dispatcher: Dis
     }
 
     /**
-     * 再生中終端に到達した
+     * 実際の再生が開始した
+     */
+    fun onPlayStart() {
+        dispatcher.dispatch(MainPlayStartAction)
+    }
+
+    /**
+     * 実際の再生が終了した
      */
     fun onPlayEnd() {
         dispatcher.dispatch(MainPlayEndAction)
@@ -142,7 +149,7 @@ class MainActionCreator @ViewModelInject constructor(private val dispatcher: Dis
         // AACファイルで保存している音声を読みこんでメモリーに格納する
         soundRepository.restore()
         // 停止状態にする
-        dispatcher.dispatch(MainStopAction)
+        dispatcher.dispatch(MainRequestStopAction)
         // プログレス閉じる
         dispatcher.dispatch(MainRestoreEndAction)
     }

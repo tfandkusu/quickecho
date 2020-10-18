@@ -77,25 +77,10 @@ class VisualVolumeViewHelper @ViewModelInject constructor() : ViewModel() {
         fun onUpdateVolume(volume: Float)
     }
 
-    fun onResume() {
-        if (playing || recording)
-            updateTask.run()
-    }
-
-    fun onPause() {
-        handler.removeCallbacks(updateTask)
-    }
-
-    fun reset() {
-        playing = false
-        recording = false
-        callBack.onUpdateVolume(0f)
-    }
-
-
     fun play() {
         playing = true
         recording = false
+        callBack.onUpdateVolume(0f)
         handler.removeCallbacks(updateTask)
         updateTask.run()
     }
@@ -103,6 +88,7 @@ class VisualVolumeViewHelper @ViewModelInject constructor() : ViewModel() {
     fun record() {
         playing = false
         recording = true
+        callBack.onUpdateVolume(0f)
         handler.removeCallbacks(updateTask)
         updateTask.run()
     }
@@ -110,6 +96,7 @@ class VisualVolumeViewHelper @ViewModelInject constructor() : ViewModel() {
     fun stop() {
         playing = false
         recording = false
+        callBack.onUpdateVolume(0f)
         handler.removeCallbacks(updateTask)
     }
 

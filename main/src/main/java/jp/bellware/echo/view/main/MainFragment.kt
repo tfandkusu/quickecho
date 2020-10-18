@@ -120,7 +120,7 @@ class MainFragment : Fragment() {
             override fun onUpdateVolume(volume: Float) {
                 visualVolume.setVolume(volume)
                 // 再生中の視覚的ボリュームを送る
-                if (store.visualVolume.value == VisualVolumeRequest.PLAY)
+                if (store.requestForVisualVolume.value == VisualVolumeRequest.PLAY)
                     actionCreator.onPlayVisualVolumeUpdate(volume)
             }
 
@@ -187,9 +187,11 @@ class MainFragment : Fragment() {
         store.requestForPlay.observe(viewLifecycleOwner, Observer {
             when (it) {
                 RPRequest.START ->
-                    playViewHelper.play {
+                    playViewHelper.play({
+                        actionCreator.onPlayStart()
+                    }, {
                         actionCreator.onPlayEnd()
-                    }
+                    })
                 RPRequest.STOP ->
                     playViewHelper.stop()
                 null -> {
@@ -209,10 +211,8 @@ class MainFragment : Fragment() {
                 }
             }
         })
-        store.visualVolume.observe(viewLifecycleOwner, Observer {
+        store.requestForVisualVolume.observe(viewLifecycleOwner, Observer {
             when (it) {
-                VisualVolumeRequest.RESET ->
-                    visualVolumeViewHelper.reset()
                 VisualVolumeRequest.RECORD ->
                     visualVolumeViewHelper.record()
                 VisualVolumeRequest.PLAY ->
@@ -307,16 +307,10 @@ class MainFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        visualVolumeViewHelper.onResume()
         val audioManager = requireActivity().getSystemService(Context.AUDIO_SERVICE) as AudioManager
         if (audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) == 0) {
             actionCreator.onMute()
         }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        visualVolumeViewHelper.onPause()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

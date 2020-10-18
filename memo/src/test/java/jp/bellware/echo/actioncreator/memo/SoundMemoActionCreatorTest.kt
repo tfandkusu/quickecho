@@ -47,7 +47,7 @@ class SoundMemoActionCreatorTest {
     }
 
     @Test
-    fun onCreate() = runBlocking {
+    fun updateList() = runBlocking {
         val items = listOf(SoundMemo(1,
                 false,
                 1000,
@@ -77,7 +77,7 @@ class SoundMemoActionCreatorTest {
         } returns flow {
             emit(items)
         }
-        actionCreator.onCreate().join()
+        actionCreator.updateList().join()
         coVerifySequence {
             repository.index()
             dispatcher.dispatch(SoundMemoListUpdateAction(items))

@@ -88,7 +88,7 @@ class MainActionCreatorTest {
             dispatcher.dispatch(MainReadyAction)
             dispatcher.dispatch(MainRestoreStartAction)
             soundRepository.restore()
-            dispatcher.dispatch(MainStopAction)
+            dispatcher.dispatch(MainRequestStopAction)
             dispatcher.dispatch(MainRestoreEndAction)
         }
     }
@@ -118,7 +118,7 @@ class MainActionCreatorTest {
     fun onReplayClick() {
         actionCreator.onReplayClick()
         verifySequence {
-            dispatcher.dispatch(MainReplayAction)
+            dispatcher.dispatch(MainRequestReplayAction)
         }
     }
 
@@ -147,7 +147,7 @@ class MainActionCreatorTest {
     fun onStopClick() {
         actionCreator.onStopClick()
         verifySequence {
-            dispatcher.dispatch(MainStopAction)
+            dispatcher.dispatch(MainRequestStopAction)
         }
     }
 
@@ -196,6 +196,14 @@ class MainActionCreatorTest {
         actionCreator.onPlayVisualVolumeUpdate(1.0f)
         verifySequence {
             dispatcher.dispatch(MainPlayVisualVolumeUpdateAction(1.0f))
+        }
+    }
+
+    @Test
+    fun onPlayStart() {
+        actionCreator.onPlayStart()
+        verifySequence {
+            dispatcher.dispatch(MainPlayStartAction)
         }
     }
 

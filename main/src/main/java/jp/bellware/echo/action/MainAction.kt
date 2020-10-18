@@ -29,30 +29,24 @@ object MainPrePlayAction : Action()
 object MainPlayAction : Action()
 
 /**
+ * 実際の再生が開始されたアクション
+ */
+object MainPlayStartAction : Action()
+
+/**
  * 削除アクション
  */
 object MainDeleteAction : Action()
 
 /**
- * 再再生アクション
+ * 再再生が要求されたアクション
  */
-object MainReplayAction : Action()
+object MainRequestReplayAction : Action()
 
 /**
- * 停止アクション
+ * 停止が要求されたアクション
  */
-object MainStopAction : Action()
-
-/**
- * 視覚的ボリュームを更新するアクション。音声メモ画面で使われる。
- * @param volume 視覚的ボリュームの量。0-1。
- */
-data class MainPlayVisualVolumeUpdateAction(val volume: Float) : Action()
-
-/**
- * 再生中終端にたどり着いたアクション
- */
-object MainPlayEndAction : Action()
+object MainRequestStopAction : Action()
 
 /**
  * ボリュームが0アクション
