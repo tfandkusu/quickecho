@@ -44,6 +44,17 @@ object MainReplayAction : Action()
 object MainStopAction : Action()
 
 /**
+ * 視覚的ボリュームを更新するアクション。音声メモ画面で使われる。
+ * @param volume 視覚的ボリュームの量。0-1。
+ */
+data class MainPlayVisualVolumeUpdateAction(val volume: Float) : Action()
+
+/**
+ * 再生中終端にたどり着いたアクション
+ */
+object MainPlayEndAction : Action()
+
+/**
  * ボリュームが0アクション
  */
 object MainMuteAction : Action()

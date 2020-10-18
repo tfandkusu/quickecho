@@ -13,11 +13,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
 class MainActionCreatorTest {
+
+    @ExperimentalCoroutinesApi
+    private val testCoroutineDispatcher = TestCoroutineDispatcher()
 
     @MockK(relaxed = true)
     lateinit var dispatcher: Dispatcher
@@ -39,10 +45,16 @@ class MainActionCreatorTest {
     @ExperimentalCoroutinesApi
     @Before
     fun setUp() {
-        // スレッドを切り替えない
-        Dispatchers.setMain(Dispatchers.Unconfined)
+        Dispatchers.setMain(testCoroutineDispatcher)
         MockKAnnotations.init(this)
         actionCreator = MainActionCreator(dispatcher, delayActionCreatorHelper, settingRepository, soundRepository)
+    }
+
+    @ExperimentalCoroutinesApi
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
+        testCoroutineDispatcher.cleanupTestCoroutines()
     }
 
     @Test
@@ -120,7 +132,6 @@ class MainActionCreatorTest {
         }
     }
 
-
     @Test
     fun onPlayClickNoSound() = runBlocking {
         actionCreator.onPlayClick(false).join()
@@ -169,6 +180,30 @@ class MainActionCreatorTest {
         actionCreator.onSoundMemoClick()
         verifySequence {
             dispatcher.dispatch(MainSoundMemoAction)
+        }
+    }
+
+    @Test
+    fun onBackPressed() {
+        actionCreator.onBackPressed()
+        verifySequence {
+            dispatcher.dispatch(MainBackPressedAction)
+        }
+    }
+
+    @Test
+    fun onPlayVisualVolumeUpdate() {
+        actionCreator.onPlayVisualVolumeUpdate(1.0f)
+        verifySequence {
+            dispatcher.dispatch(MainPlayVisualVolumeUpdateAction(1.0f))
+        }
+    }
+
+    @Test
+    fun onPlayEnd() {
+        actionCreator.onPlayEnd()
+        verifySequence {
+            dispatcher.dispatch(MainPlayEndAction)
         }
     }
 }

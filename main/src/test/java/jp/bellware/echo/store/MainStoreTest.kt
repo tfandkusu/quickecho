@@ -156,6 +156,13 @@ class MainStoreTest {
         store.visualVolume.value shouldBe VisualVolumeRequest.PLAY
     }
 
+    @Test
+    fun playEnd() {
+        store.visualVolume.value shouldBe null
+        store.onEvent(MainPlayEndAction)
+        store.visualVolume.value shouldBe VisualVolumeRequest.RESET
+    }
+
     /**
      * 停止
      */

@@ -120,6 +120,20 @@ class MainActionCreator @ViewModelInject constructor(private val dispatcher: Dis
     }
 
     /**
+     * 再生中の視覚的ボリュームが更新された時に呼ばれる
+     */
+    fun onPlayVisualVolumeUpdate(visualVolume: Float) {
+        dispatcher.dispatch(MainPlayVisualVolumeUpdateAction(visualVolume))
+    }
+
+    /**
+     * 再生中終端に到達した
+     */
+    fun onPlayEnd() {
+        dispatcher.dispatch(MainPlayEndAction)
+    }
+
+    /**
      * プロセスキルからの復帰を行う
      */
     private suspend fun restore() {

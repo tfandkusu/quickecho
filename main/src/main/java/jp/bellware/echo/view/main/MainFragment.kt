@@ -119,6 +119,9 @@ class MainFragment : Fragment() {
 
             override fun onUpdateVolume(volume: Float) {
                 visualVolume.setVolume(volume)
+                // 再生中の視覚的ボリュームを送る
+                if (store.visualVolume.value == VisualVolumeRequest.PLAY)
+                    actionCreator.onPlayVisualVolumeUpdate(volume)
             }
 
         }
@@ -185,6 +188,7 @@ class MainFragment : Fragment() {
             when (it) {
                 RPRequest.START ->
                     playViewHelper.play {
+                        actionCreator.onPlayEnd()
                     }
                 RPRequest.STOP ->
                     playViewHelper.stop()

@@ -363,6 +363,12 @@ class MainStore @ViewModelInject constructor(actionReceiver: ActionReceiver) : S
         stop.value = AnimationStatus.VISIBLE
     }
 
+    /**
+     * 再生中終端に到達
+     */
+    fun onEvent(action: MainPlayEndAction) {
+        visualVolume.value = VisualVolumeRequest.RESET
+    }
 
     /**
      * ボリューム0の時
