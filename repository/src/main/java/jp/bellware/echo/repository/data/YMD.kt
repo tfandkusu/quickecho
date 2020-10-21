@@ -19,4 +19,3 @@ fun toYMD(timeMillis: Long): YMD {
             calendar.get(Calendar.DAY_OF_MONTH)
     )
 }
-

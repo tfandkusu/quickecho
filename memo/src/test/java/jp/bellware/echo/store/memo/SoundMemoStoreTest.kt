@@ -4,9 +4,11 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import io.kotlintest.shouldBe
 import jp.bellware.echo.action.MainPlayEndAction
 import jp.bellware.echo.action.MainPlayVisualVolumeUpdateAction
+import jp.bellware.echo.action.memo.SoundMemoDayHeader
 import jp.bellware.echo.action.memo.SoundMemoLastSaveIdAction
 import jp.bellware.echo.action.memo.SoundMemoListUpdateAction
 import jp.bellware.echo.repository.data.SoundMemo
+import jp.bellware.echo.repository.data.YMD
 import jp.bellware.echo.util.EmptyActionReceiver
 import org.junit.Before
 import org.junit.Rule
@@ -30,19 +32,8 @@ class SoundMemoStoreTest {
     @Test
     fun update() {
         // 初期状態確認
-        store.items.value shouldBe SoundMemoItems(listOf(), false, 0L, 0f)
-        val items = listOf(SoundMemo(1,
-                false,
-                1000,
-                "output1.aac",
-                1,
-                139.737056,
-                35.677,
-                "東京都",
-                "港区",
-                "赤坂3-1-6",
-                2,
-                "録音したこと"),
+        store.items.value shouldBe SoundMemoItems(listOf(), listOf(), false, 0L, 0f)
+        val items = listOf(
                 SoundMemo(2,
                         true,
                         2000,
@@ -54,18 +45,34 @@ class SoundMemoStoreTest {
                         "大宮区",
                         "",
                         SoundMemo.TEXT_STATUS_NOT_IMPLEMENTED,
-                        ""))
+                        ""),
+                SoundMemo(1,
+                        false,
+                        1000,
+                        "output1.aac",
+                        1,
+                        139.737056,
+                        35.677,
+                        "東京都",
+                        "港区",
+                        "赤坂3-1-6",
+                        2,
+                        "録音したこと"))
+        val dayHeaders = listOf(
+                SoundMemoDayHeader(0, true, true, YMD(2020, 10, 22)),
+                SoundMemoDayHeader(1, false, true, YMD(2020, 10, 21))
+        )
         // 音声メモ一覧取得
-        store.onEvent(SoundMemoListUpdateAction(items))
-        store.items.value shouldBe SoundMemoItems(items, false, 0L, 0f)
+        store.onEvent(SoundMemoListUpdateAction(items, dayHeaders))
+        store.items.value shouldBe SoundMemoItems(items, dayHeaders, false, 0L, 0f)
         // 最終保存ID取得
         store.onEvent(SoundMemoLastSaveIdAction(1L))
-        store.items.value shouldBe SoundMemoItems(items, false, 1L, 0f)
+        store.items.value shouldBe SoundMemoItems(items, dayHeaders, false, 1L, 0f)
         // 視覚的ボリューム取得
         store.onEvent(MainPlayVisualVolumeUpdateAction(0.5f))
-        store.items.value shouldBe SoundMemoItems(items, true, 1L, 0.5f)
+        store.items.value shouldBe SoundMemoItems(items, dayHeaders, true, 1L, 0.5f)
         // 再生終了
         store.onEvent(MainPlayEndAction)
-        store.items.value shouldBe SoundMemoItems(items, false, 0L, 0f)
+        store.items.value shouldBe SoundMemoItems(items, dayHeaders, false, 0L, 0f)
     }
 }
