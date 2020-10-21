@@ -10,19 +10,21 @@ import jp.bellware.echo.action.memo.SoundMemoListUpdateAction
 import jp.bellware.echo.repository.data.SoundMemo
 import jp.bellware.echo.store.Store
 import jp.bellware.echo.util.ActionReceiver
-import timber.log.Timber
 
 /**
  * 音声メモ一覧更新情報
  * @param items 各音声メモ
+ * @param playing 再生中フラグ
  * @param playingId 再生中の音声メモID
  * @param volume 再生中音声の視覚的ボリューム
  */
-data class SoundMemoItems(val items: List<SoundMemo>, val playingId: Long, val volume: Float)
+data class SoundMemoItems(val items: List<SoundMemo>,
+                          val playing: Boolean,
+                          val playingId: Long, val volume: Float)
 
 class SoundMemoStore @ViewModelInject constructor(actionReceiver: ActionReceiver) : Store(actionReceiver) {
 
-    private val _items = MutableLiveData<SoundMemoItems>(SoundMemoItems(listOf(), 0, 0f))
+    private val _items = MutableLiveData<SoundMemoItems>(SoundMemoItems(listOf(), false, 0, 0f))
 
     val items: LiveData<SoundMemoItems> = _items
 
@@ -49,7 +51,7 @@ class SoundMemoStore @ViewModelInject constructor(actionReceiver: ActionReceiver
      */
     fun onEvent(action: MainPlayEndAction) {
         _items.value?.let {
-            _items.value = it.copy(playingId = 0)
+            _items.value = it.copy(playingId = 0, playing = false, volume = 0f)
         }
     }
 
@@ -57,9 +59,8 @@ class SoundMemoStore @ViewModelInject constructor(actionReceiver: ActionReceiver
      * 再生中の音声の視覚的ボリューム
      */
     fun onEvent(action: MainPlayVisualVolumeUpdateAction) {
-        Timber.d("MainPlayVisualVolumeUpdateAction")
         _items.value?.let {
-            _items.value = it.copy(volume = action.volume)
+            _items.value = it.copy(playing = true, volume = action.volume)
         }
     }
 }

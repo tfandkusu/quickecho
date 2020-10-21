@@ -78,7 +78,7 @@ class SoundMemoActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
         store.items.observe(this) { items ->
             adapter.update(items.items.map {
-                if (it.id == items.playingId) {
+                if (items.playing && it.id == items.playingId) {
                     SoundMemoGroupieItem(it, playing = true, visualVolume = items.volume)
                 } else {
                     SoundMemoGroupieItem(it)

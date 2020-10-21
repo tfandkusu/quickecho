@@ -1,5 +1,6 @@
 package jp.bellware.echo.view.memo
 
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
@@ -28,7 +29,15 @@ class SoundMemoGroupieItem(val soundMemo: SoundMemo,
                 temporal.isVisible = false
                 tapToSave.isVisible = false
             }
-
+            // 視覚的ボリューム表示
+            if (playing) {
+                visualVolumeView.isInvisible = false
+                visualVolumeView.setVolume(visualVolume)
+                playIcon.isInvisible = false
+            } else {
+                visualVolumeView.isInvisible = true
+                playIcon.isInvisible = true
+            }
         }
     }
 

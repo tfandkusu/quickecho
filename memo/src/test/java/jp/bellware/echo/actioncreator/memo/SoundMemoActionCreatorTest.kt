@@ -1,9 +1,11 @@
 package jp.bellware.echo.actioncreator.memo
 
 import io.mockk.MockKAnnotations
+import io.mockk.coEvery
 import io.mockk.coVerifySequence
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import jp.bellware.echo.action.memo.SoundMemoLastSaveIdAction
 import jp.bellware.echo.action.memo.SoundMemoListUpdateAction
 import jp.bellware.echo.repository.SoundMemoRepository
 import jp.bellware.echo.repository.data.SoundMemo
@@ -83,4 +85,19 @@ class SoundMemoActionCreatorTest {
             dispatcher.dispatch(SoundMemoListUpdateAction(items))
         }
     }
+
+    @Test
+    fun checkLastSaveId() = runBlocking {
+        coEvery {
+            repository.getLastId()
+        } returns flow {
+            emit(1L)
+        }
+        actionCreator.checkLastSaveId()
+        coVerifySequence {
+            repository.getLastId()
+            dispatcher.dispatch(SoundMemoLastSaveIdAction(1L))
+        }
+    }
 }
+

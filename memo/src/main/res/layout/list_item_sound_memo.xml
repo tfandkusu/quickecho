@@ -10,12 +10,27 @@
     android:paddingBottom="@dimen/margin_half">
 
     <!-- 再生ステータス(未実装) -->
-    <Space
-        android:id="@+id/play"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+
+    <jp.bellware.echo.view.main.VisualVolumeView
+        android:id="@+id/visualVolumeView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:maxRadiusDp="32dp"
+        app:minRadiusDp="16dp" />
+
+    <ImageView
+        android:id="@+id/playIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_volume_up_green_24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/visualVolumeView"
+        app:layout_constraintEnd_toEndOf="@+id/visualVolumeView"
+        app:layout_constraintStart_toStartOf="@+id/visualVolumeView"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/playing" />
+
 
     <TextView
         android:id="@+id/number"
@@ -25,8 +40,8 @@
         android:textColor="@color/text_dark"
         android:textSize="@dimen/body"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/play"
-        app:layout_constraintTop_toTopOf="@+id/play"
+        app:layout_constraintStart_toEndOf="@+id/visualVolumeView"
+        app:layout_constraintTop_toTopOf="@+id/visualVolumeView"
         tools:text="@string/sample_number" />
 
     <TextView
