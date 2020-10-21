@@ -3,5 +3,5 @@
     <string name="sample_number" translatable="false">1</string>
     <string name="sample_time" translatable="false">12:34</string>
     <string name="sound_memo_temporal">Temporal save</string>
-    <string name="sound_memo_tap_to_save">Tap to save it permanently.</string>
+    <string name="sound_memo_tap_to_save">Long tap to save it permanently.</string>
 </resources>
