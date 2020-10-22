@@ -8,15 +8,11 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.observe
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
 import dagger.hilt.android.AndroidEntryPoint
-import jp.bellware.echo.action.memo.SoundMemoDayHeader
+import io.doist.recyclerviewext.sticky_headers.StickyHeadersLinearLayoutManager
 import jp.bellware.echo.actioncreator.memo.SoundMemoActionCreator
 import jp.bellware.echo.memo.R
-import jp.bellware.echo.repository.data.YMD
 import jp.bellware.echo.store.memo.SoundMemoStore
 import jp.bellware.echo.view.setting.SettingActivityAlias
 import kotlinx.android.synthetic.main.activity_sound_memo.*
@@ -76,8 +72,8 @@ class SoundMemoActivity : AppCompatActivity() {
      * 一覧表示の設定
      */
     private fun setUpRecyclerView() {
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        val adapter = GroupAdapter<GroupieViewHolder>()
+        val adapter = StickyHeaderGroupAdapter()
+        recyclerView.layoutManager = StickyHeadersLinearLayoutManager<StickyHeaderGroupAdapter>(this)
         recyclerView.adapter = adapter
         store.items.observe(this) { items ->
             val dayHeaders = items.dayHeaders // + mapOf(5 to SoundMemoDayHeader(false, true, YMD(2020, 10, 18)), 7 to SoundMemoDayHeader(false, false, YMD(2019, 10, 17)))

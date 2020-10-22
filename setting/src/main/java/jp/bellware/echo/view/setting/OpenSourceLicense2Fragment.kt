@@ -17,6 +17,8 @@ import kotlinx.coroutines.withContext
 
 /**
  * ライブラリではなく、AACファイルのエンコードとデコードでソースコードを使わせて頂いたところのライセンス表記を担当。
+ *
+ * TODO Doist/RecyclerViewExtensionsのライセンス表記
  */
 class OpenSourceLicense2Fragment : Fragment() {
 

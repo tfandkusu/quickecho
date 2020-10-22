@@ -13,6 +13,9 @@ class SoundMemoDayHeaderGroupieItem(val dayHeader: SoundMemoDayHeader) : Item() 
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         val context = viewHolder.itemView.context
+        dayHeader.ymd.apply {
+            viewHolder.itemView.tag = "header %d %d %d".format(year, month, day)
+        }
         viewHolder.itemView.apply {
             var text: String
             if (dayHeader.today) {
