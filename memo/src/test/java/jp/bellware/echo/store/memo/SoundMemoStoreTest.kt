@@ -32,7 +32,7 @@ class SoundMemoStoreTest {
     @Test
     fun update() {
         // 初期状態確認
-        store.items.value shouldBe SoundMemoItems(listOf(), listOf(), false, 0L, 0f)
+        store.items.value shouldBe SoundMemoItems(listOf(), mapOf(), false, 0L, 0f)
         val items = listOf(
                 SoundMemo(2,
                         true,
@@ -58,9 +58,8 @@ class SoundMemoStoreTest {
                         "赤坂3-1-6",
                         2,
                         "録音したこと"))
-        val dayHeaders = listOf(
-                SoundMemoDayHeader(0, true, true, YMD(2020, 10, 22)),
-                SoundMemoDayHeader(1, false, true, YMD(2020, 10, 21))
+        val dayHeaders = mapOf(0 to SoundMemoDayHeader(true, true, YMD(2020, 10, 22)),
+                1 to SoundMemoDayHeader(false, true, YMD(2020, 10, 21))
         )
         // 音声メモ一覧取得
         store.onEvent(SoundMemoListUpdateAction(items, dayHeaders))

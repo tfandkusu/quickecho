@@ -102,9 +102,7 @@ class SoundMemoActionCreatorTest {
         coVerifySequence {
             repository.index()
             dispatcher.dispatch(SoundMemoListUpdateAction(items,
-                    listOf(
-                            SoundMemoDayHeader(0, true, true, YMD(2020, 10, 22)),
-                            SoundMemoDayHeader(1, false, true, YMD(2020, 10, 21))
+                    mapOf(0 to SoundMemoDayHeader(true, true, YMD(2020, 10, 22)), 1 to SoundMemoDayHeader(false, true, YMD(2020, 10, 21))
                     )))
         }
     }

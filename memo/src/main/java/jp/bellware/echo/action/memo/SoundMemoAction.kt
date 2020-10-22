@@ -6,17 +6,18 @@ import jp.bellware.echo.repository.data.YMD
 
 /**
  * 音声メモの日付ヘッダー情報
- * @param index 挿入インデックス
  * @param today 今日フラグ
  * @param thisYear 今年フラグ
  * @param ymd 日付
  */
-data class SoundMemoDayHeader(val index: Int, val today: Boolean, val thisYear: Boolean, val ymd: YMD)
+data class SoundMemoDayHeader(val today: Boolean, val thisYear: Boolean, val ymd: YMD)
 
 /**
  * 音声メモ一覧の更新
+ * @param items 音声メモ一覧
+ * @param dayHeaders 日付ヘッダー一覧。キーは挿入する音声メモのインデックス。
  */
-data class SoundMemoListUpdateAction(val items: List<SoundMemo>, val dayHeaders: List<SoundMemoDayHeader>) : Action()
+data class SoundMemoListUpdateAction(val items: List<SoundMemo>, val dayHeaders: Map<Int, SoundMemoDayHeader>) : Action()
 
 /**
  * 最後に保存した音声のid。

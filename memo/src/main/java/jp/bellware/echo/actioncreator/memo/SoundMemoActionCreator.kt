@@ -21,14 +21,15 @@ class SoundMemoActionCreator @ViewModelInject constructor(private val dispatcher
         repository.index().collect { items ->
             val now = currentTimeRepository.now()
             val today = toYMD(now)
-            val dayHeaders = mutableListOf<SoundMemoDayHeader>()
+            val dayHeaders = mutableMapOf<Int, SoundMemoDayHeader>()
             var previous: YMD? = null
+            // 日付ヘッダーを作成する
             items.mapIndexed { index, soundMemo ->
                 val ymd = toYMD(soundMemo.createdAt)
                 if (index == 0) {
-                    dayHeaders.add(SoundMemoDayHeader(index, today == ymd, today.year == ymd.year, ymd))
+                    dayHeaders[index] = SoundMemoDayHeader(today == ymd, today.year == ymd.year, ymd)
                 } else if (previous != ymd) {
-                    dayHeaders.add(SoundMemoDayHeader(index, today == ymd, today.year == ymd.year, ymd))
+                    dayHeaders[index] = SoundMemoDayHeader(today == ymd, today.year == ymd.year, ymd)
                 }
                 previous = ymd
             }

@@ -11,9 +11,12 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
+import com.xwray.groupie.kotlinandroidextensions.Item
 import dagger.hilt.android.AndroidEntryPoint
+import jp.bellware.echo.action.memo.SoundMemoDayHeader
 import jp.bellware.echo.actioncreator.memo.SoundMemoActionCreator
 import jp.bellware.echo.memo.R
+import jp.bellware.echo.repository.data.YMD
 import jp.bellware.echo.store.memo.SoundMemoStore
 import jp.bellware.echo.view.setting.SettingActivityAlias
 import kotlinx.android.synthetic.main.activity_sound_memo.*
@@ -77,13 +80,19 @@ class SoundMemoActivity : AppCompatActivity() {
         val adapter = GroupAdapter<GroupieViewHolder>()
         recyclerView.adapter = adapter
         store.items.observe(this) { items ->
-            adapter.update(items.items.map {
-                if (items.playing && it.id == items.playingId) {
-                    SoundMemoGroupieItem(it, playing = true, visualVolume = items.volume)
-                } else {
-                    SoundMemoGroupieItem(it)
+            val dayHeaders = items.dayHeaders // + mapOf(5 to SoundMemoDayHeader(false, true, YMD(2020, 10, 18)), 7 to SoundMemoDayHeader(false, false, YMD(2019, 10, 17)))
+            val listItems = mutableListOf<Item>()
+            items.soundMemos.mapIndexed { index, soundMemo ->
+                dayHeaders[index]?.let {
+                    listItems.add(SoundMemoDayHeaderGroupieItem(it))
                 }
-            })
+                if (items.playing && soundMemo.id == items.playingId) {
+                    listItems.add(SoundMemoGroupieItem(soundMemo, playing = true, visualVolume = items.volume))
+                } else {
+                    listItems.add(SoundMemoGroupieItem(soundMemo))
+                }
+            }
+            adapter.update(listItems)
         }
     }
 }
