@@ -1,7 +1,9 @@
 <resources>
     <dimen name="dp">1dp</dimen>
     <!-- Activity margin -->
-    <dimen name="activity_margin">16dp</dimen>
+    <dimen name="margin">16dp</dimen>
+    <dimen name="margin_half">8dp</dimen>
+    <dimen name="margin_4dp">4dp</dimen>
     <!-- Font size-->
     <dimen name="title">20sp</dimen>
     <dimen name="subtitle">16sp</dimen>

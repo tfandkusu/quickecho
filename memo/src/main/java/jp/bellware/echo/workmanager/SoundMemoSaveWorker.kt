@@ -7,8 +7,8 @@ import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.android.components.ApplicationComponent
-import jp.bellware.echo.repository.SoundMemoRepository
-import jp.bellware.echo.repository.data.SoundMemo
+import jp.bellware.echo.usecase.memo.SoundMemoUseCase
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 /**
  * 音声メモを保存する
@@ -28,28 +28,19 @@ class SoundMemoSaveWorker(appContext: Context, workerParams: WorkerParameters) :
     @EntryPoint
     @InstallIn(ApplicationComponent::class)
     interface SoundMemoSaveWorkerEntryPoint {
-        fun soundMemoRepository(): SoundMemoRepository
+        fun soundMemoUseCase(): SoundMemoUseCase
     }
 
+    @ExperimentalCoroutinesApi
     override suspend fun doWork(): Result {
-        // 音声メモ保存担当リポジトリを取得する
+        // 音声ファイル名
+        val fileName = inputData.getString(PARAM_FILE_NAME) ?: ""
+        // 音声メモ保存担当UseCaseを取得する
         val hiltEntryPoint =
                 EntryPointAccessors.fromApplication(applicationContext, SoundMemoSaveWorkerEntryPoint::class.java)
-        val repository = hiltEntryPoint.soundMemoRepository()
-        // 音声メモを保存する
-        val soundMemo = SoundMemo(0,
-                true,
-                System.currentTimeMillis(),
-                inputData.getString(PARAM_FILE_NAME) ?: "",
-                SoundMemo.LOCATION_STATUS_NOT_IMPLEMENTED,
-                0.0,
-                0.0,
-                "",
-                "",
-                "",
-                SoundMemo.TEXT_STATUS_NOT_IMPLEMENTED,
-                "")
-        repository.add(soundMemo)
+        val useCase = hiltEntryPoint.soundMemoUseCase()
+        // UseCase呼び出し
+        useCase.save(fileName)
         return Result.success()
     }
 

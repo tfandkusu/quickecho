@@ -8,16 +8,16 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_margin"
+        android:layout_marginTop="@dimen/margin"
         android:scaleType="center"
         android:src="@drawable/about" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_margin"
-        android:layout_marginTop="@dimen/activity_margin"
-        android:layout_marginRight="@dimen/activity_margin"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginTop="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
         android:gravity="center_horizontal"
         android:text="@string/app_name_long"
         android:textColor="@color/text_dark"
@@ -27,17 +27,17 @@
         android:id="@+id/version"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_margin"
-        android:layout_marginTop="@dimen/activity_margin"
-        android:layout_marginRight="@dimen/activity_margin"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginTop="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
         android:textColor="@color/text"
         android:textSize="@dimen/body" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_margin"
-        android:layout_marginRight="@dimen/activity_margin"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
         android:text="@string/copyright"
         android:textColor="@color/text"
         android:textSize="@dimen/body" />

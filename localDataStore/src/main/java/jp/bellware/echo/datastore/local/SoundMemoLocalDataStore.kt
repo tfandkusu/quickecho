@@ -6,6 +6,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import jp.bellware.echo.datastore.local.schema.LocalSoundMemo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -14,6 +15,11 @@ import javax.inject.Inject
  */
 interface SoundMemoLocalDataStore {
     fun index(): Flow<List<LocalSoundMemo>>
+
+    /**
+     * 最後に保存した音声メモのID
+     */
+    fun getLastId(): Flow<Long>
 
     /**
      * 音声メモを追加する。
@@ -37,6 +43,12 @@ class SoundMemoLocalDataStoreImpl @Inject constructor(@ApplicationContext val co
 
     override fun index(): Flow<List<LocalSoundMemo>> {
         return dao.index()
+    }
+
+    override fun getLastId(): Flow<Long> {
+        return dao.getLastId().map {
+            it ?: 0L
+        }
     }
 
     override suspend fun insert(localSoundMemo: LocalSoundMemo): Long {

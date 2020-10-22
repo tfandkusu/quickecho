@@ -96,6 +96,7 @@ class SoundRepositoryImpl @Inject constructor(private val soundMemoryLocalDataSt
 
     override fun start() {
         soundFileLocalDataStore.start { fileName ->
+            // 音声ファイルに保存されたら、音声メモを追加する
             soundMemoWorkManager.save(fileName)
         }
     }

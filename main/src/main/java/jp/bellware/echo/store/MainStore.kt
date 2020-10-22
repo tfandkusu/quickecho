@@ -52,7 +52,7 @@ enum class QrecSoundEffect {
  * 視覚的ボリュームに対する要求
  */
 enum class VisualVolumeRequest {
-    RECORD, PLAY, RESET, STOP
+    RECORD, PLAY, STOP
 }
 
 /**
@@ -151,7 +151,7 @@ class MainStore @ViewModelInject constructor(actionReceiver: ActionReceiver) : S
     /**
      * 視覚的ボリュームへの要求
      */
-    val visualVolume = SingleLiveEvent<VisualVolumeRequest>()
+    val requestForVisualVolume = SingleLiveEvent<VisualVolumeRequest>()
 
     /**
      * タイマーに対する要求
@@ -248,7 +248,7 @@ class MainStore @ViewModelInject constructor(actionReceiver: ActionReceiver) : S
         // 再生していたら止める
         requestForPlay.value = RPRequest.STOP
         // 視覚的ボリュームをリセット
-        visualVolume.value = VisualVolumeRequest.RESET
+        requestForVisualVolume.value = VisualVolumeRequest.STOP
         // 再生ボタンと削除ボタンだけを表示
         record.value = AnimationStatus.INVISIBLE
         play.value = AnimationStatus.VISIBLE
@@ -268,7 +268,7 @@ class MainStore @ViewModelInject constructor(actionReceiver: ActionReceiver) : S
         clickable = true
         // 録音する
         requestForRecord.value = RPRequest.START
-        visualVolume.value = VisualVolumeRequest.RECORD
+        requestForVisualVolume.value = VisualVolumeRequest.RECORD
         // タイマースタート
         requestForTimer.value = TimerRequest.START
         // バックキーをオーバーライド
@@ -291,7 +291,7 @@ class MainStore @ViewModelInject constructor(actionReceiver: ActionReceiver) : S
         // 録音再生を停止
         requestForRecord.value = RPRequest.STOP
         requestForPlay.value = RPRequest.STOP
-        visualVolume.value = VisualVolumeRequest.STOP
+        requestForVisualVolume.value = VisualVolumeRequest.STOP
         // タイマーキャンセル
         requestForTimer.value = TimerRequest.CANCEL
         // 再生中または停止中ではない
@@ -317,7 +317,7 @@ class MainStore @ViewModelInject constructor(actionReceiver: ActionReceiver) : S
         // 録音を停止
         requestForRecord.value = RPRequest.STOP_AND_SAVE
         // 視覚的ボリュームをリセット
-        visualVolume.value = VisualVolumeRequest.RESET
+        requestForVisualVolume.value = VisualVolumeRequest.STOP
         // タイマーキャンセル
         requestForTimer.value = TimerRequest.CANCEL
     }
@@ -330,26 +330,23 @@ class MainStore @ViewModelInject constructor(actionReceiver: ActionReceiver) : S
         clickable = true
         // 再生する
         requestForPlay.value = RPRequest.START
-        visualVolume.value = VisualVolumeRequest.PLAY
         playOrStop = true
     }
 
     /**
      * 再再生
      */
-    fun onEvent(action: MainReplayAction) {
+    fun onEvent(action: MainRequestReplayAction) {
         // 再生する
         requestForPlay.value = RPRequest.START
-        visualVolume.value = VisualVolumeRequest.PLAY
     }
 
     /**
      * 停止
      */
-    fun onEvent(action: MainStopAction) {
+    fun onEvent(action: MainRequestStopAction) {
         // 停止する
         requestForPlay.value = RPRequest.STOP
-        visualVolume.value = VisualVolumeRequest.RESET
         // 以下、プロセス復帰用
         // ステータス表示再現
         status.value = AnimationStatus.VISIBLE
@@ -363,6 +360,12 @@ class MainStore @ViewModelInject constructor(actionReceiver: ActionReceiver) : S
         stop.value = AnimationStatus.VISIBLE
     }
 
+    /**
+     * 再生中終端に到達
+     */
+    fun onEvent(action: MainPlayEndAction) {
+        requestForVisualVolume.value = VisualVolumeRequest.STOP
+    }
 
     /**
      * ボリューム0の時
@@ -410,6 +413,10 @@ class MainStore @ViewModelInject constructor(actionReceiver: ActionReceiver) : S
 
     fun onEvent(action: MainSoundMemoAction) {
         callSoundMemo.value = true
+    }
+
+    fun onEvent(action: MainPlayStartAction) {
+        requestForVisualVolume.value = VisualVolumeRequest.PLAY
     }
 
 }

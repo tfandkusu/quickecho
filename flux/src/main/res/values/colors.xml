@@ -31,6 +31,10 @@
     <color name="white">#ffffff</color>
     <!-- 黒 -->
     <color name="black">#000000</color>
+    <!-- 灰色 -->
+    <color name="gray">#666666</color>
+    <!-- 明るい灰色 -->
+    <color name="light_gray">#cccccc</color>
     <!-- テキスト色 -->
     <color name="text">#666</color>
     <color name="text_dark">#222</color>

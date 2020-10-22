@@ -36,6 +36,10 @@ class SoundMemoLocalDataStoreTest {
     @Test
     fun insertOne() = runBlocking {
         localDataStore.clear()
+        // 0件時
+        localDataStore.getLastId().take(1).collect { lastId ->
+            lastId shouldBe 0
+        }
         // 1件保存出来ることを確認する
         val m1 = LocalSoundMemo(0,
                 true,
@@ -73,6 +77,9 @@ class SoundMemoLocalDataStoreTest {
             m.street shouldBe "赤坂3-1-6"
             m.textStatus shouldBe 2
             m.text shouldBe "録音したこと"
+            localDataStore.getLastId().take(1).collect { lastId ->
+                lastId shouldBe m.id
+            }
         }
         // 更新出来ることを確認する
         val m1u = m1.copy(id = id, temporal = false)

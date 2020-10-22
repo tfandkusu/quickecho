@@ -66,7 +66,7 @@ class MainStoreTest {
         // 再生していたら止める
         store.requestForPlay.value shouldBe RPRequest.STOP
         // 視覚的ボリュームをリセット
-        store.visualVolume.value shouldBe VisualVolumeRequest.RESET
+        store.requestForVisualVolume.value shouldBe VisualVolumeRequest.STOP
         // 再生ボタンと削除ボタンだけを表示
         store.record.value shouldBe AnimationStatus.INVISIBLE
         store.play.value shouldBe AnimationStatus.VISIBLE
@@ -81,7 +81,7 @@ class MainStoreTest {
         store.overrideBackKey.value shouldBe true
         // 録音する
         store.requestForRecord.value shouldBe RPRequest.START
-        store.visualVolume.value shouldBe VisualVolumeRequest.RECORD
+        store.requestForVisualVolume.value shouldBe VisualVolumeRequest.RECORD
         // タイマースタート
         store.requestForTimer.value shouldBe TimerRequest.START
         // 再生する
@@ -101,7 +101,7 @@ class MainStoreTest {
         // 録音を停止して保存する
         store.requestForRecord.value shouldBe RPRequest.STOP_AND_SAVE
         // 視覚的ボリュームをリセット
-        store.visualVolume.value shouldBe VisualVolumeRequest.RESET
+        store.requestForVisualVolume.value shouldBe VisualVolumeRequest.STOP
         // タイマーキャンセル
         store.requestForTimer.value shouldBe TimerRequest.CANCEL
         // 再生開始
@@ -110,9 +110,11 @@ class MainStoreTest {
         store.clickable shouldBe true
         // 再生する
         store.requestForPlay.value shouldBe RPRequest.START
-        store.visualVolume.value shouldBe VisualVolumeRequest.PLAY
         // 再生または停止中
         store.playOrStop shouldBe true
+        // 実際の再生が開始
+        store.onEvent(MainPlayStartAction)
+        store.requestForVisualVolume.value shouldBe VisualVolumeRequest.PLAY
         // 削除する
         store.onEvent(MainDeleteAction)
         // クリックできない
@@ -127,7 +129,7 @@ class MainStoreTest {
         // 録音再生を停止
         store.requestForRecord.value shouldBe RPRequest.STOP
         store.requestForPlay.value shouldBe RPRequest.STOP
-        store.visualVolume.value shouldBe VisualVolumeRequest.STOP
+        store.requestForVisualVolume.value shouldBe VisualVolumeRequest.STOP
         // タイマーキャンセル
         store.requestForTimer.value shouldBe TimerRequest.CANCEL
         // 再生または停止中を解除
@@ -151,9 +153,12 @@ class MainStoreTest {
      */
     @Test
     fun replay() {
-        store.onEvent(MainReplayAction)
+        store.onEvent(MainRequestReplayAction)
         store.requestForPlay.value shouldBe RPRequest.START
-        store.visualVolume.value shouldBe VisualVolumeRequest.PLAY
+        store.onEvent(MainPlayStartAction)
+        store.requestForVisualVolume.value shouldBe VisualVolumeRequest.PLAY
+        store.onEvent(MainPlayEndAction)
+        store.requestForVisualVolume.value shouldBe VisualVolumeRequest.STOP
     }
 
     /**
@@ -161,9 +166,8 @@ class MainStoreTest {
      */
     @Test
     fun stop() {
-        store.onEvent(MainStopAction)
+        store.onEvent(MainRequestStopAction)
         store.requestForPlay.value shouldBe RPRequest.STOP
-        store.visualVolume.value shouldBe VisualVolumeRequest.RESET
         // 以下、プロセス復帰用
         // ステータス表示再現
         store.status.value shouldBe AnimationStatus.VISIBLE

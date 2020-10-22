@@ -29,19 +29,24 @@ object MainPrePlayAction : Action()
 object MainPlayAction : Action()
 
 /**
+ * 実際の再生が開始されたアクション
+ */
+object MainPlayStartAction : Action()
+
+/**
  * 削除アクション
  */
 object MainDeleteAction : Action()
 
 /**
- * 再再生アクション
+ * 再再生が要求されたアクション
  */
-object MainReplayAction : Action()
+object MainRequestReplayAction : Action()
 
 /**
- * 停止アクション
+ * 停止が要求されたアクション
  */
-object MainStopAction : Action()
+object MainRequestStopAction : Action()
 
 /**
  * ボリュームが0アクション

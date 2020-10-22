@@ -27,4 +27,8 @@ abstract class HiltRepositoryModule {
     abstract fun bindSoundMemoRepository(
             soundMemoRepository: SoundMemoRepositoryImpl
     ): SoundMemoRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindCurrentTimeRepository(currentTimeRepository: CurrentTimeRepositoryImpl): CurrentTimeRepository
 }

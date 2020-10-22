@@ -9,6 +9,10 @@ interface SoundMemoDao {
     @Query("SELECT * FROM LocalSoundMemo ORDER BY id DESC")
     fun index(): Flow<List<LocalSoundMemo>>
 
+
+    @Query("SELECT id FROM LocalSoundMemo ORDER BY createdAt DESC LIMIT 1")
+    fun getLastId(): Flow<Long?>
+
     /**
      * 一時保存の音声メモだけ取得する
      */

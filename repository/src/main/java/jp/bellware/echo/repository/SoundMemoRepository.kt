@@ -20,6 +20,11 @@ interface SoundMemoRepository {
      * 音声メモ一覧
      */
     fun index(): Flow<List<SoundMemo>>
+
+    /**
+     * 最後に保存した音声メモのIDを取得する
+     */
+    suspend fun getLastId(): Flow<Long>
 }
 
 class SoundMemoRepositoryImpl @Inject constructor(private val localDataStore: SoundMemoLocalDataStore) : SoundMemoRepository {
@@ -32,5 +37,9 @@ class SoundMemoRepositoryImpl @Inject constructor(private val localDataStore: So
         return localDataStore.index().map { list ->
             list.map { SoundMemoMapper.map(it) }
         }
+    }
+
+    override suspend fun getLastId(): Flow<Long> {
+        return localDataStore.getLastId()
     }
 }

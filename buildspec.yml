@@ -6,6 +6,8 @@ phases:
       - echo $FIREBASE_TEST_LAB_JSON | base64 -d > firebase-test-lab.json
       - gcloud auth activate-service-account --key-file firebase-test-lab.json
       - gcloud config set project quick-echo
+      # タイムゾーンをJSTにする
+      - export TZ="Asia/Tokyo"
   build:
     commands:
       - ./gradlew assembleDebug

@@ -53,15 +53,20 @@ class PlayViewHelper @ViewModelInject constructor(private val repository: SoundR
     val visualVolume: Float
         @Synchronized get() = vvp.getVolume()
 
+    private var playing: Boolean = false
+        @Synchronized set
+        @Synchronized get
+
     /**
      * 再生する
-     * @param onEndListener 再生終了時の処理
+     * @param onStart 再生開始時の処理
+     * @param onEnd 正妻終了時の処理
      */
-    fun play(onEndListener: () -> Unit) {
+    fun play(onStart: () -> Unit, onEnd: () -> Unit) {
         stop()
         if (repository.length == 0) {
             //長さ0の時はすぐに終わる
-            onEndListener()
+            onEnd()
             return
         }
         val attributes = AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_MEDIA)
@@ -82,10 +87,13 @@ class PlayViewHelper @ViewModelInject constructor(private val repository: SoundR
             }
             fo = FadeOut(repository.length, SAMPLE_RATE * 3 / 10)
             fc.reset()
+            handler.post {
+                onStart()
+            }
             track?.let {
                 it.play()
-                while (true) {
-                    val packet = pullPacket(onEndListener)
+                while (playing) {
+                    val packet = pullPacket()
                     if (packet != null) {
                         filter(packet)
                         val shortPacket = PacketConverter.convert(packet)
@@ -97,8 +105,11 @@ class PlayViewHelper @ViewModelInject constructor(private val repository: SoundR
                     }
                 }
             }
-
+            handler.post {
+                onEnd()
+            }
         })
+        playing = true
         thread?.start()
     }
 
@@ -107,11 +118,11 @@ class PlayViewHelper @ViewModelInject constructor(private val repository: SoundR
      */
     fun stop() {
         track?.stop()
+        playing = false
         try {
             thread?.join()
         } catch (e: InterruptedException) {
         }
-
         track?.release()
         track = null
     }
@@ -120,15 +131,13 @@ class PlayViewHelper @ViewModelInject constructor(private val repository: SoundR
         stop()
     }
 
-    private fun pullPacket(onEndListener: () -> Unit): FloatArray? {
+    private fun pullPacket(): FloatArray? {
         val packet = repository[index]
         ++index
-        if (packet == null) {
-            //終端
-            handler.post { onEndListener() }
-            return null
+        return if (packet == null) {
+            null
         } else {
-            return Arrays.copyOf(packet, packet.size)
+            Arrays.copyOf(packet, packet.size)
         }
     }
 
