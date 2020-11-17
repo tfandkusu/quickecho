@@ -100,6 +100,10 @@ RecordViewHelperとPlayViewHelperはメモリに音声を保存して再生時�
 - [Bitrise](https://www.bitrise.io/) Google Playへの自動公開と[Release](https://github.com/tfandkusu/quickecho/releases)の自動作成。
 - [PyGithub](https://github.com/PyGithub/PyGithub) [Release](https://github.com/tfandkusu/quickecho/releases)の自動作成に使っています。
 
+## その他
+
+- [Dependabot Preview](https://github.com/marketplace/dependabot-preview)
+
 # 今後の予定
 
 ## 録音音声を保存して再生する機能の追加
