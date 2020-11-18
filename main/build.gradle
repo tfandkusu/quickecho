@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 apply from: rootProject.file('gradle/view-common.gradle')
 
 dependencies {
+    implementation project(':viewCommonLib')
     implementation project(':common')
     implementation project(':flux')
     implementation project(':repository')
