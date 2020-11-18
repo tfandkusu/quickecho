@@ -5,6 +5,7 @@ def lifecycle_version = "2.2.0"
 def arch_version = "2.1.0"
 
 dependencies {
+    implementation project(':commonLib')
     // Material Component
     implementation 'com.google.android.material:material:1.1.0'
 
