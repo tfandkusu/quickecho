@@ -89,11 +89,14 @@ RecordViewHelperとPlayViewHelperはメモリに音声を保存して再生時�
 - [Timber](https://github.com/JakeWharton/timber)
 - [Flipper](https://fbflipper.com/)
 
+## ビルド
+
+- [Spotless plugin for Gradle](https://github.com/diffplug/spotless/tree/main/plugin-gradle)
+
 ## CI
 
-- [AWS CodeBuild](https://aws.amazon.com/jp/codebuild/) PUSH毎の単体テストとlint結果投稿([Danger](https://github.com/danger/danger))を行います。
+- [AWS CodeBuild](https://aws.amazon.com/jp/codebuild/) PUSH毎に単体テスト、lint結果投稿([Danger](https://github.com/danger/danger))、フォーマット確認を行います。
 - [AWS Chatbot](https://aws.amazon.com/jp/chatbot/) CIの結果をSlackに投稿します。
-- [Docker Hub](https://hub.docker.com/) CI用にはじめからDangerが入っているDockerイメージを作成して保存しています。[作成イメージ](https://hub.docker.com/r/tfandkusu/android_danger)
 
 ## CD
 
