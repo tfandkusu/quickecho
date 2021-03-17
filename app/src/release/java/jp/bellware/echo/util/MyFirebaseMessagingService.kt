@@ -10,7 +10,6 @@ import com.google.firebase.messaging.RemoteMessage
 import jp.bellware.echo.R
 import jp.bellware.echo.start.StartActivity
 
-
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     companion object {
@@ -30,18 +29,16 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             intent.data = Uri.parse(url)
             val pendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
             val notification = NotificationCompat.Builder(this, StartActivity.CHANNEL_ID)
-                    .setSmallIcon(R.drawable.notification_small_icon)
-                    .setContentTitle(getString(R.string.app_name_long))
-                    .setContentText(message)
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setContentIntent(pendingIntent)
-                    .setAutoCancel(true)
-                    .build()
+                .setSmallIcon(R.drawable.notification_small_icon)
+                .setContentTitle(getString(R.string.app_name_long))
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .build()
             with(NotificationManagerCompat.from(this)) {
                 notify(NOTIFICATION_ID, notification)
             }
         }
-
     }
-
 }

@@ -3,7 +3,22 @@ package jp.bellware.echo.actioncreator
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import jp.bellware.echo.action.*
+import jp.bellware.echo.action.MainBackPressedAction
+import jp.bellware.echo.action.MainDeleteAction
+import jp.bellware.echo.action.MainMaxRecordTimeOverAction
+import jp.bellware.echo.action.MainMuteAction
+import jp.bellware.echo.action.MainNoRecordAction
+import jp.bellware.echo.action.MainPlayAction
+import jp.bellware.echo.action.MainPrePlayAction
+import jp.bellware.echo.action.MainPreRecordAction
+import jp.bellware.echo.action.MainReadyAction
+import jp.bellware.echo.action.MainRecordAction
+import jp.bellware.echo.action.MainReplayAction
+import jp.bellware.echo.action.MainRestoreEndAction
+import jp.bellware.echo.action.MainRestoreStartAction
+import jp.bellware.echo.action.MainSoundMemoAction
+import jp.bellware.echo.action.MainSoundMemoButtonVisibilityAction
+import jp.bellware.echo.action.MainStopAction
 import jp.bellware.echo.repository.SettingRepository
 import jp.bellware.echo.repository.SoundRepository
 import jp.bellware.echo.util.Dispatcher
@@ -17,11 +32,13 @@ import kotlinx.coroutines.launch
  * @param delayActionCreatorHelper 一定ミリ秒時間待機担当
  * @param soundRepository 音声Repository
  */
-class MainActionCreator @ViewModelInject constructor(private val dispatcher: Dispatcher,
-                                                     private val delayActionCreatorHelper: DelayActionCreatorHelper,
-                                                     private val settingRepository: SettingRepository,
-                                                     private val soundRepository: SoundRepository) : ViewModel() {
-
+class MainActionCreator @ViewModelInject
+constructor(
+    private val dispatcher: Dispatcher,
+    private val delayActionCreatorHelper: DelayActionCreatorHelper,
+    private val settingRepository: SettingRepository,
+    private val soundRepository: SoundRepository
+) : ViewModel() {
 
     /**
      * FragmentのonCreateで呼ぶ

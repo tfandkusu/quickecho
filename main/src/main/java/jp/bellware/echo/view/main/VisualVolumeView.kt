@@ -45,10 +45,11 @@ class VisualVolumeView : View {
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) :
+        super(context, attrs, defStyleAttr)
 
     override fun onDraw(canvas: Canvas) {
-        //円を描画する
+        // 円を描画する
         val dp = resources.displayMetrics.density
         paint.color = 0xffcccccc.toInt()
         paint.isAntiAlias = true
@@ -71,5 +72,4 @@ class VisualVolumeView : View {
         this.volume = volume
         invalidate()
     }
-
 }

@@ -3,16 +3,16 @@ package jp.bellware.echo.repository
 import android.media.AudioFormat
 import android.media.AudioRecord
 import android.media.AudioTrack
+import javax.inject.Inject
 import jp.bellware.echo.datastore.local.SoundFileLocalDataStore
 import jp.bellware.echo.datastore.local.SoundMemoryLocalDataStore
 import jp.bellware.echo.util.filter.PacketConverter
 import jp.bellware.echo.workmanager.SoundMemoWorkManager
+import kotlin.math.max
+import kotlin.math.min
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.take
-import javax.inject.Inject
-import kotlin.math.max
-import kotlin.math.min
 
 /**
  * 録音担当リポジトリ
@@ -84,9 +84,11 @@ interface SoundRepository {
     suspend fun restore()
 }
 
-class SoundRepositoryImpl @Inject constructor(private val soundMemoryLocalDataStore: SoundMemoryLocalDataStore,
-                                              private val soundFileLocalDataStore: SoundFileLocalDataStore,
-                                              private val soundMemoWorkManager: SoundMemoWorkManager) : SoundRepository {
+class SoundRepositoryImpl @Inject constructor(
+    private val soundMemoryLocalDataStore: SoundMemoryLocalDataStore,
+    private val soundFileLocalDataStore: SoundFileLocalDataStore,
+    private val soundMemoWorkManager: SoundMemoWorkManager
+) : SoundRepository {
     override val packetSize: Int
         get() = soundMemoryLocalDataStore.packetSize
     override val length: Int
@@ -122,10 +124,14 @@ class SoundRepositoryImpl @Inject constructor(private val soundMemoryLocalDataSt
     }
 
     override fun getSuitablePackageSize(): Int {
-        val recordMinBufferSize = AudioRecord.getMinBufferSize(SoundRepository.SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO,
-                AudioFormat.ENCODING_PCM_16BIT)
-        val playMinBufferSize = AudioTrack.getMinBufferSize(SoundRepository.SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO,
-                AudioFormat.ENCODING_PCM_16BIT)
+        val recordMinBufferSize = AudioRecord.getMinBufferSize(
+            SoundRepository.SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO,
+            AudioFormat.ENCODING_PCM_16BIT
+        )
+        val playMinBufferSize = AudioTrack.getMinBufferSize(
+            SoundRepository.SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO,
+            AudioFormat.ENCODING_PCM_16BIT
+        )
         return max(recordMinBufferSize, playMinBufferSize)
     }
 
@@ -142,8 +148,10 @@ class SoundRepositoryImpl @Inject constructor(private val soundMemoryLocalDataSt
                 // パケットを作成する
                 val packet = ShortArray(packetSize)
                 // パケットにコピーする
-                System.arraycopy(data, it * packetSize, packet, 0,
-                        min(packetSize, data.size - it * packetSize))
+                System.arraycopy(
+                    data, it * packetSize, packet, 0,
+                    min(packetSize, data.size - it * packetSize)
+                )
                 packet
             }.map {
                 // Float版を作る
@@ -154,5 +162,4 @@ class SoundRepositoryImpl @Inject constructor(private val soundMemoryLocalDataSt
             }
         }
     }
-
 }

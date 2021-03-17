@@ -6,16 +6,19 @@ import android.media.MediaCodecInfo
 import android.media.MediaCodecList
 import android.media.MediaFormat
 import android.os.Handler
-import timber.log.Timber
 import java.io.FileOutputStream
-import java.util.*
+import java.util.UUID
 import java.util.concurrent.Executors
+import timber.log.Timber
 
 /**
  * 1ファイル分のAACファイル作成担当
  * @param onSaved aacファイルが保存されたときに呼ばれる
  */
-class AacEncodeSession(private val context: Context, private val onSaved: (fileName: String) -> Unit) {
+class AacEncodeSession(
+    private val context: Context,
+    private val onSaved: (fileName: String) -> Unit
+) {
 
     companion object {
         const val SAMPLE_RATE = 44100
@@ -30,7 +33,6 @@ class AacEncodeSession(private val context: Context, private val onSaved: (fileN
          */
         private const val AAC_EXT = ".aac"
     }
-
 
     /**
      * 音声パケットキュー
@@ -62,15 +64,27 @@ class AacEncodeSession(private val context: Context, private val onSaved: (fileN
     fun start() {
         // MediaCodecの作成
         val mediaCodecList = MediaCodecList(MediaCodecList.REGULAR_CODECS)
-        val audioFormatName = mediaCodecList.findEncoderForFormat(MediaFormat.createAudioFormat(MediaFormat.MIMETYPE_AUDIO_AAC,
-                SAMPLE_RATE, CHANNEL))
+        val audioFormatName = mediaCodecList.findEncoderForFormat(
+            MediaFormat.createAudioFormat(
+                MediaFormat.MIMETYPE_AUDIO_AAC,
+                SAMPLE_RATE, CHANNEL
+            )
+        )
         mediaCodec = MediaCodec.createByCodecName(audioFormatName)
-        val audioFormat = MediaFormat.createAudioFormat(MediaFormat.MIMETYPE_AUDIO_AAC, SAMPLE_RATE, CHANNEL)
+        val audioFormat = MediaFormat.createAudioFormat(
+            MediaFormat.MIMETYPE_AUDIO_AAC,
+            SAMPLE_RATE, CHANNEL
+        )
         audioFormat.setInteger(MediaFormat.KEY_BIT_RATE, 128 * 1024)
         // AAC LCが一般的なプロファイル
-        audioFormat.setInteger(MediaFormat.KEY_AAC_PROFILE,
-                MediaCodecInfo.CodecProfileLevel.AACObjectLC)
-        mediaCodec?.configure(audioFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE)
+        audioFormat.setInteger(
+            MediaFormat.KEY_AAC_PROFILE,
+            MediaCodecInfo.CodecProfileLevel.AACObjectLC
+        )
+        mediaCodec?.configure(
+            audioFormat, null, null,
+            MediaCodec.CONFIGURE_FLAG_ENCODE
+        )
         // 書き出し用ファイルを非同期で開く
         openFileAsync(context)
         // 非同期処理のためのコールバックを設定する
@@ -84,12 +98,19 @@ class AacEncodeSession(private val context: Context, private val onSaved: (fileN
                     val shortBuffer = it.asShortBuffer()
                     val data = pull(shortBuffer.remaining())
                     shortBuffer.put(data)
-                    codec.queueInputBuffer(index, 0, data.size * 2, presentationTimeUs, 0)
+                    codec.queueInputBuffer(
+                        index, 0, data.size * 2, presentationTimeUs,
+                        0
+                    )
                     presentationTimeUs += 1000000 * data.size / SAMPLE_RATE
                 }
             }
 
-            override fun onOutputBufferAvailable(codec: MediaCodec, index: Int, info: MediaCodec.BufferInfo) {
+            override fun onOutputBufferAvailable(
+                codec: MediaCodec,
+                index: Int,
+                info: MediaCodec.BufferInfo
+            ) {
                 // ここはメインスレッド
                 val outputBuffer = codec.getOutputBuffer(index)
                 outputBuffer?.let {
@@ -195,7 +216,6 @@ class AacEncodeSession(private val context: Context, private val onSaved: (fileN
         closeFileAsync(save)
     }
 
-
     /**
      *
      * From https://github.com/HelloHuDi/AudioCapture/blob/master/audiocapture/src/main/java/com/hd/audiocapture/writer/AccFileWriter.java
@@ -205,9 +225,12 @@ class AacEncodeSession(private val context: Context, private val onSaved: (fileN
      * needed as MediaCodec encoder generates a packet of raw AAC data.
      * Note the packetLen must count in the ADTS header itself.
      */
-    private fun addADTStoPacket(packet: ByteArray, packetLen: Int,
-                                @Suppress("SameParameterValue") sampleInHz: Int,
-                                @Suppress("SameParameterValue") chanCfgCounts: Int) {
+    private fun addADTStoPacket(
+        packet: ByteArray,
+        packetLen: Int,
+        @Suppress("SameParameterValue") sampleInHz: Int,
+        @Suppress("SameParameterValue") chanCfgCounts: Int
+    ) {
         val profile = 2 // AAC LC
         var freqIdx = 8 // 16KHz    39=MediaCodecInfo.CodecProfileLevel.AACObjectELD;
         when (sampleInHz) {
@@ -235,5 +258,4 @@ class AacEncodeSession(private val context: Context, private val onSaved: (fileN
         packet[5] = ((packetLen and 7 shl 5) + 0x1F).toByte()
         packet[6] = 0xFC.toByte()
     }
-
 }

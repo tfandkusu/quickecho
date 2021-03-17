@@ -9,8 +9,17 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import jp.bellware.echo.datastore.local.*
 import javax.inject.Singleton
+import jp.bellware.echo.datastore.local.QuickEchoDatabase
+import jp.bellware.echo.datastore.local.QuickEchoDatabaseFactory
+import jp.bellware.echo.datastore.local.SettingLocalDataStore
+import jp.bellware.echo.datastore.local.SettingLocalDataStoreImpl
+import jp.bellware.echo.datastore.local.SoundFileLocalDataStore
+import jp.bellware.echo.datastore.local.SoundFileLocalDataStoreImpl
+import jp.bellware.echo.datastore.local.SoundMemoLocalDataStore
+import jp.bellware.echo.datastore.local.SoundMemoLocalDataStoreImpl
+import jp.bellware.echo.datastore.local.SoundMemoryLocalDataStore
+import jp.bellware.echo.datastore.local.SoundMemoryLocalDataStoreImpl
 
 @Module
 @InstallIn(ApplicationComponent::class)
@@ -18,22 +27,23 @@ abstract class HiltLocalDataStoreModule {
     @Binds
     @Singleton
     abstract fun bindSoundMemoryLocalDataStore(
-            soundMemoryLocalDataStore: SoundMemoryLocalDataStoreImpl
+        soundMemoryLocalDataStore: SoundMemoryLocalDataStoreImpl
     ): SoundMemoryLocalDataStore
 
     @Binds
     @Singleton
     abstract fun bindSoundFileLocalDataStore(
-            soundFileLocalDataStore: SoundFileLocalDataStoreImpl
+        soundFileLocalDataStore: SoundFileLocalDataStoreImpl
     ): SoundFileLocalDataStore
 
     @Binds
-    abstract fun bindSettingLocalDataStore(settingLocalDataStore: SettingLocalDataStoreImpl): SettingLocalDataStore
+    abstract fun bindSettingLocalDataStore(settingLocalDataStore: SettingLocalDataStoreImpl):
+        SettingLocalDataStore
 
     @Binds
     @Singleton
     abstract fun bindSoundMemoLocalDataStore(
-            soundMemoLocalDataStore: SoundMemoLocalDataStoreImpl
+        soundMemoLocalDataStore: SoundMemoLocalDataStoreImpl
     ): SoundMemoLocalDataStore
 }
 

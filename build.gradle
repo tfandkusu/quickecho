@@ -42,7 +42,6 @@ buildscript {
     }
 }
 
-
 allprojects {
     repositories {
         google()
@@ -57,7 +56,7 @@ allprojects {
             targetExclude('bin/**/*.kt')
             targetExclude("**/generated/**/*.kt")
 
-            ktlint("0.39.0")
+            ktlint("0.41.0")
                     .userData([android: "true", experimental: "true"])
         }
     }

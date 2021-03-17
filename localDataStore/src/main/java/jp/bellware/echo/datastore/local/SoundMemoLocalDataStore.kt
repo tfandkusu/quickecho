@@ -3,11 +3,11 @@ package jp.bellware.echo.datastore.local
 import android.content.Context
 import androidx.room.withTransaction
 import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 import jp.bellware.echo.datastore.local.schema.LocalSoundMemo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 /**
  * 音声メモをローカルのファイルとSQLiteデータベースに保存する担当
@@ -31,7 +31,10 @@ interface SoundMemoLocalDataStore {
     suspend fun clear()
 }
 
-class SoundMemoLocalDataStoreImpl @Inject constructor(@ApplicationContext val context: Context, private val db: QuickEchoDatabase) : SoundMemoLocalDataStore {
+class SoundMemoLocalDataStoreImpl @Inject constructor(
+    @ApplicationContext val context: Context,
+    private val db: QuickEchoDatabase
+) : SoundMemoLocalDataStore {
 
     private val dao = db.soundMemoDao()
 
@@ -76,5 +79,4 @@ class SoundMemoLocalDataStoreImpl @Inject constructor(@ApplicationContext val co
     override suspend fun clear() {
         dao.clear()
     }
-
 }

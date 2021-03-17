@@ -3,13 +3,11 @@ package jp.bellware.echo.datastore.local
 import android.content.Context
 import android.os.Environment
 import dagger.hilt.android.qualifiers.ApplicationContext
-import jp.bellware.echo.util.filter.GainDetector
 import java.io.FileOutputStream
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
-import java.util.*
 import javax.inject.Inject
-
+import jp.bellware.echo.util.filter.GainDetector
 
 /**
  * 録音音声をメモリーに保持する
@@ -56,7 +54,9 @@ interface SoundMemoryLocalDataStore {
 /**
  * 録音音声を保持する
  */
-class SoundMemoryLocalDataStoreImpl @Inject constructor(@ApplicationContext private val context: Context) : SoundMemoryLocalDataStore {
+class SoundMemoryLocalDataStoreImpl @Inject constructor(
+    @ApplicationContext private val context: Context
+) : SoundMemoryLocalDataStore {
 
     /**
      * 最大のパケットの大きさ
@@ -72,7 +72,6 @@ class SoundMemoryLocalDataStoreImpl @Inject constructor(@ApplicationContext priv
     override var length: Int = 0
         private set
 
-
     /**
      * 音声パケットリスト
      */
@@ -85,13 +84,11 @@ class SoundMemoryLocalDataStoreImpl @Inject constructor(@ApplicationContext priv
     override var gain = 0f
         private set
 
-
     /**
      * ボリューム取得担当
      */
     private
     val gd = GainDetector()
-
 
     /**
      * 録音をクリア
@@ -104,7 +101,6 @@ class SoundMemoryLocalDataStoreImpl @Inject constructor(@ApplicationContext priv
         length = 0
         gd.reset()
     }
-
 
     /**
      * 音声パケットを追加
@@ -121,7 +117,6 @@ class SoundMemoryLocalDataStoreImpl @Inject constructor(@ApplicationContext priv
         gain = gd.max
     }
 
-
     /**
      * 音声パケットを取得。記録されているパケット数以上のインデックスを設定すると、nullが返却される。
      * @param index インデックス。大きい方が新しい。
@@ -131,31 +126,30 @@ class SoundMemoryLocalDataStoreImpl @Inject constructor(@ApplicationContext priv
         return if (index >= packets.size) null else packets[index]
     }
 
-
     /**
      * デバッグ用にwavファイルを保存する
      */
     override fun save() {
         context.getExternalFilesDir(Environment.DIRECTORY_MUSIC)?.let {
             val fos = FileOutputStream(it.absolutePath + "/output.wav")
-            //ヘッダ書き込み
+            // ヘッダ書き込み
             val buffer = ByteBuffer.allocate(44)
             buffer.order(ByteOrder.LITTLE_ENDIAN)
             buffer.put("RIFF".toByteArray())
-            buffer.putInt(44 - 8 + length * 2)//これ以降のファイルサイズ
+            buffer.putInt(44 - 8 + length * 2) // これ以降のファイルサイズ
             buffer.put("WAVE".toByteArray())
             buffer.put("fmt ".toByteArray())
-            buffer.putInt(16)//fmtチャンクのバイト数
-            buffer.putShort(1.toShort())//リニアPCM
-            buffer.putShort(1.toShort())//モノラル
-            buffer.putInt(44100)//サンプリングレート
-            buffer.putInt(88200)//データ速度
-            buffer.putShort(2.toShort())//ブロックサイズ
-            buffer.putShort(16.toShort())//サンプルあたりビット数
-            buffer.put("data".toByteArray())//dataチャンク
-            buffer.putInt(length * 2)//波形データのバイト数
+            buffer.putInt(16) // fmtチャンクのバイト数
+            buffer.putShort(1.toShort()) // リニアPCM
+            buffer.putShort(1.toShort()) // モノラル
+            buffer.putInt(44100) // サンプリングレート
+            buffer.putInt(88200) // データ速度
+            buffer.putShort(2.toShort()) // ブロックサイズ
+            buffer.putShort(16.toShort()) // サンプルあたりビット数
+            buffer.put("data".toByteArray()) // dataチャンク
+            buffer.putInt(length * 2) // 波形データのバイト数
             fos.write(buffer.array())
-            //データ書き込み
+            // データ書き込み
             for (packet in packets) {
                 val data = ByteBuffer.allocate(packet.size * 2)
                 data.order(ByteOrder.LITTLE_ENDIAN)

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.test.platform.app.InstrumentationRegistry
 import io.kotlintest.shouldBe
 import io.kotlintest.shouldNotBe
+import java.io.FileNotFoundException
 import jp.bellware.echo.datastore.local.schema.LocalSoundMemo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -14,7 +15,6 @@ import kotlinx.coroutines.withContext
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import java.io.FileNotFoundException
 
 class SoundMemoLocalDataStoreTest {
 
@@ -37,18 +37,20 @@ class SoundMemoLocalDataStoreTest {
     fun insertOne() = runBlocking {
         localDataStore.clear()
         // 1件保存出来ることを確認する
-        val m1 = LocalSoundMemo(0,
-                true,
-                System.currentTimeMillis(),
-                "test1.aac",
-                1,
-                139.0,
-                35.0,
-                "東京都",
-                "港区",
-                "赤坂3-1-6",
-                2,
-                "録音したこと")
+        val m1 = LocalSoundMemo(
+            0,
+            true,
+            System.currentTimeMillis(),
+            "test1.aac",
+            1,
+            139.0,
+            35.0,
+            "東京都",
+            "港区",
+            "赤坂3-1-6",
+            2,
+            "録音したこと"
+        )
         // ダミーのAACファイルを作る
         withContext(Dispatchers.IO) {
             val fos = context.openFileOutput(m1.fileName, Context.MODE_PRIVATE)
@@ -107,18 +109,20 @@ class SoundMemoLocalDataStoreTest {
         localDataStore.clear()
         // 6件保存する
         (0 until 6).map {
-            val m = LocalSoundMemo(0,
-                    true,
-                    System.currentTimeMillis(),
-                    "output$it.aac",
-                    1,
-                    139.0,
-                    35.0,
-                    "東京都",
-                    "港区",
-                    "赤坂3-1-6",
-                    2,
-                    "録音したこと")
+            val m = LocalSoundMemo(
+                0,
+                true,
+                System.currentTimeMillis(),
+                "output$it.aac",
+                1,
+                139.0,
+                35.0,
+                "東京都",
+                "港区",
+                "赤坂3-1-6",
+                2,
+                "録音したこと"
+            )
             val fos = context.openFileOutput(m.fileName, Context.MODE_PRIVATE)
             fos.write(0)
             fos.close()

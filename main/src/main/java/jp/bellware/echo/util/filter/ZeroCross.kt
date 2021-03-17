@@ -58,8 +58,8 @@ class ZeroCross {
      * サンプルを追加する
      */
     fun add(s: Float) {
-        //トップについて
-        //クロス判定
+        // トップについて
+        // クロス判定
         if (topSign == 1 && s < 0) {
             ++cross
             topSign = 0
@@ -67,16 +67,16 @@ class ZeroCross {
             ++cross
             topSign = 0
         }
-        //符号
+        // 符号
         if (s < -AMP)
             topSign = -1
         else if (s > AMP)
             topSign = 1
-        //ボトムについて
+        // ボトムについて
         bottom = top - WINDOW_SIZE
         if (bottom >= 0) {
             val t = queue[queue.size - 1]
-            //クロス判定
+            // クロス判定
             if (bottomSign == 1 && t < 0) {
                 --cross
                 bottomSign = 0
@@ -84,13 +84,13 @@ class ZeroCross {
                 --cross
                 bottomSign = 0
             }
-            //符号
+            // 符号
             if (t < -AMP)
                 bottomSign = -1
             else if (t > AMP)
                 bottomSign = 1
         }
-        //キューに追加
+        // キューに追加
         queue.add(s)
         top++
     }
@@ -112,5 +112,4 @@ class ZeroCross {
          */
         private val CROSS = 10
     }
-
 }

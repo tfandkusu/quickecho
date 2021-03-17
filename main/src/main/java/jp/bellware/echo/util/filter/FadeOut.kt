@@ -6,8 +6,9 @@ package jp.bellware.echo.util.filter
  * @param duration フェードアウト期間
  */
 class FadeOut(
-        private val length: Int,
-        private val duration: Int) {
+    private val length: Int,
+    private val duration: Int
+) {
 
     /**
      * 現在処理位置

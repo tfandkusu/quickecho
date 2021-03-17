@@ -41,5 +41,4 @@ class SoundMemoryLocalDataStoreTest {
         dataStore.packetSize shouldBe 0
         dataStore[0] shouldBe null
     }
-
 }

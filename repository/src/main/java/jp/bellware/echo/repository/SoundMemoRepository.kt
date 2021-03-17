@@ -1,11 +1,11 @@
 package jp.bellware.echo.repository
 
+import javax.inject.Inject
 import jp.bellware.echo.datastore.local.SoundMemoLocalDataStore
 import jp.bellware.echo.mapper.SoundMemoMapper
 import jp.bellware.echo.repository.data.SoundMemo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
 /**
  * 音声メモ リポジトリ
@@ -22,7 +22,9 @@ interface SoundMemoRepository {
     fun index(): Flow<List<SoundMemo>>
 }
 
-class SoundMemoRepositoryImpl @Inject constructor(private val localDataStore: SoundMemoLocalDataStore) : SoundMemoRepository {
+class SoundMemoRepositoryImpl @Inject constructor(
+    private val localDataStore: SoundMemoLocalDataStore
+) : SoundMemoRepository {
     override suspend fun add(soundMemo: SoundMemo) {
         val localSoundMemo = SoundMemoMapper.map(soundMemo)
         localDataStore.insert(localSoundMemo)

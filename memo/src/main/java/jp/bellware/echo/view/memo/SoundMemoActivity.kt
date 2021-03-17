@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import jp.bellware.echo.memo.R
 
-
 /**
  * 音声メモ画面。
  */
@@ -54,5 +53,4 @@ class SoundMemoActivity : AppCompatActivity() {
 //        super.onTrimMemory(level)
 //        fragment?.onTrimMemory(level)
 //    }
-
 }

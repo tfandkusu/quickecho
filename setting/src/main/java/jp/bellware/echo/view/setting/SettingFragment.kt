@@ -1,6 +1,6 @@
 package jp.bellware.echo.view.setting
 
-//import com.google.android.gms.appinvite.AppInviteInvitation;
+// import com.google.android.gms.appinvite.AppInviteInvitation;
 
 import android.content.Intent
 import android.net.Uri
@@ -26,7 +26,7 @@ class SettingFragment : PreferenceFragmentCompat() {
             soundMemo?.isVisible = false
         }
         run {
-            //商品情報
+            // 商品情報
             val pref = findPreference<Preference>(PREF_ABOUT)
             pref?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 val action = SettingFragmentDirections.actionSettingFragmentToAboutFragment()
@@ -35,7 +35,7 @@ class SettingFragment : PreferenceFragmentCompat() {
             }
         }
         run {
-            //OSS
+            // OSS
             val pref = findPreference<Preference>(PREF_OSS_1)
             pref?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 callOSS()
@@ -43,7 +43,7 @@ class SettingFragment : PreferenceFragmentCompat() {
             }
         }
         run {
-            //OSS
+            // OSS
             val pref = findPreference<Preference>(PREF_OSS_2)
             pref?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 val action = SettingFragmentDirections.actionSettingFragmentToOss2Fragment()
@@ -52,7 +52,7 @@ class SettingFragment : PreferenceFragmentCompat() {
             }
         }
         run {
-            //プライバシーポリシー
+            // プライバシーポリシー
             val pref = findPreference<Preference>(PREF_PP)
             pref?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 callPP()
@@ -86,6 +86,5 @@ class SettingFragment : PreferenceFragmentCompat() {
         private const val PREF_OSS_2 = "oss2"
 
         private const val PREF_PP = "pp"
-
     }
 }

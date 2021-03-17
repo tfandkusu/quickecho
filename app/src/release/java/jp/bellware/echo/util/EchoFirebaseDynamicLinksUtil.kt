@@ -14,17 +14,16 @@ object EchoFirebaseDynamicLinksUtil {
      */
     fun process(activity: Activity, intent: Intent, onNext: (type: String?) -> Unit) {
         FirebaseDynamicLinks.getInstance()
-                .getDynamicLink(intent).addOnSuccessListener(activity) { pendingDynamicLinkData ->
-                    var deepLink: Uri? = null
-                    deepLink = pendingDynamicLinkData?.link
-                    var type: String? = null
-                    deepLink?.let {
-                        type = it.getQueryParameter("type")
-                    }
-                    onNext(type)
-                }.addOnFailureListener {
-                    onNext(null)
+            .getDynamicLink(intent).addOnSuccessListener(activity) { pendingDynamicLinkData ->
+                var deepLink: Uri? = null
+                deepLink = pendingDynamicLinkData?.link
+                var type: String? = null
+                deepLink?.let {
+                    type = it.getQueryParameter("type")
                 }
-
+                onNext(type)
+            }.addOnFailureListener {
+                onNext(null)
+            }
     }
 }

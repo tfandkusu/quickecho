@@ -6,7 +6,9 @@ package jp.bellware.echo.util.filter
  * @param defVal デフォルト値
  */
 class StaticQueue<T>(
-        val capacity: Int, val defVal: T) {
+    val capacity: Int,
+    val defVal: T
+) {
     private var offset: Int = 0
     private var array = mutableListOf<T>()
 
@@ -29,14 +31,12 @@ class StaticQueue<T>(
         size = 0
     }
 
-
     /**
      * クリアする
      */
     fun clear() {
         init()
     }
-
 
     /**
      * 要素を追加する
@@ -62,6 +62,4 @@ class StaticQueue<T>(
             index += array.size
         return array[index]
     }
-
-
 }

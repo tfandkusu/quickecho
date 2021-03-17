@@ -5,7 +5,21 @@ import io.mockk.coVerifySequence
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.verifySequence
-import jp.bellware.echo.action.*
+import jp.bellware.echo.action.MainDeleteAction
+import jp.bellware.echo.action.MainMaxRecordTimeOverAction
+import jp.bellware.echo.action.MainMuteAction
+import jp.bellware.echo.action.MainNoRecordAction
+import jp.bellware.echo.action.MainPlayAction
+import jp.bellware.echo.action.MainPrePlayAction
+import jp.bellware.echo.action.MainPreRecordAction
+import jp.bellware.echo.action.MainReadyAction
+import jp.bellware.echo.action.MainRecordAction
+import jp.bellware.echo.action.MainReplayAction
+import jp.bellware.echo.action.MainRestoreEndAction
+import jp.bellware.echo.action.MainRestoreStartAction
+import jp.bellware.echo.action.MainSoundMemoAction
+import jp.bellware.echo.action.MainSoundMemoButtonVisibilityAction
+import jp.bellware.echo.action.MainStopAction
 import jp.bellware.echo.repository.SettingRepository
 import jp.bellware.echo.repository.SoundRepository
 import jp.bellware.echo.util.Dispatcher
@@ -42,7 +56,10 @@ class MainActionCreatorTest {
         // スレッドを切り替えない
         Dispatchers.setMain(Dispatchers.Unconfined)
         MockKAnnotations.init(this)
-        actionCreator = MainActionCreator(dispatcher, delayActionCreatorHelper, settingRepository, soundRepository)
+        actionCreator = MainActionCreator(
+            dispatcher, delayActionCreatorHelper,
+            settingRepository, soundRepository
+        )
     }
 
     @Test
@@ -91,7 +108,6 @@ class MainActionCreatorTest {
         }
     }
 
-
     @Test
     fun onDeleteClick() = runBlocking {
         actionCreator.onDeleteClick().join()
@@ -119,7 +135,6 @@ class MainActionCreatorTest {
             dispatcher.dispatch(MainPlayAction)
         }
     }
-
 
     @Test
     fun onPlayClickNoSound() = runBlocking {

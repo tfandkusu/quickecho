@@ -26,12 +26,15 @@ class SingleLiveEvent<T> {
      * @param observer 監視イベント
      */
     fun observe(owner: LifecycleOwner, observer: Observer<T>) {
-        liveData.observe(owner, Observer<T> { t ->
-            if (!onChangedFlag) {
-                observer.onChanged(t)
-                onChangedFlag = true
+        liveData.observe(
+            owner,
+            Observer<T> { t ->
+                if (!onChangedFlag) {
+                    observer.onChanged(t)
+                    onChangedFlag = true
+                }
             }
-        })
+        )
     }
 
     var value: T?

@@ -5,14 +5,13 @@ import android.media.MediaCodec
 import android.media.MediaCodecInfo
 import android.media.MediaExtractor
 import android.media.MediaFormat
+import java.io.ByteArrayOutputStream
+import java.nio.ByteBuffer
+import kotlin.experimental.or
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
-import java.io.ByteArrayOutputStream
-import java.nio.ByteBuffer
-import kotlin.experimental.or
-
 
 /**
  * AACファイル1つを読み込んで音声データに戻す担当
@@ -42,9 +41,11 @@ object AacDecoder {
         val extractor = MediaExtractor()
         extractor.setDataSource(fis.fd)
         extractor.selectTrack(0)
-        val format = makeAACCodecSpecificData(MediaCodecInfo.CodecProfileLevel.AACObjectLC,
-                AacEncodeSession.SAMPLE_RATE,
-                AacEncodeSession.CHANNEL)
+        val format = makeAACCodecSpecificData(
+            MediaCodecInfo.CodecProfileLevel.AACObjectLC,
+            AacEncodeSession.SAMPLE_RATE,
+            AacEncodeSession.CHANNEL
+        )
         val decoder = MediaCodec.createDecoderByType(MediaFormat.MIMETYPE_AUDIO_AAC)
         decoder.configure(format, null, null, 0)
         decoder.start()
@@ -57,12 +58,16 @@ object AacDecoder {
                 buffer?.let {
                     val sampleSize = extractor.readSampleData(it, 0)
                     if (sampleSize < 0) {
-                        decoder.queueInputBuffer(inIndex, 0, 0,
-                                0, MediaCodec.BUFFER_FLAG_END_OF_STREAM)
+                        decoder.queueInputBuffer(
+                            inIndex, 0, 0,
+                            0, MediaCodec.BUFFER_FLAG_END_OF_STREAM
+                        )
                         eof = true
                     } else {
-                        decoder.queueInputBuffer(inIndex, 0, sampleSize,
-                                extractor.sampleTime, 0)
+                        decoder.queueInputBuffer(
+                            inIndex, 0, sampleSize,
+                            extractor.sampleTime, 0
+                        )
                         extractor.advance()
                     }
                 }
@@ -101,7 +106,6 @@ object AacDecoder {
         return shortArray
     }
 
-
     /**
      *
      * こちらより引用
@@ -121,15 +125,19 @@ object AacDecoder {
      * @return MediaFormat
      */
     @Suppress("SameParameterValue")
-    private fun makeAACCodecSpecificData(audioProfile: Int, sampleRate: Int, channelConfig: Int): MediaFormat? {
+    private fun makeAACCodecSpecificData(
+        audioProfile: Int,
+        sampleRate: Int,
+        channelConfig: Int
+    ): MediaFormat? {
         val format = MediaFormat()
         format.setString(MediaFormat.KEY_MIME, MediaFormat.MIMETYPE_AUDIO_AAC)
         format.setInteger(MediaFormat.KEY_AAC_PROFILE, audioProfile)
         format.setInteger(MediaFormat.KEY_SAMPLE_RATE, sampleRate)
         format.setInteger(MediaFormat.KEY_CHANNEL_COUNT, channelConfig)
         val samplingFreq = intArrayOf(
-                96000, 88200, 64000, 48000, 44100, 32000, 24000, 22050,
-                16000, 12000, 11025, 8000
+            96000, 88200, 64000, 48000, 44100, 32000, 24000, 22050,
+            16000, 12000, 11025, 8000
         )
 
         // Search the Sampling Frequencies

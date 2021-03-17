@@ -1,8 +1,8 @@
 package jp.bellware.echo.util
 
 import de.greenrobot.event.EventBus
-import jp.bellware.echo.action.Action
 import javax.inject.Inject
+import jp.bellware.echo.action.Action
 
 /**
  * FluxのDispatcher
@@ -14,10 +14,8 @@ interface Dispatcher {
     fun dispatch(action: Action)
 }
 
-
 class DispatcherImpl @Inject constructor() : Dispatcher {
     override fun dispatch(action: Action) {
         EventBus.getDefault().post(action)
     }
-
 }

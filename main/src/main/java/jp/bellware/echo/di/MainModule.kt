@@ -4,7 +4,11 @@ import jp.bellware.echo.actioncreator.DelayActionCreatorHelper
 import jp.bellware.echo.actioncreator.DelayActionCreatorHelperImpl
 import jp.bellware.echo.actioncreator.MainActionCreator
 import jp.bellware.echo.store.MainStore
-import jp.bellware.echo.view.main.*
+import jp.bellware.echo.view.main.PlayViewHelper
+import jp.bellware.echo.view.main.RecordViewHelper
+import jp.bellware.echo.view.main.SoundEffectViewHelper
+import jp.bellware.echo.view.main.TimerViewHelper
+import jp.bellware.echo.view.main.VisualVolumeViewHelper
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -24,4 +28,3 @@ val mainModule = module {
     viewModel { VisualVolumeViewHelper() }
     viewModel { TimerViewHelper() }
 }
-

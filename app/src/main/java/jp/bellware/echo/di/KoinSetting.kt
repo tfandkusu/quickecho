@@ -11,7 +11,12 @@ object KoinSetting {
     fun start(application: Application) {
         startKoin {
             androidContext(application.applicationContext)
-            modules(listOf(localDataStoreModuleInMainModule, repositoryModuleInMainModule, fluxModule, mainModule))
+            modules(
+                listOf(
+                    localDataStoreModuleInMainModule, repositoryModuleInMainModule,
+                    fluxModule, mainModule
+                )
+            )
         }
     }
 }

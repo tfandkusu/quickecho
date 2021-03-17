@@ -2,7 +2,6 @@ package jp.bellware.echo.action
 
 // メイン画面のアクション
 
-
 /**
  * 準備完了アクション
  */
@@ -83,4 +82,3 @@ object MainSoundMemoAction : Action()
  * @param show 表示フラグ
  */
 data class MainSoundMemoButtonVisibilityAction(val show: Boolean) : Action()
-

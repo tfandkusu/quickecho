@@ -1,6 +1,5 @@
 package jp.bellware.echo.view.main
 
-
 import android.media.AudioFormat
 import android.media.AudioRecord
 import android.media.MediaRecorder
@@ -18,7 +17,8 @@ import jp.bellware.echo.util.filter.ZeroCrossRecordVisualVolumeProcessor
  * @param repository 記録担当
  */
 class RecordViewHelper @ViewModelInject constructor(
-        private val repository: SoundRepository) : ViewModel() {
+    private val repository: SoundRepository
+) : ViewModel() {
 
     companion object {
 
@@ -58,7 +58,6 @@ class RecordViewHelper @ViewModelInject constructor(
      */
     private var recording = false
 
-
     /**
      * 視覚的ボリューム
      */
@@ -80,26 +79,29 @@ class RecordViewHelper @ViewModelInject constructor(
      */
     private fun startRecord() {
         packetSize = repository.getSuitablePackageSize()
-        record = AudioRecord(MediaRecorder.AudioSource.DEFAULT, SoundRepository.SAMPLE_RATE,
-                AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, packetSize * 2)
+        record = AudioRecord(
+            MediaRecorder.AudioSource.DEFAULT, SoundRepository.SAMPLE_RATE,
+            AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, packetSize * 2
+        )
         record?.startRecording()
-        thread = Thread(Runnable {
-            //これがないと音が途切れる
-            Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_AUDIO)
-            while (true) {
-                val data = ShortArray(packetSize)
-                val size = record?.read(data, 0, packetSize) ?: 0
-                if (size >= 1) {
-                    addPacket(data)
-                } else {
-                    break
+        thread = Thread(
+            Runnable {
+                // これがないと音が途切れる
+                Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_AUDIO)
+                while (true) {
+                    val data = ShortArray(packetSize)
+                    val size = record?.read(data, 0, packetSize) ?: 0
+                    if (size >= 1) {
+                        addPacket(data)
+                    } else {
+                        break
+                    }
                 }
+                BWU.log("RecordHandler#onResume RecordThread end")
             }
-            BWU.log("RecordHandler#onResume RecordThread end")
-        })
+        )
         thread?.start()
     }
-
 
     /**
      * 録音を終了する
