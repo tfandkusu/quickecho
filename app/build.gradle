@@ -3,7 +3,6 @@ apply from: rootProject.file('gradle/view-common.gradle')
 apply plugin: 'io.fabric'
 apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
-
 android {
     compileSdkVersion 29
 
