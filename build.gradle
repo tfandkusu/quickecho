@@ -50,6 +50,7 @@ allprojects {
     // DroidKaigi/conference-app-2021を参考にSpotlessを設定する
     apply plugin: "com.diffplug.spotless"
     spotless {
+        ratchetFrom 'origin/master'
         kotlin {
             target '**/*.kt'
             targetExclude("$buildDir/**/*.kt")
