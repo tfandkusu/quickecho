@@ -13,7 +13,8 @@ import jp.bellware.echo.repository.data.SoundMemo
 /**
  * 音声メモを保存する
  */
-class SoundMemoSaveWorker(appContext: Context, workerParams: WorkerParameters) : CoroutineWorker(appContext, workerParams) {
+class SoundMemoSaveWorker(appContext: Context, workerParams: WorkerParameters) :
+    CoroutineWorker(appContext, workerParams) {
     companion object {
         /**
          * ローカル保存したAACファイルのファイル名
@@ -34,23 +35,27 @@ class SoundMemoSaveWorker(appContext: Context, workerParams: WorkerParameters) :
     override suspend fun doWork(): Result {
         // 音声メモ保存担当リポジトリを取得する
         val hiltEntryPoint =
-                EntryPointAccessors.fromApplication(applicationContext, SoundMemoSaveWorkerEntryPoint::class.java)
+            EntryPointAccessors.fromApplication(
+                applicationContext,
+                SoundMemoSaveWorkerEntryPoint::class.java
+            )
         val repository = hiltEntryPoint.soundMemoRepository()
         // 音声メモを保存する
-        val soundMemo = SoundMemo(0,
-                true,
-                System.currentTimeMillis(),
-                inputData.getString(PARAM_FILE_NAME) ?: "",
-                SoundMemo.LOCATION_STATUS_NOT_IMPLEMENTED,
-                0.0,
-                0.0,
-                "",
-                "",
-                "",
-                SoundMemo.TEXT_STATUS_NOT_IMPLEMENTED,
-                "")
+        val soundMemo = SoundMemo(
+            0,
+            true,
+            System.currentTimeMillis(),
+            inputData.getString(PARAM_FILE_NAME) ?: "",
+            SoundMemo.LOCATION_STATUS_NOT_IMPLEMENTED,
+            0.0,
+            0.0,
+            "",
+            "",
+            "",
+            SoundMemo.TEXT_STATUS_NOT_IMPLEMENTED,
+            ""
+        )
         repository.add(soundMemo)
         return Result.success()
     }
-
 }

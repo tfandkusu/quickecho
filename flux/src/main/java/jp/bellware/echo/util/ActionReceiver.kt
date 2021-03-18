@@ -15,7 +15,6 @@ interface ActionReceiver {
 class ActionReceiverImpl @Inject constructor() : ActionReceiver {
     override fun register(obj: Any) {
         EventBus.getDefault().register(obj)
-
     }
 
     override fun unregister(obj: Any) {

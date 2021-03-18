@@ -5,7 +5,9 @@ import androidx.room.Room
 
 object QuickEchoDatabaseFactory {
     fun create(context: Context): QuickEchoDatabase {
-        return Room.databaseBuilder(context,
-                QuickEchoDatabase::class.java, "database.sqlite3").build()
+        return Room.databaseBuilder(
+            context,
+            QuickEchoDatabase::class.java, "database.sqlite3"
+        ).build()
     }
 }

@@ -2,7 +2,7 @@ package jp.bellware.echo.util.analytics
 
 import android.content.Context
 
-//import com.google.firebase.analytics.FirebaseAnalytics;
+// import com.google.firebase.analytics.FirebaseAnalytics;
 
 /**
  * Firebase Analytics担当クラス
@@ -15,9 +15,8 @@ class AnalyticsHandler {
     //     */
     //    private FirebaseAnalytics fa;
 
-
     fun onCreate(context: Context) {
-        //fa = FirebaseAnalytics.getInstance(context);
+        // fa = FirebaseAnalytics.getInstance(context);
     }
 
     fun onResume() {}

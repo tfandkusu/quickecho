@@ -38,9 +38,7 @@ object AnimatorViewHelper {
                 view.translationY = 0.0f
             }
             null -> {
-
             }
         }
     }
-
 }

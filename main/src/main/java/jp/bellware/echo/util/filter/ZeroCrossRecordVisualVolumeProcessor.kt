@@ -1,6 +1,5 @@
 package jp.bellware.echo.util.filter
 
-
 /**
  * ゼロ点クロスを用いた視覚的ボリューム
  */
@@ -45,7 +44,6 @@ class ZeroCrossRecordVisualVolumeProcessor : VisualVolumeProcessor {
      */
     private val packet = BasisStats(PACKET_SIZE)
 
-
     override fun reset() {
         zc.reset()
         volume = 0f
@@ -58,24 +56,24 @@ class ZeroCrossRecordVisualVolumeProcessor : VisualVolumeProcessor {
     override fun add(s: Float) {
         var s = s
         zc.add(s)
-        //絶対値にする
+        // 絶対値にする
         s = Math.abs(s)
         packet.add(s)
         if (index % PACKET_SIZE == PACKET_SIZE - 1) {
-            //0.01秒ごとに
-            //現在ボリューム
+            // 0.01秒ごとに
+            // 現在ボリューム
             val cv: Float
             if (zc.isSpeaking) {
-                //話している
+                // 話している
                 include = true
                 packet.calculate()
-                //前の0.01秒のボリュームを基準にする
+                // 前の0.01秒のボリュームを基準にする
                 cv = packet.max / base
                 base = packet.max
                 if (base == 0f)
                     base = 0.1f
             } else {
-                //無音
+                // 無音
                 cv = 0f
             }
             if (cv < volume - downSpeed) {
@@ -94,12 +92,12 @@ class ZeroCrossRecordVisualVolumeProcessor : VisualVolumeProcessor {
     }
 
     override fun getVolume(): Float {
-        //使わなくなった。
+        // 使わなくなった。
         return volume
     }
 
     override fun isIncludeSound(): Boolean {
-        //ここだけ使う
+        // ここだけ使う
         return include
     }
 
@@ -109,6 +107,5 @@ class ZeroCrossRecordVisualVolumeProcessor : VisualVolumeProcessor {
          * 現在ボリューム取得のためのサイズ
          */
         private const val PACKET_SIZE = 441
-
     }
 }

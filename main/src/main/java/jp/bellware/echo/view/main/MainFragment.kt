@@ -1,13 +1,17 @@
 package jp.bellware.echo.view.main
 
-
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.media.AudioManager
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -20,17 +24,30 @@ import com.google.android.material.shape.ShapeAppearanceModel
 import dagger.hilt.android.AndroidEntryPoint
 import jp.bellware.echo.actioncreator.MainActionCreator
 import jp.bellware.echo.main.R
-import jp.bellware.echo.store.*
+import jp.bellware.echo.store.MainStore
+import jp.bellware.echo.store.QrecSoundEffect
+import jp.bellware.echo.store.RPRequest
+import jp.bellware.echo.store.StatusIcon
+import jp.bellware.echo.store.TimerRequest
+import jp.bellware.echo.store.VisualVolumeRequest
+import jp.bellware.echo.store.WarningMessage
 import jp.bellware.echo.util.QuickEchoFlags
 import jp.bellware.echo.view.memo.SoundMemoActivityAlias
 import jp.bellware.echo.view.setting.SettingActivityAlias
-import kotlinx.android.synthetic.main.fragment_main.*
-import kotlinx.android.synthetic.main.main_control.*
-import kotlinx.android.synthetic.main.main_progress.*
-import kotlinx.android.synthetic.main.main_sound_memo_button.*
-import kotlinx.android.synthetic.main.main_status.*
+import kotlinx.android.synthetic.main.fragment_main.explosionView
+import kotlinx.android.synthetic.main.fragment_main.warning_card
+import kotlinx.android.synthetic.main.fragment_main.warning_text
+import kotlinx.android.synthetic.main.main_control.delete
+import kotlinx.android.synthetic.main.main_control.play
+import kotlinx.android.synthetic.main.main_control.record
+import kotlinx.android.synthetic.main.main_control.replay
+import kotlinx.android.synthetic.main.main_control.stop
+import kotlinx.android.synthetic.main.main_progress.progress
+import kotlinx.android.synthetic.main.main_sound_memo_button.soundMemoButton
+import kotlinx.android.synthetic.main.main_status.statusFrame
+import kotlinx.android.synthetic.main.main_status.statusImage
+import kotlinx.android.synthetic.main.main_status.visualVolume
 import kotlinx.coroutines.InternalCoroutinesApi
-
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
@@ -70,7 +87,6 @@ class MainFragment : Fragment() {
      */
     private val timerViewHelper: TimerViewHelper by viewModels()
 
-
     companion object {
         /**
          * 再生中または停止中
@@ -88,15 +104,21 @@ class MainFragment : Fragment() {
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
-        store.overrideBackKey.observe(this, Observer { flag ->
-            flag?.let {
-                callback.isEnabled = it
+        store.overrideBackKey.observe(
+            this,
+            Observer { flag ->
+                flag?.let {
+                    callback.isEnabled = it
+                }
             }
-        })
+        )
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
@@ -120,7 +142,6 @@ class MainFragment : Fragment() {
             override fun onUpdateVolume(volume: Float) {
                 visualVolume.setVolume(volume)
             }
-
         }
         // 再生または停止状態でプロセスキルフラグの取得
         val playOrStop = savedInstanceState?.getBoolean(EXTRA_PLAY_OR_STOP, false) ?: false
@@ -133,136 +154,186 @@ class MainFragment : Fragment() {
             // 開発中の音声メモ機能は無効化する
         }
         // StoreとViewを繋げる
-        store.status.observe(viewLifecycleOwner, Observer {
-            AnimatorViewHelper.apply(statusFrame, it)
-        })
-        store.icon.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                StatusIcon.RECORD -> {
-                    statusImage.setImageResource(R.drawable.microphone_48dp)
-                }
-                StatusIcon.PLAY -> {
-                    statusImage.setImageResource(R.drawable.speaker_48dp)
-                }
-                else -> {
+        store.status.observe(
+            viewLifecycleOwner,
+            Observer {
+                AnimatorViewHelper.apply(statusFrame, it)
+            }
+        )
+        store.icon.observe(
+            viewLifecycleOwner,
+            Observer {
+                when (it) {
+                    StatusIcon.RECORD -> {
+                        statusImage.setImageResource(R.drawable.microphone_48dp)
+                    }
+                    StatusIcon.PLAY -> {
+                        statusImage.setImageResource(R.drawable.speaker_48dp)
+                    }
+                    else -> {
+                    }
                 }
             }
-        })
-        store.explosion.observe(viewLifecycleOwner, Observer {
-            if (it == true)
-                explosionView.startRecordAnimation()
-        })
-        store.record.observe(viewLifecycleOwner, Observer {
-            AnimatorViewHelper.apply(record, it)
-        })
-        store.play.observe(viewLifecycleOwner, Observer {
-            AnimatorViewHelper.apply(play, it)
-        })
-        store.stop.observe(viewLifecycleOwner, Observer {
-            AnimatorViewHelper.apply(stop, it)
-        })
-        store.replay.observe(viewLifecycleOwner, Observer {
-            AnimatorViewHelper.apply(replay, it)
-        })
-        store.delete.observe(viewLifecycleOwner, Observer {
-            AnimatorViewHelper.apply(delete, it)
-        })
+        )
+        store.explosion.observe(
+            viewLifecycleOwner,
+            Observer {
+                if (it == true)
+                    explosionView.startRecordAnimation()
+            }
+        )
+        store.record.observe(
+            viewLifecycleOwner,
+            Observer {
+                AnimatorViewHelper.apply(record, it)
+            }
+        )
+        store.play.observe(
+            viewLifecycleOwner,
+            Observer {
+                AnimatorViewHelper.apply(play, it)
+            }
+        )
+        store.stop.observe(
+            viewLifecycleOwner,
+            Observer {
+                AnimatorViewHelper.apply(stop, it)
+            }
+        )
+        store.replay.observe(
+            viewLifecycleOwner,
+            Observer {
+                AnimatorViewHelper.apply(replay, it)
+            }
+        )
+        store.delete.observe(
+            viewLifecycleOwner,
+            Observer {
+                AnimatorViewHelper.apply(delete, it)
+            }
+        )
         // StoreをViewHelperをつなげる
-        store.soundEffect.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                QrecSoundEffect.START -> {
-                    soundEffect.start()
-                }
-                QrecSoundEffect.PLAY ->
-                    soundEffect.play()
-                QrecSoundEffect.DELETE ->
-                    soundEffect.delete()
-                null -> {
-                }
-            }
-        })
-        store.requestForPlay.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                RPRequest.START ->
-                    playViewHelper.play {
+        store.soundEffect.observe(
+            viewLifecycleOwner,
+            Observer {
+                when (it) {
+                    QrecSoundEffect.START -> {
+                        soundEffect.start()
                     }
-                RPRequest.STOP ->
-                    playViewHelper.stop()
-                null -> {
-                }
-            }
-        })
-        store.requestForRecord.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                RPRequest.START ->
-                    recordViewHelper.start()
-                RPRequest.STOP ->
-                    recordViewHelper.stop(false)
-                RPRequest.STOP_AND_SAVE ->
-                    recordViewHelper.stop(true)
-                null -> {
-
-                }
-            }
-        })
-        store.visualVolume.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                VisualVolumeRequest.RESET ->
-                    visualVolumeViewHelper.reset()
-                VisualVolumeRequest.RECORD ->
-                    visualVolumeViewHelper.record()
-                VisualVolumeRequest.PLAY ->
-                    visualVolumeViewHelper.play()
-                VisualVolumeRequest.STOP ->
-                    visualVolumeViewHelper.stop()
-                null -> {
-                }
-            }
-        })
-        store.warning.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                WarningMessage.MUTE ->
-                    showWarning(R.string.warning_volume)
-                WarningMessage.RECORD_TIME ->
-                    showWarning(R.string.warning_time_limit)
-                WarningMessage.NO_RECORD ->
-                    showWarning(R.string.warning_no_sound)
-                null -> {
-                }
-            }
-        })
-        store.requestForTimer.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                TimerRequest.START -> {
-                    timerViewHelper.start {
-                        actionCreator.onMaxRecordTimeOver(recordViewHelper.isIncludeSound)
+                    QrecSoundEffect.PLAY ->
+                        soundEffect.play()
+                    QrecSoundEffect.DELETE ->
+                        soundEffect.delete()
+                    null -> {
                     }
                 }
-                TimerRequest.CANCEL -> {
-                    timerViewHelper.cancel()
-                }
-                null -> {
+            }
+        )
+        store.requestForPlay.observe(
+            viewLifecycleOwner,
+            Observer {
+                when (it) {
+                    RPRequest.START ->
+                        playViewHelper.play {
+                        }
+                    RPRequest.STOP ->
+                        playViewHelper.stop()
+                    null -> {
+                    }
                 }
             }
-        })
-        store.clickPlay.observe(viewLifecycleOwner, Observer {
-            if (it == true)
-                play.performClick()
-        })
-        store.clickDelete.observe(viewLifecycleOwner, Observer {
-            if (it == true)
-                delete.performClick()
-        })
+        )
+        store.requestForRecord.observe(
+            viewLifecycleOwner,
+            Observer {
+                when (it) {
+                    RPRequest.START ->
+                        recordViewHelper.start()
+                    RPRequest.STOP ->
+                        recordViewHelper.stop(false)
+                    RPRequest.STOP_AND_SAVE ->
+                        recordViewHelper.stop(true)
+                    null -> {
+                    }
+                }
+            }
+        )
+        store.visualVolume.observe(
+            viewLifecycleOwner,
+            Observer {
+                when (it) {
+                    VisualVolumeRequest.RESET ->
+                        visualVolumeViewHelper.reset()
+                    VisualVolumeRequest.RECORD ->
+                        visualVolumeViewHelper.record()
+                    VisualVolumeRequest.PLAY ->
+                        visualVolumeViewHelper.play()
+                    VisualVolumeRequest.STOP ->
+                        visualVolumeViewHelper.stop()
+                    null -> {
+                    }
+                }
+            }
+        )
+        store.warning.observe(
+            viewLifecycleOwner,
+            Observer {
+                when (it) {
+                    WarningMessage.MUTE ->
+                        showWarning(R.string.warning_volume)
+                    WarningMessage.RECORD_TIME ->
+                        showWarning(R.string.warning_time_limit)
+                    WarningMessage.NO_RECORD ->
+                        showWarning(R.string.warning_no_sound)
+                    null -> {
+                    }
+                }
+            }
+        )
+        store.requestForTimer.observe(
+            viewLifecycleOwner,
+            Observer {
+                when (it) {
+                    TimerRequest.START -> {
+                        timerViewHelper.start {
+                            actionCreator.onMaxRecordTimeOver(recordViewHelper.isIncludeSound)
+                        }
+                    }
+                    TimerRequest.CANCEL -> {
+                        timerViewHelper.cancel()
+                    }
+                    null -> {
+                    }
+                }
+            }
+        )
+        store.clickPlay.observe(
+            viewLifecycleOwner,
+            Observer {
+                if (it == true)
+                    play.performClick()
+            }
+        )
+        store.clickDelete.observe(
+            viewLifecycleOwner,
+            Observer {
+                if (it == true)
+                    delete.performClick()
+            }
+        )
         store.progress.observe(viewLifecycleOwner) {
             progress.isVisible = it
         }
         // 音声メモ画面を呼び出す
-        store.callSoundMemo.observe(viewLifecycleOwner, Observer {
-            if (it == true) {
-                val intent = Intent(requireContext(), SoundMemoActivityAlias::class.java)
-                startActivity(intent)
+        store.callSoundMemo.observe(
+            viewLifecycleOwner,
+            Observer {
+                if (it == true) {
+                    val intent = Intent(requireContext(), SoundMemoActivityAlias::class.java)
+                    startActivity(intent)
+                }
             }
-        })
+        )
         // クリックイベント
         // 録音ボタンが押された
         record.setOnClickListener {
@@ -295,11 +366,9 @@ class MainFragment : Fragment() {
             actionCreator.onSoundMemoClick()
         }
         progress.setOnClickListener {
-
         }
         actionCreator.onCreate()
     }
-
 
     override fun onResume() {
         super.onResume()
@@ -339,11 +408,11 @@ class MainFragment : Fragment() {
     private fun setUpSoundMemoButtonBackground() {
         val dp = resources.displayMetrics.density
         val model = ShapeAppearanceModel.Builder()
-                .setAllCornerSizes(28 * dp)
-                .build()
+            .setAllCornerSizes(28 * dp)
+            .build()
         val drawable = MaterialShapeDrawable(model).apply {
             fillColor =
-                    ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.memo))
+                ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.memo))
         }
         soundMemoButton.background = drawable
     }

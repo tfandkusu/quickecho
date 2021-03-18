@@ -8,8 +8,5 @@ import android.content.Intent
  */
 class MyFirebaseMessagingService : IntentService("MyFirebaseMessagingService") {
     override fun onHandleIntent(intent: Intent?) {
-
     }
-
-
 }

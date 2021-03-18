@@ -30,7 +30,6 @@ class BasisStats(window: Int) {
     var sum = 0f
         private set
 
-
     /**
      * 音声パケットを追加する
      */

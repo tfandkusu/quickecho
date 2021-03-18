@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import jp.bellware.echo.main.R
 import jp.bellware.echo.repository.SettingRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -17,7 +16,8 @@ import kotlinx.coroutines.launch
  * 効果音担当ViewModel
  */
 class SoundEffectViewHelper @ViewModelInject constructor(
-        val repository: SettingRepository) : ViewModel() {
+    val repository: SettingRepository
+) : ViewModel() {
     /**
      * 効果音読み込みと再生の担当
      */
@@ -52,10 +52,10 @@ class SoundEffectViewHelper @ViewModelInject constructor(
      * ActivityのonCreateから呼ばれる
      */
     @InternalCoroutinesApi
-    fun onCreate(context: Context, onLoadFinished: () -> Unit) = viewModelScope.launch(Dispatchers.Main) {
+    fun onCreate(context: Context, onLoadFinished: () -> Unit) = viewModelScope.launch {
         // プロセスで1度だけ実行
         if (startId == 0 && playId == 0 && deleteId == 0) {
-            //サウンドプール
+            // サウンドプール
             soundPool = SoundPool(1, AudioManager.STREAM_MUSIC, 0)
             soundPool.setOnLoadCompleteListener { _, _, _ ->
                 ++count
@@ -70,7 +70,6 @@ class SoundEffectViewHelper @ViewModelInject constructor(
                 isEnabled = it
             }
         }
-
     }
 
     /**
@@ -106,5 +105,4 @@ class SoundEffectViewHelper @ViewModelInject constructor(
             soundPool.play(id, 1f, 1f, 0, 0, 1f)
         }
     }
-
 }

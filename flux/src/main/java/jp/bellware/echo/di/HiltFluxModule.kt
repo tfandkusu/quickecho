@@ -4,11 +4,11 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import javax.inject.Singleton
 import jp.bellware.echo.util.ActionReceiver
 import jp.bellware.echo.util.ActionReceiverImpl
 import jp.bellware.echo.util.Dispatcher
 import jp.bellware.echo.util.DispatcherImpl
-import javax.inject.Singleton
 
 @Module
 @InstallIn(ApplicationComponent::class)

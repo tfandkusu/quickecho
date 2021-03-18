@@ -26,7 +26,10 @@ class SoundRepositoryTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        repository = SoundRepositoryImpl(memoryLocalDataStore, fileLocalDataStore, soundMemoWorkManager)
+        repository = SoundRepositoryImpl(
+            memoryLocalDataStore,
+            fileLocalDataStore, soundMemoWorkManager
+        )
     }
 
     @Test
@@ -80,16 +83,22 @@ class SoundRepositoryTest {
     @Test
     fun add() {
         repository.add(
-                shortArrayOf((Short.MAX_VALUE * 7 / 10).toShort(),
-                        (Short.MIN_VALUE * 8 / 10).toShort(),
-                        (Short.MAX_VALUE * 9 / 10).toShort()),
-                floatArrayOf(0.7f, -0.8f, 0.9f))
+            shortArrayOf(
+                (Short.MAX_VALUE * 7 / 10).toShort(),
+                (Short.MIN_VALUE * 8 / 10).toShort(),
+                (Short.MAX_VALUE * 9 / 10).toShort()
+            ),
+            floatArrayOf(0.7f, -0.8f, 0.9f)
+        )
         verifySequence {
             memoryLocalDataStore.add(floatArrayOf(0.7f, -0.8f, 0.9f))
             fileLocalDataStore.add(
-                    shortArrayOf((Short.MAX_VALUE * 7 / 10).toShort(),
-                            (Short.MIN_VALUE * 8 / 10).toShort(),
-                            (Short.MAX_VALUE * 9 / 10).toShort()))
+                shortArrayOf(
+                    (Short.MAX_VALUE * 7 / 10).toShort(),
+                    (Short.MIN_VALUE * 8 / 10).toShort(),
+                    (Short.MAX_VALUE * 9 / 10).toShort()
+                )
+            )
         }
     }
 

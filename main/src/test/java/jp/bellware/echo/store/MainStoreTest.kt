@@ -2,7 +2,22 @@ package jp.bellware.echo.store
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import io.kotlintest.shouldBe
-import jp.bellware.echo.action.*
+import jp.bellware.echo.action.MainBackPressedAction
+import jp.bellware.echo.action.MainDeleteAction
+import jp.bellware.echo.action.MainMaxRecordTimeOverAction
+import jp.bellware.echo.action.MainMuteAction
+import jp.bellware.echo.action.MainNoRecordAction
+import jp.bellware.echo.action.MainPlayAction
+import jp.bellware.echo.action.MainPrePlayAction
+import jp.bellware.echo.action.MainPreRecordAction
+import jp.bellware.echo.action.MainReadyAction
+import jp.bellware.echo.action.MainRecordAction
+import jp.bellware.echo.action.MainReplayAction
+import jp.bellware.echo.action.MainRestoreEndAction
+import jp.bellware.echo.action.MainRestoreStartAction
+import jp.bellware.echo.action.MainSoundMemoAction
+import jp.bellware.echo.action.MainSoundMemoButtonVisibilityAction
+import jp.bellware.echo.action.MainStopAction
 import jp.bellware.echo.util.EmptyActionReceiver
 import org.junit.Before
 import org.junit.Rule
@@ -176,7 +191,6 @@ class MainStoreTest {
         store.replay.value shouldBe AnimationStatus.VISIBLE
         store.stop.value shouldBe AnimationStatus.VISIBLE
     }
-
 
     /**
      * ボリューム0の時

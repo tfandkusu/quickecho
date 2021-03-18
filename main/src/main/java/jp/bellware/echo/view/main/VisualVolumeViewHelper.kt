@@ -4,7 +4,6 @@ import android.os.Handler
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 
-
 /**
  * 視覚的ボリューム隔離クラス
  */
@@ -22,7 +21,6 @@ class VisualVolumeViewHelper @ViewModelInject constructor() : ViewModel() {
      */
     private var playing = false
 
-
     /**
      * コールバック
      */
@@ -38,7 +36,6 @@ class VisualVolumeViewHelper @ViewModelInject constructor() : ViewModel() {
         override fun onUpdateVolume(volume: Float) {
         }
     }
-
 
     /**
      * 視覚的ボリューム更新タスク
@@ -92,7 +89,6 @@ class VisualVolumeViewHelper @ViewModelInject constructor() : ViewModel() {
         callBack.onUpdateVolume(0f)
     }
 
-
     fun play() {
         playing = true
         recording = false
@@ -112,6 +108,4 @@ class VisualVolumeViewHelper @ViewModelInject constructor() : ViewModel() {
         recording = false
         handler.removeCallbacks(updateTask)
     }
-
-
 }

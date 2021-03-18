@@ -31,18 +31,20 @@ class SoundMemoRepositoryTest {
 
     @Test
     fun add() = runBlocking {
-        val m = SoundMemo(0,
-                true,
-                System.currentTimeMillis(),
-                "test1.aac",
-                1,
-                139.0,
-                35.0,
-                "東京都",
-                "港区",
-                "赤坂3-1-6",
-                2,
-                "録音したこと")
+        val m = SoundMemo(
+            0,
+            true,
+            System.currentTimeMillis(),
+            "test1.aac",
+            1,
+            139.0,
+            35.0,
+            "東京都",
+            "港区",
+            "赤坂3-1-6",
+            2,
+            "録音したこと"
+        )
         val lm = SoundMemoMapper.map(m)
         repository.add(m)
         coVerifySequence {
@@ -53,18 +55,20 @@ class SoundMemoRepositoryTest {
     @ExperimentalCoroutinesApi
     @Test
     fun index() = runBlocking {
-        val lm = LocalSoundMemo(1,
-                true,
-                System.currentTimeMillis(),
-                "test1.aac",
-                1,
-                139.0,
-                35.0,
-                "東京都",
-                "港区",
-                "赤坂3-1-6",
-                2,
-                "録音したこと")
+        val lm = LocalSoundMemo(
+            1,
+            true,
+            System.currentTimeMillis(),
+            "test1.aac",
+            1,
+            139.0,
+            35.0,
+            "東京都",
+            "港区",
+            "赤坂3-1-6",
+            2,
+            "録音したこと"
+        )
         val m = SoundMemoMapper.map(lm)
         every {
             localDataStore.index()

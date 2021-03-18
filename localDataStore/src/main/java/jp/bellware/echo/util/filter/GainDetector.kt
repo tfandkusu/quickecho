@@ -28,5 +28,4 @@ class GainDetector {
     fun reset() {
         max = 0f
     }
-
 }

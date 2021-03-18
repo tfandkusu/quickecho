@@ -10,14 +10,12 @@ import androidx.lifecycle.ViewModel
 class TimerViewHelper @ViewModelInject constructor() : ViewModel() {
     private val handler = Handler()
 
-
     companion object {
         /**
          * 録音可能時間
          */
         private const val MAX_RECORD_TIME = 2 * 60 * 1000L
     }
-
 
     private var runnable: Runnable? = null
 
@@ -44,7 +42,6 @@ class TimerViewHelper @ViewModelInject constructor() : ViewModel() {
             runnable = null
         }
     }
-
 
     override fun onCleared() {
         cancel()

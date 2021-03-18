@@ -2,9 +2,9 @@ package jp.bellware.echo.datastore.local
 
 import android.content.SharedPreferences
 import com.tfcporciuncula.flow.FlowSharedPreferences
+import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
 /**
  * ローカルファイルからの設定の出し入れを行う
@@ -26,7 +26,8 @@ interface SettingLocalDataStore {
     fun isSaveEveryTime(): Flow<Boolean>
 }
 
-class SettingLocalDataStoreImpl @Inject constructor(private val pref: SharedPreferences) : SettingLocalDataStore {
+class SettingLocalDataStoreImpl @Inject constructor(private val pref: SharedPreferences) :
+    SettingLocalDataStore {
 
     companion object {
         private const val PREF_SOUND_EFFECT = "soundEffect"
@@ -48,7 +49,6 @@ class SettingLocalDataStoreImpl @Inject constructor(private val pref: SharedPref
         val flowSharedPreferences = FlowSharedPreferences(pref)
         val value = flowSharedPreferences.getBoolean(PREF_SHOW_SOUND_MEMO, true)
         return value.asFlow()
-
     }
 
     @ExperimentalCoroutinesApi

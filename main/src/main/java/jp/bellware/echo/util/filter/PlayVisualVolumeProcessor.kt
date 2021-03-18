@@ -21,7 +21,7 @@ class PlayVisualVolumeProcessor : VisualVolumeProcessor {
         if (s > vv)
             vv = s
         else {
-            //少しづつ後退させる
+            // 少しづつ後退させる
             vv -= 2f * 1f / 44100
         }
     }

@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import jp.bellware.echo.setting.R
-import kotlinx.android.synthetic.main.fragment_about.*
+import kotlinx.android.synthetic.main.fragment_about.version
 
 /**
  * アプリについて画面
@@ -18,21 +18,24 @@ class AboutFragment : Fragment() {
         const val LINK_TYPE = "about"
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_about, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //バージョン名を設定
+        // バージョン名を設定
         try {
             val packageName = requireContext().packageName
             val packageInfo = requireContext().packageManager.getPackageInfo(packageName, 0)
             val versionText = "${getString(R.string.version)} ${packageInfo.versionName}"
             version.text = versionText
         } catch (e: PackageManager.NameNotFoundException) {
-            //おこらない
+            // おこらない
         }
-
     }
 }

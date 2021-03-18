@@ -1,8 +1,8 @@
 package jp.bellware.echo.repository
 
+import javax.inject.Inject
 import jp.bellware.echo.datastore.local.SettingLocalDataStore
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
 /**
  * 設定リポジトリ
@@ -24,7 +24,8 @@ interface SettingRepository {
     fun isSaveEveryTime(): Flow<Boolean>
 }
 
-class SettingRepositoryImpl @Inject constructor(private val dataStore: SettingLocalDataStore) : SettingRepository {
+class SettingRepositoryImpl @Inject constructor(private val dataStore: SettingLocalDataStore) :
+    SettingRepository {
     override fun isSoundEffect(): Flow<Boolean> {
         return dataStore.isSoundEffect()
     }

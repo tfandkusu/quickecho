@@ -34,13 +34,12 @@ class StartActivity : AppCompatActivity() {
          * 通知のチャンネルID
          */
         const val CHANNEL_ID = "main"
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
-        //ツールバー設定
+        // ツールバー設定
         this.setSupportActionBar(toolbar)
         if (savedInstanceState == null) {
             // 起動時のみ
@@ -50,7 +49,6 @@ class StartActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CODE_MAIN) {
             finish()
@@ -59,8 +57,11 @@ class StartActivity : AppCompatActivity() {
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         if (CODE_PERMISSION == requestCode) {
             // If request is cancelled, the result arrays are empty.
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -80,22 +81,30 @@ class StartActivity : AppCompatActivity() {
      * 実行時パーミッションをチェックする
      */
     private fun checkPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) !=
+            PackageManager.PERMISSION_GRANTED
+        ) {
             // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.RECORD_AUDIO)) {
-                //拒否した場合は説明を表示
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    this,
+                    Manifest.permission.RECORD_AUDIO
+                )
+            ) {
+                // 拒否した場合は説明を表示
                 showInformation()
                 // Show an expanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
             } else {
-                //許可を求める
-                ActivityCompat.requestPermissions(this,
-                        arrayOf(Manifest.permission.RECORD_AUDIO),
-                        CODE_PERMISSION)
+                // 許可を求める
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.RECORD_AUDIO),
+                    CODE_PERMISSION
+                )
             }
         } else {
-            //すでに許可されている
+            // すでに許可されている
             callMainActivityWithLinks()
         }
     }
@@ -133,12 +142,13 @@ class StartActivity : AppCompatActivity() {
      * アプリ詳細を呼び出す
      */
     private fun callApplicationDetailActivity() {
-        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                Uri.parse("package:$packageName"))
+        val intent = Intent(
+            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+            Uri.parse("package:$packageName")
+        )
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
     }
-
 
     /**
      * 通知チャンネルを登録する
@@ -146,7 +156,7 @@ class StartActivity : AppCompatActivity() {
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationManager =
-                    getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             val name = getString(R.string.channel_name)
             val descriptionText = getString(R.string.channel_description)
             val importance = NotificationManager.IMPORTANCE_DEFAULT

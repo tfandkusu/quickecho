@@ -1,0 +1,10 @@
+[*]
+charset = utf-8
+# 文末の空白文字削除
+trim_trailing_whitespace = true
+# 最後の改行を入力する
+insert_final_newline = true
+
+[*.{Dangerfile, Gemfile, Rakefile}]
+indent_style = space
+indent_size = 2

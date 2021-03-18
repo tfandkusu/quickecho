@@ -3,7 +3,6 @@ package jp.bellware.echo.datastore.local.schema
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-
 /**
  * 音声メモ
  * @param id 連番、プライマリーキー
@@ -20,18 +19,20 @@ import androidx.room.PrimaryKey
  * @param text 認識結果
  */
 @Entity
-data class LocalSoundMemo(@PrimaryKey(autoGenerate = true) val id: Long,
-                          val temporal: Boolean,
-                          val createdAt: Long,
-                          val fileName: String,
-                          val locationStatus: Int,
-                          val longitude: Double,
-                          val latitude: Double,
-                          val prefecture: String,
-                          val city: String,
-                          val street: String,
-                          val textStatus: Int,
-                          val text: String) {
+data class LocalSoundMemo(
+    @PrimaryKey(autoGenerate = true) val id: Long,
+    val temporal: Boolean,
+    val createdAt: Long,
+    val fileName: String,
+    val locationStatus: Int,
+    val longitude: Double,
+    val latitude: Double,
+    val prefecture: String,
+    val city: String,
+    val street: String,
+    val textStatus: Int,
+    val text: String
+) {
     companion object {
         /**
          * 位置情報の機能は未実装
@@ -44,4 +45,3 @@ data class LocalSoundMemo(@PrimaryKey(autoGenerate = true) val id: Long,
         const val TEXT_STATUS_NOT_IMPLEMENTED = 1
     }
 }
-

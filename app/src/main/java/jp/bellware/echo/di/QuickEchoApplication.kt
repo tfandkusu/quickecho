@@ -7,7 +7,6 @@ import jp.bellware.echo.util.FlipperSetting
 import jp.bellware.echo.view.memo.QuickEchoFlutterUtil
 import timber.log.Timber
 
-
 @HiltAndroidApp
 class QuickEchoApplication : Application() {
     override fun onCreate() {
