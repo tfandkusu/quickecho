@@ -11,7 +11,7 @@ phases:
       # - ./gradlew assembleDebug
       # - ./gradlew localDataStore:assembleDebugAndroidTest
       # - gcloud firebase test android run --type instrumentation --app app/build/outputs/apk/debug/app-debug.apk --test localDataStore/build/outputs/apk/androidTest/debug/localDataStore-debug-androidTest.apk --device model=NexusLowRes,version=29,locale=ja_JP,orientation=portrait
-      # - ./gradlew testDebug
+      - ./gradlew testDebug
       # 暫定的にこちらで行う、別のワークフローを起動して並列化を行う予定
       - ./gradlew lintDebug
       - ./gradlew spotlessCheck

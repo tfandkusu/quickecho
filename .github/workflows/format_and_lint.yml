@@ -32,6 +32,8 @@ jobs:
           java-version: '11'
       # フォーマットチェック
       - run: ./gradlew spotlessKotlinCheck
+      # 単体テスト実行
+      - run: ./gradlew testDebug
       # lintレポート作成
       - run: ./gradlew lintDebug
       # Rubyをセットアップする
