@@ -8,7 +8,7 @@ dependencies {
     implementation project(':repository')
 
     implementation 'androidx.cardview:cardview:1.0.0'
-
+    // ライブラリが古い系
     // ConstraintLayout
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     // ViewPager2

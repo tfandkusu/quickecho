@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+
         // ボリューム調整を音楽にする
         volumeControlStream = AudioManager.STREAM_MUSIC
     }
