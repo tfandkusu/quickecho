@@ -1,8 +1,9 @@
-# DroidKaigi/conference-app-2021を参考に、フォーマットとlintを行うワークフローを作成する
+# 単体テスト実行、フォーマットチェック、lint投稿を行うワークフロー
+# DroidKaigi/conference-app-2021を参考にした
 # https://github.com/DroidKaigi/conference-app-2021/blob/main/.github/workflows/review-suggest.yml
 
 # ワークフローの名前
-name: format_and_lint
+name: test_and_check
 # ワークフロー実行タイミングは
 on:
   # masterブランチへのPUSH
