@@ -1,0 +1,34 @@
+# DroidKaigi/conference-app-2021を参考に、フォーマットとlintを行うワークフローを作成する
+# https://github.com/DroidKaigi/conference-app-2021/blob/main/.github/workflows/review-suggest.yml
+
+# ワークフローの名前
+name: reviewdog-suggester
+# ワークフロー実行タイミングは
+on:
+  # masterブランチへのPUSH
+  push:
+    branches:
+      - master
+  # プルリクの作成と更新
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+jobs:
+  check: # job名
+    # ubuntuで動かす
+    runs-on: ubuntu-latest
+    steps:
+      # masterブランチをチェックアウトする
+      - uses: actions/checkout@v2
+        with:
+          ref: master
+      # 該当ブランチをチェックアウトする
+      - uses: actions/checkout@v2
+      # java11をセットアップする
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '11'
+      # コマンドを実行する
+      - run: ./gradlew spotlessKotlinApply
