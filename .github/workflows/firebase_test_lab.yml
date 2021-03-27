@@ -1,0 +1,34 @@
+name: firebase_test_lab
+# ワークフロー実行タイミングは
+on:
+  # masterブランチへのPUSH
+  push:
+    branches:
+      - master
+  # プルリクの作成と更新
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+jobs:
+  check: # job名
+    # ubuntuで動かす
+    runs-on: ubuntu-latest
+    steps:
+      # 該当ブランチをチェックアウトする
+      - uses: actions/checkout@v2
+      # java11をセットアップする
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '11'
+      # Firebase Test Labに送るAPKを作る
+      - run: ./gradlew assembleDebug
+      - run: ./gradlew localDataStore:assembleDebugAndroidTest
+      # gcloudコマンドを使う
+      - uses: actions-hub/gcloud@master
+        env:
+          PROJECT_ID: quick-echo
+          APPLICATION_CREDENTIALS: ${{ secrets.FIREBASE_TEST_LAB_JSON }}
+        with:
+          args: firebase test android run --type instrumentation --app app/build/outputs/apk/debug/app-debug.apk --test localDataStore/build/outputs/apk/androidTest/debug/localDataStore-debug-androidTest.apk --device model=NexusLowRes,version=29,locale=ja_JP,orientation=portrait
