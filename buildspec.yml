@@ -1,7 +1,18 @@
 version: 0.2
 phases:
+  install:
+    runtime-versions:
+      android: 29.x
   pre_build:
     commands:
+      # gcloudコマンドのインストール
+      # https://github.com/yarnpkg/yarn/issues/4505
+      - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+      # Firebase Test Lab実行に必要なgcloudコマンドインストール
+      - echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+      - curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
+      - apt-get update -y
+      - apt-get install -y google-cloud-sdk
       # Firebase Test Labの認証情報とプロジェクトを設定
       - echo $FIREBASE_TEST_LAB_JSON | base64 -d > firebase-test-lab.json
       - gcloud auth activate-service-account --key-file firebase-test-lab.json
@@ -11,8 +22,3 @@ phases:
       - ./gradlew assembleDebug
       - ./gradlew localDataStore:assembleDebugAndroidTest
       - gcloud firebase test android run --type instrumentation --app app/build/outputs/apk/debug/app-debug.apk --test localDataStore/build/outputs/apk/androidTest/debug/localDataStore-debug-androidTest.apk --device model=NexusLowRes,version=29,locale=ja_JP,orientation=portrait
-      - ./gradlew testDebug
-      # 暫定的にこちらで行う、別のワークフローを起動して並列化を行う予定
-      - ./gradlew lintDebug
-      - ./gradlew spotlessCheck
-      - danger
