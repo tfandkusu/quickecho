@@ -95,8 +95,8 @@ RecordViewHelperとPlayViewHelperはメモリに音声を保存して再生時�
 
 ## CI
 
-- [AWS CodeBuild](https://aws.amazon.com/jp/codebuild/) PUSH毎に単体テスト、lint結果投稿([Danger](https://github.com/danger/danger))、フォーマット確認を行います。
-- [AWS Chatbot](https://aws.amazon.com/jp/chatbot/) CIの結果をSlackに投稿します。
+- [Github Actions](https://docs.github.com/ja/actions) PUSH毎に単体テスト、lint結果投稿([Danger](https://github.com/danger/danger))、フォーマット確認を行います。
+- [Firebase Test Lab](https://firebase.google.com/docs/test-lab) SQLiteデータベース書き込みの単体テストに使用しています。
 
 ## CD
 
