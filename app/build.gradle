@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'deploygate'
 apply from: rootProject.file('gradle/view-common.gradle')
 apply plugin: 'io.fabric'
 apply plugin: 'com.google.android.gms.oss-licenses-plugin'
