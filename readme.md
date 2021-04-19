@@ -92,10 +92,11 @@ RecordViewHelperとPlayViewHelperはメモリに音声を保存して再生時�
 ## ビルド
 
 - [Spotless plugin for Gradle](https://github.com/diffplug/spotless/tree/main/plugin-gradle)
+- [Gradle DeployGate Plugin](https://github.com/DeployGate/gradle-deploygate-plugin)
 
 ## CI
 
-- [Github Actions](https://docs.github.com/ja/actions) PUSH毎に単体テスト、lint結果投稿([Danger](https://github.com/danger/danger))、フォーマット確認を行います。
+- [Github Actions](https://docs.github.com/ja/actions) PUSH毎に単体テスト、lint結果投稿([Danger](https://github.com/danger/danger))、フォーマット確認を行います。stagingブランチにPUSHするとDeployGateで配布します。
 - [Firebase Test Lab](https://firebase.google.com/docs/test-lab) SQLiteデータベース書き込みの単体テストに使用しています。
 
 ## CD

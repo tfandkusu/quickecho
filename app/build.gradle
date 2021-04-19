@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'deploygate'
 apply from: rootProject.file('gradle/view-common.gradle')
-apply plugin: 'io.fabric'
 apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
 android {
@@ -56,7 +56,6 @@ dependencies {
     // Debugビルドでは実行できないためReleaseビルドでしか使わない。
     // google-services.jsonがソースコード公開のためにモックになっているため。
     releaseImplementation "com.google.firebase:firebase-core:$firebase_core_version"
-    releaseImplementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
     releaseImplementation 'com.google.firebase:firebase-messaging:20.1.5'
     releaseImplementation 'com.google.firebase:firebase-dynamic-links:19.1.0'
 
