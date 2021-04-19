@@ -27,8 +27,8 @@ jobs:
         env:
           GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
       # KeyStoreを復元する
-      - run: mkdir ~/keystore
-      - run: echo $KEYSTORE | base64 -d > ~/keystore/echo.jks
+      - run: mkdir ~/keystores
+      - run: echo $KEYSTORE | base64 -d > ~/keystores/echo.jks
         env:
           KEYSTORE: ${{ secrets.KEYSTORE }}
       # Deploygateのタスクを実行する
