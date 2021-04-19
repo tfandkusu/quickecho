@@ -1,0 +1,29 @@
+name: deploygate
+# ワークフロー実行タイミングは
+on:
+  # stagingブランチへのPUSH
+  push:
+    branches:
+      - staging
+  # プルリクの作成と更新(テスト用)
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+jobs:
+  check: # job名
+    # ubuntuで動かす
+    runs-on: ubuntu-latest
+    steps:
+      # 該当ブランチをチェックアウトする
+      - uses: actions/checkout@v2
+      # java11をセットアップする
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '11'
+      # Deploygateのタスクを実行する
+      - run: ./gradlew uploadDeployGateRelease
+        env:
+          DEPLOYGATE_API_TOKEN:  ${{ secrets.DEPLOYGATE_API_TOKEN }}
+          DEPLOYGATE_DISTRIBUTION_KEY:  ${{ secrets.DEPLOYGATE_DISTRIBUTION_KEY }}
