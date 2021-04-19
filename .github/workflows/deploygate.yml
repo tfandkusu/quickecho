@@ -23,12 +23,12 @@ jobs:
         with:
           java-version: '11'
       # google-services.jsonを復元する
-      - run: cat $GOOGLE_SERVICES_JSON | base64 -d > app/src/release/google-services.json
+      - run: echo $GOOGLE_SERVICES_JSON | base64 -d > app/src/release/google-services.json
         env:
           GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
       # KeyStoreを復元する
       - run: mkdir ~/keystore
-      - run: cat $KEYSTORE | base64 -d > ~/keystore/echo.jks
+      - run: echo $KEYSTORE | base64 -d > ~/keystore/echo.jks
         env:
           KEYSTORE: ${{ secrets.KEYSTORE }}
       # Deploygateのタスクを実行する
