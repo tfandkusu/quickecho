@@ -119,5 +119,6 @@ RecordViewHelperとPlayViewHelperはメモリに音声を保存して再生時�
 
 # テスト
 
-ブランチプロテクションの確認
+ブランチプロテクションの確認2
+
 
