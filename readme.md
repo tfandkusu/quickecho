@@ -116,9 +116,3 @@ RecordViewHelperとPlayViewHelperはメモリに音声を保存して再生時�
 
 - **ステップ1** Roomに保存する
 - **ステップ2** Firestoreに保存する
-
-# テスト
-
-ブランチプロテクションの確認2
-
-
