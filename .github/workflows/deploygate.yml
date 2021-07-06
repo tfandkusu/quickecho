@@ -10,6 +10,10 @@ jobs:
     # ubuntuで動かす
     runs-on: ubuntu-latest
     steps:
+      # masterブランチをチェックアウトする
+      - uses: actions/checkout@v2
+        with:
+          ref: master
       # 該当ブランチをチェックアウトする
       - uses: actions/checkout@v2
       # java11をセットアップする
@@ -34,3 +38,8 @@ jobs:
           BITRISEIO_ANDROID_KEYSTORE_ALIAS: ${{ secrets.BITRISEIO_ANDROID_KEYSTORE_ALIAS }}
           BITRISEIO_ANDROID_KEYSTORE_PASSWORD: ${{ secrets.BITRISEIO_ANDROID_KEYSTORE_PASSWORD }}
           BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD: ${{ secrets.BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD }}
+      # stagingブランチをmasterブランチと同じにする
+      - run: git checkout master
+      - run: git branch -D staging
+      - run: git checkout -b staging
+      - run: git push -f origin staging
