@@ -1,3 +1,5 @@
+include ':viewCommonLib'
+include ':commonLib'
 include ':common'
 include ':memo'
 include ':app'

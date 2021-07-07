@@ -1,8 +1,8 @@
 apply plugin: 'com.android.library'
 apply from: rootProject.file('gradle/view-common.gradle')
-apply plugin: 'kotlin-android'
 
 dependencies {
+    implementation project(':viewCommonLib')
     implementation project(':common')
     implementation project(':flux')
     implementation project(':repository')

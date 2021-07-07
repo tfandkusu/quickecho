@@ -3,6 +3,7 @@ apply from: rootProject.file('gradle/view-common.gradle')
 
 
 dependencies {
+    implementation project(':viewCommonLib')
     // FluxのためにEventBusを使う
     implementation 'de.greenrobot:eventbus:2.4.1'
 }

@@ -1,0 +1,35 @@
+apply plugin: 'com.android.library'
+apply from: rootProject.file('gradle/common.gradle')
+
+dependencies {
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    api 'androidx.appcompat:appcompat:1.1.0'
+    api "androidx.core:core-ktx:1.2.0"
+
+    // Kotlin Coroutine
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3"
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.3'
+
+    // Timber
+    api 'com.jakewharton.timber:timber:4.7.1'
+
+    // KOIN
+    def koin_version = '2.0.1'
+    api "org.koin:koin-android:$koin_version"
+    api "org.koin:koin-androidx-viewmodel:$koin_version"
+
+    // テスト
+    testApi 'junit:junit:4.13'
+    // coroutine test
+    testApi 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.3'
+    androidTestApi 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.3'
+    // Kotlin Test
+    testApi 'io.kotlintest:kotlintest-runner-junit4:3.4.2'
+    androidTestApi 'io.kotlintest:kotlintest-runner-junit4:3.4.2'
+    // MockK
+    testApi "io.mockk:mockk:1.9.2"
+    // AndroidX test
+    androidTestApi 'androidx.test:runner:1.2.0'
+    androidTestApi 'androidx.test:rules:1.2.0'
+}

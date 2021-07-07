@@ -38,6 +38,7 @@ android {
 }
 
 dependencies {
+    implementation project(':viewCommonLib')
     implementation project(':main')
     implementation project(':setting')
     implementation project(':memo')
