@@ -1,10 +1,10 @@
 name: deploygate
 # ワークフロー実行タイミングは
 on:
-  # stagingブランチへのPUSH
+  # in_house_で始まるタグのPUSH
   push:
-    branches:
-      - staging
+    tags:
+      - 'in_house_*'
 jobs:
   check: # job名
     # ubuntuで動かす
@@ -38,8 +38,3 @@ jobs:
           BITRISEIO_ANDROID_KEYSTORE_ALIAS: ${{ secrets.BITRISEIO_ANDROID_KEYSTORE_ALIAS }}
           BITRISEIO_ANDROID_KEYSTORE_PASSWORD: ${{ secrets.BITRISEIO_ANDROID_KEYSTORE_PASSWORD }}
           BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD: ${{ secrets.BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD }}
-      # stagingブランチをmasterブランチと同じにする
-      - run: git checkout master
-      - run: git branch -D staging
-      - run: git checkout -b staging
-      - run: git push -f origin staging
