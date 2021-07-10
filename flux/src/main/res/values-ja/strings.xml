@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">エコー</string>
-    <string name="app_name_long">クイックエコー(社内テスト)</string>
+    <string name="app_name_long">クイックエコー</string>
     <string name="error">エラー</string>
     <string name="ok">OK</string>
     <string name="cancel">キャンセル</string>
