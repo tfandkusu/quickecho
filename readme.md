@@ -1,5 +1,3 @@
-<img src="https://codebuild.ap-northeast-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiNDBCQVBqRVljUldOZU1JMnlEdDRMblBiQjVma1VmYXhIWVNrVjE3NWpKcEUySmZxYXBQNkkwelh5OHV0Rml1dWNWb3l6TGk4d0xqZk1YaHg2b1UzcG93PSIsIml2UGFyYW1ldGVyU3BlYyI6IlhMZndTc0RLeEtRd3RKN0UiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master">
-
 クイックエコー
 ====
 音声を録音して、素早く再生が出来るAndroidアプリです。英語の発音確認におすすめです。
